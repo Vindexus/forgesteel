@@ -652,93 +652,88 @@ export const LibraryListPage = (props: Props) => {
 		);
 	};
 
-	try {
-		const selected = getList().find(item => item.id == selectedID);
-		const getPanel = getElementPanel();
+	const selected = getList().find(item => item.id == selectedID);
+	const getPanel = getElementPanel();
 
-		const sourcebookOptions = props.sourcebooks
-			.filter(cs => cs.isHomebrew)
-			.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
+	const sourcebookOptions = props.sourcebooks
+		.filter(cs => cs.isHomebrew)
+		.map(cs => ({ label: cs.name || 'Unnamed Sourcebook', value: cs.id }));
 
-		return (
-			<ErrorBoundary>
-				<div className='library-list-page'>
-					<AppHeader subheader='Library'>
-						<Popover
-							trigger='click'
-							content={(
-								<div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
-									{
-										sourcebookOptions.length > 1 ?
-											<div>
-												<div className='ds-text'>Where do you want it to live?</div>
-												<Select
-													style={{ width: '100%' }}
-													placeholder='Select'
-													options={sourcebookOptions}
-													optionRender={option => <div className='ds-text'>{option.data.label}</div>}
-													showSearch={true}
-													filterOption={(input, option) => {
-														const strings = option ?
-															[
-																option.label
-															]
-															: [];
-														return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
-													}}
-													value={sourcebookID}
-													onChange={setSourcebookID}
-												/>
-											</div>
-											: null
-									}
-									{sourcebookOptions.length > 1 ? <Divider /> : null}
-									<Space direction='vertical' style={{ width: '100%' }}>
-										<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(category, sourcebookID, null)}>Create</Button>
-										<Upload
-											style={{ width: '100%' }}
-											accept={`.drawsteel-${category.toLowerCase()},.ds-${category.toLowerCase()}`}
-											showUploadList={false}
-											beforeUpload={file => {
-												file
-													.text()
-													.then(json => {
-														const e = JSON.parse(json) as Element;
-														props.importElement(category, sourcebookID, e);
-													});
-												return false;
-											}}
-										>
-											<Button block={true} icon={<DownloadOutlined />}>Import</Button>
-										</Upload>
-									</Space>
-								</div>
-							)}
-						>
-							<Button type='primary'>
-								Add
-								<DownOutlined />
-							</Button>
-						</Popover>
-						{getElementToolbar()}
-					</AppHeader>
-					<div className='library-list-page-content'>
-						{getSidebar()}
-						<div className='element-selected'>
-							{
-								selected ?
-									getPanel(selected)
-									:
-									<Empty text='Nothing selected' />
-							}
-						</div>
+	return (
+		<ErrorBoundary>
+			<div className='library-list-page'>
+				<AppHeader subheader='Library'>
+					<Popover
+						trigger='click'
+						content={(
+							<div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
+								{
+									sourcebookOptions.length > 1 ?
+										<div>
+											<div className='ds-text'>Where do you want it to live?</div>
+											<Select
+												style={{ width: '100%' }}
+												placeholder='Select'
+												options={sourcebookOptions}
+												optionRender={option => <div className='ds-text'>{option.data.label}</div>}
+												showSearch={true}
+												filterOption={(input, option) => {
+													const strings = option ?
+														[
+															option.label
+														]
+														: [];
+													return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
+												}}
+												value={sourcebookID}
+												onChange={setSourcebookID}
+											/>
+										</div>
+										: null
+								}
+								{sourcebookOptions.length > 1 ? <Divider /> : null}
+								<Space direction='vertical' style={{ width: '100%' }}>
+									<Button type='primary' block={true} icon={<PlusOutlined />} onClick={() => props.createElement(category, sourcebookID, null)}>Create</Button>
+									<Upload
+										style={{ width: '100%' }}
+										accept={`.drawsteel-${category.toLowerCase()},.ds-${category.toLowerCase()}`}
+										showUploadList={false}
+										beforeUpload={file => {
+											file
+												.text()
+												.then(json => {
+													const e = JSON.parse(json) as Element;
+													props.importElement(category, sourcebookID, e);
+												});
+											return false;
+										}}
+									>
+										<Button block={true} icon={<DownloadOutlined />}>Import</Button>
+									</Upload>
+								</Space>
+							</div>
+						)}
+					>
+						<Button type='primary'>
+							Add
+							<DownOutlined />
+						</Button>
+					</Popover>
+					{getElementToolbar()}
+				</AppHeader>
+				<div className='library-list-page-content'>
+					{getSidebar()}
+					<div className='element-selected'>
+						{
+							selected ?
+								getPanel(selected)
+								:
+								<Empty text='Nothing selected' />
+						}
 					</div>
-					<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+				<AppFooter page='library' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+			</div>
+		</ErrorBoundary>
+	);
 };

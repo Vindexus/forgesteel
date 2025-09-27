@@ -26,53 +26,52 @@ interface Props {
 }
 
 export const ClassPanel = (props: Props) => {
-	try {
-		const getTags = () => {
-			if (props.heroClass.type === 'master') {
-				return [ 'Master Class' ];
-			}
+	const getTags = () => {
+		if (props.heroClass.type === 'master') {
+			return [ 'Master Class' ];
+		}
 
-			return [];
-		};
+		return [];
+	};
 
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'class-panel' : 'class-panel compact'} id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
-					<HeaderText level={1} tags={getTags()}>
-						{props.heroClass.name || 'Unnamed Class'}
-					</HeaderText>
-					<Markdown text={props.heroClass.description} />
-					{
-						(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
-							<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
-							: null
-					}
-					{
-						props.mode === PanelMode.Full ?
-							<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />
-							: null
-					}
-					{
-						props.mode === PanelMode.Full ?
-							props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-								<Space key={lvl.level} direction='vertical'>
-									<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
-									<div className='features'>
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'class-panel' : 'class-panel compact'} id={props.mode === PanelMode.Full ? props.heroClass.id : undefined}>
+				<HeaderText level={1} tags={getTags()}>
+					{props.heroClass.name || 'Unnamed Class'}
+				</HeaderText>
+				<Markdown text={props.heroClass.description} />
+				{
+					(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
+						<Field label={`${props.heroClass.subclassName}s`} value={props.heroClass.subclasses.map(c => c.name).join(', ')} />
+						: null
+				}
+				{
+					props.mode === PanelMode.Full ?
+						<Field label='Primary Characteristics' value={props.heroClass.primaryCharacteristics.join(', ') || props.heroClass.primaryCharacteristicsOptions.map(array => array.join(', ') || 'None').join(' or ') || 'None'} />
+						: null
+				}
+				{
+					props.mode === PanelMode.Full ?
+						props.heroClass.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
+							<Space key={lvl.level} direction='vertical'>
+								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
+								<div className='features'>
 										{
 											...lvl.features.map(f =>
 												<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 											)
 										}
-									</div>
-								</Space>
-							))
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full) && (props.heroClass.abilities.length > 0) ?
-							<Space direction='vertical'>
-								<HeaderText level={1}>Abilities</HeaderText>
-								<div className='abilities'>
+								</div>
+							</Space>
+						))
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (props.heroClass.abilities.length > 0) ?
+						<Space direction='vertical'>
+							<HeaderText level={1}>Abilities</HeaderText>
+							<div className='abilities'>
 									{
 										...props.heroClass.abilities.map(a =>
 											<SelectablePanel key={a.id}>
@@ -80,29 +79,25 @@ export const ClassPanel = (props: Props) => {
 											</SelectablePanel>
 										)
 									}
-								</div>
-							</Space>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
-							<Space direction='vertical'>
-								<HeaderText level={1}>Subclasses</HeaderText>
-								<div className='subclasses'>
+							</div>
+						</Space>
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && (props.heroClass.subclasses.length > 0) ?
+						<Space direction='vertical'>
+							<HeaderText level={1}>Subclasses</HeaderText>
+							<div className='subclasses'>
 									{
 										...props.heroClass.subclasses
 											.filter(sc => (props.heroClass.subclasses.filter(x => x.selected).length === 0) || sc.selected)
 											.map(sc => <SubclassPanel key={sc.id} subclass={sc} options={props.options} hero={props.hero} mode={PanelMode.Full} />)
 									}
-								</div>
-							</Space>
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+							</div>
+						</Space>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };

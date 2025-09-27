@@ -141,99 +141,94 @@ export const ItemPanel = (props: Props) => {
 
 	const imbueable = item.type === ItemType.ImbuedArmor || item.type === ItemType.ImbuedImplement || item.type === ItemType.ImbuedWeapon;
 
-	try {
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined}>
-					<HeaderText
-						level={1}
-						tags={[ item.type ]}
-					>
-						{item.name || 'Unnamed Item'}
-					</HeaderText>
-					{
-						props.hero && !HeroLogic.canUseItem(props.hero, item) ?
-							<Alert
-								type='warning'
-								showIcon={true}
-								message='Your kit does not allow you to use this item.'
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'item-panel' : 'item-panel compact'} id={props.mode === PanelMode.Full ? item.id : undefined}>
+				<HeaderText
+					level={1}
+					tags={[ item.type ]}
+				>
+					{item.name || 'Unnamed Item'}
+				</HeaderText>
+				{
+					props.hero && !HeroLogic.canUseItem(props.hero, item) ?
+						<Alert
+							type='warning'
+							showIcon={true}
+							message='Your kit does not allow you to use this item.'
+						/>
+						: null
+				}
+				<Markdown text={item.description} />
+				{
+					imbueable ?
+						<HeaderText
+							level={1}
+							extra={
+								props.onChange ?
+									<Button type='text' icon={<PlusOutlined />} onClick={() => setImbuementsOpen(true)} />
+									: null
+							}
+						>
+							Imbuements
+						</HeaderText>
+						: null
+				}
+				{
+					item.imbuements
+						.map(f => f.feature)
+						.map(f => (
+							<FeatureConfigPanel
+								key={f.id}
+								feature={f}
+								options={props.options}
+								hero={props.hero!}
+								sourcebooks={props.sourcebooks}
+								setData={setFeatureData}
+								onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}
 							/>
-							: null
+						))
+				}
+				{
+					props.onChange && imbueable && (item.imbuements.length === 0) ?
+						<Empty />
+						: null
+				}
+				{
+					props.mode === PanelMode.Full ?
+						<>
+							{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
+							<Markdown text={item.effect} />
+							{
+								item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
+									<div key={lvl.level}>
+										<HeaderText>Level {lvl.level.toString()}</HeaderText>
+										{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
+									</div>
+								))
+							}
+						</>
+						: null
+				}
+				{
+					props.onChange && (item.type !== ItemType.Artifact) ?
+						<>
+							<Divider />
+							<NumberSpin min={1} label='Number' value={item.count} onChange={setCount} />
+						</>
+						: null
+				}
+			</div>
+			<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} width='500px'>
+				<Modal
+					content={
+						<div style={{ padding: '20px' }}>
+							{getAvailableImbuements()}
+						</div>
 					}
-					<Markdown text={item.description} />
-					{
-						imbueable ?
-							<HeaderText
-								level={1}
-								extra={
-									props.onChange ?
-										<Button type='text' icon={<PlusOutlined />} onClick={() => setImbuementsOpen(true)} />
-										: null
-								}
-							>
-								Imbuements
-							</HeaderText>
-							: null
-					}
-					{
-						item.imbuements
-							.map(f => f.feature)
-							.map(f => (
-								<FeatureConfigPanel
-									key={f.id}
-									feature={f}
-									options={props.options}
-									hero={props.hero!}
-									sourcebooks={props.sourcebooks}
-									setData={setFeatureData}
-									onDelete={props.onChange ? () => removeImbuement(f.id) : undefined}
-								/>
-							))
-					}
-					{
-						props.onChange && imbueable && (item.imbuements.length === 0) ?
-							<Empty />
-							: null
-					}
-					{
-						props.mode === PanelMode.Full ?
-							<>
-								{item.keywords.length > 0 ? <Field label='Keywords' value={item.keywords.map((k, n) => <Tag key={n}>{k}</Tag>)} /> : null}
-								<Markdown text={item.effect} />
-								{
-									item.featuresByLevel.filter(lvl => lvl.features.length > 0).map(lvl => (
-										<div key={lvl.level}>
-											<HeaderText>Level {lvl.level.toString()}</HeaderText>
-											{lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} mode={PanelMode.Full} />)}
-										</div>
-									))
-								}
-							</>
-							: null
-					}
-					{
-						props.onChange && (item.type !== ItemType.Artifact) ?
-							<>
-								<Divider />
-								<NumberSpin min={1} label='Number' value={item.count} onChange={setCount} />
-							</>
-							: null
-					}
-				</div>
-				<Drawer open={imbuementsOpen} onClose={() => setImbuementsOpen(false)} closeIcon={null} width='500px'>
-					<Modal
-						content={
-							<div style={{ padding: '20px' }}>
-								{getAvailableImbuements()}
-							</div>
-						}
-						onClose={() => setImbuementsOpen(false)}
-					/>
-				</Drawer>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
-	}
+					onClose={() => setImbuementsOpen(false)}
+				/>
+			</Drawer>
+		</ErrorBoundary>
+	);
 };

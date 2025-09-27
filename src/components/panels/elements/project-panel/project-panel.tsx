@@ -59,80 +59,75 @@ export const ProjectPanel = (props: Props) => {
 		}
 	};
 
-	try {
-		let itemOK = true;
-		if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
-			itemOK = false;
-		}
-		let sourceOK = true;
-		if (project.source && project.progress && !project.progress.source) {
-			sourceOK = false;
-		}
-
-		return (
-			<ErrorBoundary>
-				<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
-					<HeaderText
-						level={1}
-						extra={
-							project.isCustom && (props.mode === PanelMode.Full) ?
-								<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
-								: null
-						}
-					>
-						{props.project.name || 'Unnamed Project'}
-					</HeaderText>
-					<Markdown text={props.project.description} />
-					{
-						(props.mode === PanelMode.Full) && !editing ?
-							<>
-								{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
-								{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
-								{project.source ? <Field label='Source' value={props.project.source} /> : null}
-								{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
-								<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
-								<Field label='Goal' value={props.project.goal || '(varies)'} />
-								{
-									project.progress && itemOK && sourceOK ?
-										<NumberSpin
-											label='Progress'
-											min={0}
-											max={project.goal || undefined}
-											steps={[ 1, 10 ]}
-											value={project.progress.points}
-											suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
-											onChange={setPoints}
-										/>
-										: null
-								}
-								{
-									project.progress && itemOK && sourceOK && (project.goal > 0) ?
-										<Progress
-											className='project-progress'
-											type='dashboard'
-											percent={100 * project.progress.points / project.goal}
-											format={value => `${Math.round(value || 0)}%`}
-										/>
-										: null
-								}
-								<Markdown text={props.project.effect} />
-							</>
-							: null
-					}
-					{
-						(props.mode === PanelMode.Full) && editing ?
-							<ProjectEditPanel
-								project={project}
-								includeNameAndDescription={true}
-								onChange={onChange}
-							/>
-							: null
-					}
-				</div>
-			</ErrorBoundary>
-		);
-	} catch (ex) {
-		console.error(ex);
-		return null;
+	let itemOK = true;
+	if (project.itemPrerequisites && project.progress && !project.progress.prerequisites) {
+		itemOK = false;
 	}
+	let sourceOK = true;
+	if (project.source && project.progress && !project.progress.source) {
+		sourceOK = false;
+	}
+
+	return (
+		<ErrorBoundary>
+			<div className={props.mode === PanelMode.Full ? 'project-panel' : 'project-panel compact'} id={props.mode === PanelMode.Full ? props.project.id : undefined}>
+				<HeaderText
+					level={1}
+					extra={
+						project.isCustom && (props.mode === PanelMode.Full) ?
+							<Button type='text' icon={editing ? <CheckCircleOutlined /> : <EditOutlined />} onClick={() => setEditing(!editing)} />
+							: null
+					}
+				>
+					{props.project.name || 'Unnamed Project'}
+				</HeaderText>
+				<Markdown text={props.project.description} />
+				{
+					(props.mode === PanelMode.Full) && !editing ?
+						<>
+							{project.itemPrerequisites ? <Field label='Item Prerequisites' value={props.project.itemPrerequisites} /> : null}
+							{project.itemPrerequisites && project.progress ? <Toggle label='Obtained Items' value={project.progress.prerequisites} onChange={setPrerequisites} /> : null}
+							{project.source ? <Field label='Source' value={props.project.source} /> : null}
+							{project.source && project.progress ? <Toggle label='Obtained Source' value={project.progress.source} onChange={setSource} /> : null}
+							<Field label='Characteristic' value={props.project.characteristic.length === 5 ? 'highest characteristic' : props.project.characteristic.join(' or ')} />
+							<Field label='Goal' value={props.project.goal || '(varies)'} />
+							{
+								project.progress && itemOK && sourceOK ?
+									<NumberSpin
+										label='Progress'
+										min={0}
+										max={project.goal || undefined}
+										steps={[ 1, 10 ]}
+										value={project.progress.points}
+										suffix={props.project.goal ? `/ ${props.project.goal}` : undefined}
+										onChange={setPoints}
+									/>
+									: null
+							}
+							{
+								project.progress && itemOK && sourceOK && (project.goal > 0) ?
+									<Progress
+										className='project-progress'
+										type='dashboard'
+										percent={100 * project.progress.points / project.goal}
+										format={value => `${Math.round(value || 0)}%`}
+									/>
+									: null
+							}
+							<Markdown text={props.project.effect} />
+						</>
+						: null
+				}
+				{
+					(props.mode === PanelMode.Full) && editing ?
+						<ProjectEditPanel
+							project={project}
+							includeNameAndDescription={true}
+							onChange={onChange}
+						/>
+						: null
+				}
+			</div>
+		</ErrorBoundary>
+	);
 };
