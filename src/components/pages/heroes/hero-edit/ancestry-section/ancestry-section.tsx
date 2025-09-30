@@ -30,7 +30,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectAncestry: (ancestry: Ancestry) => void;
 	setFeatureData: (featureID: string, data: FeatureData) => void;
@@ -43,7 +42,7 @@ export const AncestrySection = (props: Props) => {
 		const ancestries = SourcebookLogic.getAncestries(props.sourcebooks).map(Utils.copy).filter(a => matchElement(a, props.searchTerm));
 		const options = ancestries.map(a => (
 			<SelectablePanel key={a.id} onSelect={() => props.selectAncestry(a)}>
-				<AncestryPanel ancestry={a} options={props.options} />
+				<AncestryPanel ancestry={a} />
 			</SelectablePanel>
 		));
 
@@ -54,7 +53,7 @@ export const AncestrySection = (props: Props) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 		}
@@ -70,7 +69,7 @@ export const AncestrySection = (props: Props) => {
 					props.hero.ancestry && (!isSmall || (choices.length === 0)) ?
 						<div className={columnClassName} id='ancestry-selected'>
 							<SelectablePanel showShadow={false}>
-								<AncestryPanel ancestry={props.hero.ancestry} options={props.options} mode={PanelMode.Full} />
+								<AncestryPanel ancestry={props.hero.ancestry} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null

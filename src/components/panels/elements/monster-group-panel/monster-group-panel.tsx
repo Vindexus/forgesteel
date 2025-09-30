@@ -15,7 +15,6 @@ import './monster-group-panel.scss';
 
 interface Props {
 	monsterGroup: MonsterGroup;
-	options: Options;
 	mode?: PanelMode;
 	onSelectMonster?: (monster: Monster) => void;
 }
@@ -47,7 +46,6 @@ export const MonsterGroupPanel = (props: Props) => {
 										<SelectablePanel key={m.id}>
 											<FeaturePanel
 												feature={m}
-												options={props.options}
 												mode={PanelMode.Full}
 												cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
 												repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -69,7 +67,7 @@ export const MonsterGroupPanel = (props: Props) => {
 								{
 									props.monsterGroup.monsters.map(m =>
 										<SelectablePanel key={m.id} onSelect={props.onSelectMonster ? () => props.onSelectMonster!(m) : undefined}>
-											<MonsterPanel monster={m} monsterGroup={props.monsterGroup} options={props.options} />
+											<MonsterPanel monster={m} monsterGroup={props.monsterGroup} />
 										</SelectablePanel>
 									)
 								}
@@ -81,7 +79,7 @@ export const MonsterGroupPanel = (props: Props) => {
 							<>
 								<HeaderText level={1}>Customization</HeaderText>
 								<div className='add-ons'>
-									{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} options={props.options} cost={a.data.cost} mode={PanelMode.Full} />)}
+									{props.monsterGroup.addOns.map(a => <FeaturePanel key={a.id} feature={a} cost={a.data.cost} mode={PanelMode.Full} />)}
 								</div>
 							</>
 							: null

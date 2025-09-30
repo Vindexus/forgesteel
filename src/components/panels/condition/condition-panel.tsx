@@ -70,7 +70,6 @@ export const ConditionPanel = (props: Props) => {
 						<Segmented
 							name='endtypes'
 							block={true}
-							options={[ ConditionEndType.EndOfTurn, ConditionEndType.SaveEnds, ConditionEndType.UntilRemoved ]}
 							value={condition.ends}
 							onChange={setConditionEndType}
 						/>

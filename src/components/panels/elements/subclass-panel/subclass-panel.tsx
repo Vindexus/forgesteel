@@ -13,7 +13,6 @@ import './subclass-panel.scss';
 
 interface Props {
 	subclass: SubClass;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -40,7 +39,7 @@ export const SubclassPanel = (props: Props) => {
 							<Space key={lvl.level} direction='vertical'>
 								<HeaderText level={1}>Level {lvl.level.toString()}</HeaderText>
 								<div className='features'>
-									{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
+									{...lvl.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)}
 								</div>
 							</Space>
 						))

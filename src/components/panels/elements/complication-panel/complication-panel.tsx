@@ -12,7 +12,6 @@ import './complication-panel.scss';
 
 interface Props {
 	complication: Complication;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -28,7 +27,7 @@ export const ComplicationPanel = (props: Props) => {
 					{
 						props.mode === PanelMode.Full ?
 							props.complication.features.map(f => (
-								<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 							))
 							: null
 					}

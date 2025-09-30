@@ -32,7 +32,6 @@ interface EncounterGroupHeroProps {
 	hero: Hero;
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onSelect: (hero: Hero) => void;
 	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;

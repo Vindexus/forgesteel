@@ -21,7 +21,6 @@ import './hero-sheet-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setOptions: (options: Options) => void;
 }
 
@@ -226,7 +225,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 				<HeroSheetPage
 					hero={hero}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 				/>
 			);
 		}
@@ -304,7 +302,6 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						<Segmented
 							name='pagesize'
 							block={true}
-							options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
 							value={props.options.classicSheetPageSize}
 							onChange={setClassicSheetPageSize}
 						/>

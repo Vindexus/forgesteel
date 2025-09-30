@@ -15,7 +15,6 @@ import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	follower: FollowerSheet;
-	options: Options;
 }
 
 export const RetainerCard = (props: Props) => {
@@ -83,11 +82,9 @@ export const RetainerCard = (props: Props) => {
 				<div className='stamina-recoveries'>
 					<StaminaComponent
 						stamina={follower.stamina}
-						options={props.options}
 					/>
 					<RecoveriesComponent
 						recoveries={follower.recoveries}
-						options={props.options}
 					/>
 				</div>
 			);

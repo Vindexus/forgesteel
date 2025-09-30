@@ -28,7 +28,6 @@ import './fixture-edit-panel.scss';
 interface Props {
 	fixture: Fixture;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (fixture: Fixture) => void;
 }
 
@@ -149,7 +148,6 @@ export const FixtureEditPanel = (props: Props) => {
 							<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
 								name='sizemodtypes'
 								block={true}
-								options={[ 'T', 'S', 'M', 'L' ]}
 								value={fixture.size.mod}
 								onChange={setSizeMod}
 							/>
@@ -240,7 +238,6 @@ export const FixtureEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>

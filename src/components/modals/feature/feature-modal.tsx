@@ -17,7 +17,6 @@ import './feature-modal.scss';
 interface Props {
 	feature: Feature;
 	hero: Hero;
-	options: Options;
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
 	updateHero?: (hero: Hero) => void;
@@ -99,7 +98,6 @@ export const FeatureModal = (props: Props) => {
 						<div className='feature-section'>
 							<FeaturePanel
 								feature={props.feature}
-								options={props.options}
 								hero={props.hero}
 								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}
@@ -137,7 +135,6 @@ export const FeatureModal = (props: Props) => {
 						<div style={{ width: '100%', textAlign: 'center' }}>
 							<Segmented
 								name='tabs'
-								options={[ 'Feature', 'Customize' ]}
 								value={page}
 								onChange={setPage}
 							/>

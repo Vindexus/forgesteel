@@ -21,7 +21,6 @@ import './monster-select-modal.scss';
 interface Props {
 	monsters: Monster[];
 	subset?: 'mount' | 'retainer';
-	options: Options;
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
@@ -88,7 +87,7 @@ export const MonsterSelectModal = (props: Props) => {
 											}
 										}}
 									>
-										<MonsterPanel monster={m} options={props.options} />
+										<MonsterPanel monster={m} />
 									</SelectablePanel>
 								))
 							}

@@ -6,7 +6,6 @@ import './stamina-component.scss';
 
 interface Props {
 	stamina: StaminaSheet;
-	options: Options;
 }
 
 export const StaminaComponent = (props: Props) => {

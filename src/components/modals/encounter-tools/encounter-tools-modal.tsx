@@ -18,7 +18,6 @@ import './encounter-tools-modal.scss';
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 }
 

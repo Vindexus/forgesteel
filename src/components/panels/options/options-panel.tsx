@@ -1,71 +1,34 @@
 import { Divider, Segmented, Select, Space } from 'antd';
+import { Options, SheetTextColor } from '@/models/options';
 import { Collections } from '@/utils/collections';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { Hero } from '@/models/hero';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelWidth } from '@/enums/panel-width';
 import { SheetPageSize } from '@/enums/sheet-page-size';
 import { Toggle } from '@/components/controls/toggle/toggle';
-import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
+import { useEffect } from 'react';
 
 import './options-panel.scss';
 
 interface Props {
 	mode: 'hero-modern' | 'hero-classic' | 'monster' | 'encounter-modern' | 'encounter-classic' | 'tactical-map' | 'session' | 'player';
-	options: Options;
 	heroes: Hero[];
 	setOptions: (options: Options) => void;
 }
 
 export const OptionsPanel = (props: Props) => {
-	const setSinglePage = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.singlePage = value;
-		props.setOptions(copy);
-	};
+	const { options, setOptions } = useAppStore();
 
-	const setSeparateInventoryFeatures = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.separateInventoryFeatures = value;
-		props.setOptions(copy);
-	};
-
-	const setShowSkillsInGroups = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showSkillsInGroups = value;
-		props.setOptions(copy);
-	};
-
-	const setShowStandardAbilities = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showStandardAbilities = value;
-		props.setOptions(copy);
-	};
-
-	const setDimUnavailableAbilities = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.dimUnavailableAbilities = value;
-		props.setOptions(copy);
-	};
-
-	const setShowSources = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showSources = value;
-		props.setOptions(copy);
-	};
-
-	const setIncludePlayState = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.includePlayState = value;
-		props.setOptions(copy);
-	};
-
-	const setColorSheet = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.colorSheet = value;
-		props.setOptions(copy);
-	};
+	function createOnChange<K extends keyof Options>(key: K) {
+		return (value: Options[K]) => {
+			setOptions({
+				...options,
+				[key]: value
+			});
+		};
+	}
 
 	const changeTextColor = (newColor: 'light' | 'default' | 'dark') => {
 		setDrawColor(newColor);
@@ -89,126 +52,15 @@ export const OptionsPanel = (props: Props) => {
 		const lightest = `rgb(${value + 68}, ${value + 68}, ${value + 68})`;
 		document.documentElement.style.setProperty('--color-text-lightest', lightest);
 	};
-	setDrawColor(props.options.sheetTextColor);
 
-	const setSheetTextColor = (value: 'light' | 'default' | 'dark') => {
-		const copy = Utils.copy(props.options);
-		copy.sheetTextColor = value;
-		props.setOptions(copy);
-	};
+	useEffect(() => {
+		setDrawColor(options.sheetTextColor);
+	}, [ options.sheetTextColor ]);
 
-	const setFeaturesInclude = (value: 'minimal' | 'no-basic' | 'all') => {
-		const copy = Utils.copy(props.options);
-		copy.featuresInclude = value;
-		props.setOptions(copy);
-	};
-
-	const setAbilitySort = (value: 'size' | 'type') => {
-		const copy = Utils.copy(props.options);
-		copy.abilitySort = value;
-		props.setOptions(copy);
-	};
-
-	const setClassicSheetPageSize = (value: SheetPageSize) => {
-		const copy = Utils.copy(props.options);
-		copy.classicSheetPageSize = value;
-		props.setOptions(copy);
-	};
-
-	const setPageOrientation = (value: 'portrait' | 'landscape') => {
-		const copy = Utils.copy(props.options);
-		copy.pageOrientation = value;
-		props.setOptions(copy);
-	};
-
-	const setAbilityWidth = (value: PanelWidth) => {
-		const copy = Utils.copy(props.options);
-		copy.abilityWidth = value;
-		props.setOptions(copy);
-	};
-
-	const setCompactView = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.compactView = value;
-		props.setOptions(copy);
-	};
-
-	const setSimilarLevel = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.similarLevel = value;
-		props.setOptions(copy);
-	};
-
-	const setSimilarRole = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.similarRole = value;
-		props.setOptions(copy);
-	};
-
-	const setSimilarOrganization = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.similarOrganization = value;
-		props.setOptions(copy);
-	};
-
-	const setSimilarSize = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.similarSize = value;
-		props.setOptions(copy);
-	};
-
-	const setMinionCount = (value: number) => {
-		const copy = Utils.copy(props.options);
-		copy.minionCount = value;
-		props.setOptions(copy);
-	};
-
-	const setParty = (value: string) => {
-		const copy = Utils.copy(props.options);
-		copy.party = value;
-		props.setOptions(copy);
-	};
-
-	const setHeroParty = (value: string) => {
-		const copy = Utils.copy(props.options);
-		copy.heroParty = value;
-		props.setOptions(copy);
-	};
-
-	const setHeroCount = (value: number) => {
-		const copy = Utils.copy(props.options);
-		copy.heroCount = value;
-		props.setOptions(copy);
-	};
-
-	const setHeroLevel = (value: number) => {
-		const copy = Utils.copy(props.options);
-		copy.heroLevel = value;
-		props.setOptions(copy);
-	};
-
-	const setHeroVictories = (value: number) => {
-		const copy = Utils.copy(props.options);
-		copy.heroVictories = value;
-		props.setOptions(copy);
-	};
-
-	const setShowDefeatedCombatants = (value: boolean) => {
-		const copy = Utils.copy(props.options);
-		copy.showDefeatedCombatants = value;
-		props.setOptions(copy);
-	};
-
-	const setGridSize = (value: number) => {
-		const copy = Utils.copy(props.options);
-		copy.gridSize = value;
-		props.setOptions(copy);
-	};
-
-	const setPlayerGridSize = (value: number) => {
-		const copy = Utils.copy(props.options);
-		copy.playerGridSize = value;
-		props.setOptions(copy);
+	const setSheetTextColor = (value: SheetTextColor) => {
+		setOptions({
+			sheetTextColor: value
+		});
 	};
 
 	const getContent = () => {
@@ -245,8 +97,8 @@ export const OptionsPanel = (props: Props) => {
 								: [];
 							return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 						}}
-						value={props.options.party}
-						onChange={p => setParty(p || '')}
+						value={options.party}
+						onChange={p => setOptions({ party: p || '' })}
 					/>
 				</>
 			);
@@ -256,36 +108,36 @@ export const OptionsPanel = (props: Props) => {
 			case 'hero-modern':
 				return (
 					<>
-						<Toggle label='Separate inventory features' value={props.options.separateInventoryFeatures} onChange={setSeparateInventoryFeatures} />
-						<Toggle label='Show skills in groups' value={props.options.showSkillsInGroups} onChange={setShowSkillsInGroups} />
-						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
-						<Toggle label='Dim unavailable abilities' value={props.options.dimUnavailableAbilities} onChange={setDimUnavailableAbilities} />
-						<Toggle label='Show feature / ability sources' value={props.options.showSources} onChange={setShowSources} />
+						<Toggle label='Separate inventory features' value={options.separateInventoryFeatures} onChange={createOnChange('separateInventoryFeatures')} />
+						<Toggle label='Show skills in groups' value={options.showSkillsInGroups} onChange={createOnChange('showSkillsInGroups')} />
+						<Toggle label='Include standard abilities' value={options.showStandardAbilities} onChange={createOnChange('showStandardAbilities')} />
+						<Toggle label='Dim unavailable abilities' value={options.dimUnavailableAbilities} onChange={createOnChange('dimUnavailableAbilities')} />
+						<Toggle label='Show feature / ability sources' value={options.showSources} onChange={createOnChange('showSources')} />
 						<Divider>View</Divider>
-						<Toggle label='Single page' value={props.options.singlePage} onChange={setSinglePage} />
-						<Toggle label='Compact' value={props.options.compactView} onChange={setCompactView} />
+						<Toggle label='Single page' value={options.singlePage} onChange={createOnChange('singlePage')} />
+						<Toggle label='Compact' value={options.compactView} onChange={createOnChange('compactView')} />
 						<Divider>Abilities</Divider>
 						<Segmented
 							name='abilitywidth'
 							block={true}
-							disabled={props.options.compactView}
+							disabled={options.compactView}
 							options={[
 								{ value: PanelWidth.Narrow, label: 'S' },
 								{ value: PanelWidth.Medium, label: 'M' },
 								{ value: PanelWidth.Wide, label: 'L' },
 								{ value: PanelWidth.ExtraWide, label: 'XL' }
 							]}
-							value={props.options.abilityWidth}
-							onChange={setAbilityWidth}
+							value={options.abilityWidth}
+							onChange={createOnChange('abilityWidth')}
 						/>
 					</>
 				);
 			case 'hero-classic':
 				return (
 					<>
-						<Toggle label='Show play state' value={props.options.includePlayState} onChange={setIncludePlayState} />
-						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
-						<Toggle label='Include standard abilities' value={props.options.showStandardAbilities} onChange={setShowStandardAbilities} />
+						<Toggle label='Show play state' value={options.includePlayState} onChange={createOnChange('includePlayState')} />
+						<Toggle label='Use color' value={options.colorSheet} onChange={createOnChange('colorSheet')} />
+						<Toggle label='Include standard abilities' value={options.showStandardAbilities} onChange={createOnChange('showStandardAbilities')} />
 						<Divider size='small'>Text Color</Divider>
 						<Segmented
 							name='textColor'
@@ -295,7 +147,7 @@ export const OptionsPanel = (props: Props) => {
 								{ value: 'default', label: 'Default' },
 								{ value: 'light', label: 'Lighter' }
 							]}
-							value={props.options.sheetTextColor}
+							value={options.sheetTextColor}
 							onChange={changeTextColor}
 						/>
 						<Divider size='small'>Include Class Features</Divider>
@@ -307,8 +159,8 @@ export const OptionsPanel = (props: Props) => {
 								{ value: 'no-basic', label: 'No Simple' },
 								{ value: 'all', label: 'All' }
 							]}
-							value={props.options.featuresInclude}
-							onChange={setFeaturesInclude}
+							value={options.featuresInclude}
+							onChange={createOnChange('featuresInclude')}
 						/>
 						<Divider size='small'>Sort Abilities By</Divider>
 						<Segmented
@@ -318,17 +170,16 @@ export const OptionsPanel = (props: Props) => {
 								{ value: 'size', label: 'Length' },
 								{ value: 'type', label: 'Action Type' }
 							]}
-							value={props.options.abilitySort}
-							onChange={setAbilitySort}
+							value={options.abilitySort}
+							onChange={createOnChange('abilitySort')}
 						/>
 						<Divider>Layout</Divider>
 						<Space direction='vertical' style={{ width: '100%' }}>
 							<Segmented
 								name='pagesize'
 								block={true}
-								options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-								value={props.options.classicSheetPageSize}
-								onChange={setClassicSheetPageSize}
+								value={options.classicSheetPageSize}
+								onChange={createOnChange('classicSheetPageSize')}
 							/>
 							<Segmented
 								name='orientation'
@@ -337,8 +188,8 @@ export const OptionsPanel = (props: Props) => {
 									{ value: 'portrait', label: 'Portrait' },
 									{ value: 'landscape', label: 'Landscape' }
 								]}
-								value={props.options.pageOrientation}
-								onChange={setPageOrientation}
+								value={options.pageOrientation}
+								onChange={createOnChange('pageOrientation')}
 							/>
 						</Space>
 					</>
@@ -347,16 +198,16 @@ export const OptionsPanel = (props: Props) => {
 				return (
 					<>
 						<div className='ds-text'>Show data from similar monsters using these fields:</div>
-						<Toggle label='Monster level' value={props.options.similarLevel} onChange={setSimilarLevel} />
-						<Toggle label='Monster role' value={props.options.similarRole} onChange={setSimilarRole} />
-						<Toggle label='Monster organization' value={props.options.similarOrganization} onChange={setSimilarOrganization} />
-						<Toggle label='Monster size' value={props.options.similarSize} onChange={setSimilarSize} />
+						<Toggle label='Monster level' value={options.similarLevel} onChange={createOnChange('similarLevel')} />
+						<Toggle label='Monster role' value={options.similarRole} onChange={createOnChange('similarRole')} />
+						<Toggle label='Monster organization' value={options.similarOrganization} onChange={createOnChange('similarOrganization')} />
+						<Toggle label='Monster size' value={options.similarSize} onChange={createOnChange('similarSize')} />
 					</>
 				);
 			case 'encounter-modern':
 				return (
 					<>
-						<NumberSpin label='Minions per group' min={1} value={props.options.minionCount} onChange={setMinionCount} />
+						<NumberSpin label='Minions per group' min={1} value={options.minionCount} onChange={createOnChange('minionCount')} />
 						{getPartySection(true)}
 						<Divider />
 						<div className='ds-text'>
@@ -376,15 +227,15 @@ export const OptionsPanel = (props: Props) => {
 									: [];
 								return strings.some(str => str.toLowerCase().includes(input.toLowerCase()));
 							}}
-							value={props.options.heroParty}
-							onChange={p => setHeroParty(p || '')}
+							value={options.heroParty}
+							onChange={p => setOptions({ heroParty: p || '' })}
 						/>
 						{
-							props.options.heroParty === '' ?
+							options.heroParty === '' ?
 								<>
-									<NumberSpin label='Number of heroes' min={1} value={props.options.heroCount} onChange={setHeroCount} />
-									<NumberSpin label='Hero level' min={1} max={10} value={props.options.heroLevel} onChange={setHeroLevel} />
-									<NumberSpin label='Number of victories' min={0} value={props.options.heroVictories} onChange={setHeroVictories} />
+									<NumberSpin label='Number of heroes' min={1} value={options.heroCount} onChange={createOnChange('heroCount')} />
+									<NumberSpin label='Hero level' min={1} max={10} value={options.heroLevel} onChange={createOnChange('heroLevel')} />
+									<NumberSpin label='Number of victories' min={0} value={options.heroVictories} onChange={createOnChange('heroVictories')} />
 								</>
 								: null
 						}
@@ -393,7 +244,7 @@ export const OptionsPanel = (props: Props) => {
 			case 'encounter-classic':
 				return (
 					<>
-						<Toggle label='Use color' value={props.options.colorSheet} onChange={setColorSheet} />
+						<Toggle label='Use color' value={options.colorSheet} onChange={createOnChange('colorSheet')} />
 						<Divider size='small'>Text Color</Divider>
 						<Segmented
 							name='textColor'
@@ -403,7 +254,7 @@ export const OptionsPanel = (props: Props) => {
 								{ value: 'default', label: 'Default' },
 								{ value: 'light', label: 'Lighter' }
 							]}
-							value={props.options.sheetTextColor}
+							value={options.sheetTextColor}
 							onChange={changeTextColor}
 						/>
 						<Divider>Layout</Divider>
@@ -411,9 +262,8 @@ export const OptionsPanel = (props: Props) => {
 							<Segmented
 								name='pagesize'
 								block={true}
-								options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
-								value={props.options.classicSheetPageSize}
-								onChange={setClassicSheetPageSize}
+								value={options.classicSheetPageSize}
+								onChange={createOnChange('classicSheetPageSize')}
 							/>
 						</Space>
 					</>
@@ -421,7 +271,7 @@ export const OptionsPanel = (props: Props) => {
 			case 'tactical-map':
 				return (
 					<>
-						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={props.options.gridSize} onChange={setGridSize} />
+						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={options.gridSize} onChange={createOnChange('gridSize')} />
 					</>
 				);
 			case 'session':
@@ -429,14 +279,14 @@ export const OptionsPanel = (props: Props) => {
 					<>
 						{getPartySection(false)}
 						<Divider />
-						<Toggle label='Show defeated combatants' value={props.options.showDefeatedCombatants} onChange={setShowDefeatedCombatants} />
-						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={props.options.gridSize} onChange={setGridSize} />
+						<Toggle label='Show defeated combatants' value={options.showDefeatedCombatants} onChange={createOnChange('showDefeatedCombatants')} />
+						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={options.gridSize} onChange={createOnChange('gridSize')} />
 					</>
 				);
 			case 'player':
 				return (
 					<>
-						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={props.options.playerGridSize} onChange={setPlayerGridSize} />
+						<NumberSpin label='Map Grid Size' min={5} steps={[ 5 ]} value={options.playerGridSize} onChange={createOnChange('playerGridSize')} />
 					</>
 				);
 		}

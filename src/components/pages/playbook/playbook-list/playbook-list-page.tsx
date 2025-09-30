@@ -39,7 +39,6 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
-	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -202,7 +201,7 @@ export const PlaybookListPage = (props: Props) => {
 
 		switch (category) {
 			case 'adventure':
-				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} options={props.options} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <AdventurePanel key={element.id} adventure={element as Adventure} heroes={props.heroes} sourcebooks={props.sourcebooks} playbook={props.playbook} mode={PanelMode.Full} />;
 				break;
 			case 'encounter':
 				getPanel = (element: Element) => {
@@ -213,7 +212,6 @@ export const PlaybookListPage = (props: Props) => {
 								encounter={element as Encounter}
 								heroes={props.heroes}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 							/>
 						);
 					} else {
@@ -223,7 +221,6 @@ export const PlaybookListPage = (props: Props) => {
 								encounter={element as Encounter}
 								heroes={props.heroes}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								mode={PanelMode.Full}
 								showTools={() => props.showEncounterTools(element as Encounter)}
 							/>
@@ -238,7 +235,7 @@ export const PlaybookListPage = (props: Props) => {
 				getPanel = (element: Element) => <NegotiationPanel key={element.id} negotiation={element as Negotiation} mode={PanelMode.Full} />;
 				break;
 			case 'tactical-map':
-				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} options={props.options} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
+				getPanel = (element: Element) => <TacticalMapPanel key={element.id} map={element as TacticalMap} display={TacticalMapDisplayType.DirectorView} mode={PanelMode.Full} />;
 				break;
 		}
 
@@ -428,7 +425,7 @@ export const PlaybookListPage = (props: Props) => {
 						(category === 'tactical-map') ?
 							<Popover
 								trigger='click'
-								content={<OptionsPanel mode={category} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={category} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options
@@ -442,7 +439,7 @@ export const PlaybookListPage = (props: Props) => {
 						(category === 'encounter') ?
 							<Popover
 								trigger='click'
-								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} heroes={props.heroes} setOptions={props.setOptions} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

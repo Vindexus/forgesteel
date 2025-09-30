@@ -24,7 +24,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	session: Playbook;
-	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -42,7 +41,6 @@ export const SessionPlayerPage = (props: Props) => {
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
 						heroes={props.heroes}
-						options={props.options}
 						onChange={() => null}
 					/>
 				);
@@ -75,7 +73,6 @@ export const SessionPlayerPage = (props: Props) => {
 						key={JSON.stringify(map)}
 						map={map}
 						display={TacticalMapDisplayType.Player}
-						options={props.options}
 						heroes={props.heroes}
 						encounters={props.session.encounters}
 						sourcebooks={props.sourcebooks}
@@ -103,7 +100,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<AppHeader subheader='Forge Steel'>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='player' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode='player' heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button icon={<SettingOutlined />}>
 								Options

@@ -19,7 +19,6 @@ interface Props {
 	subClasses: SubClass[];
 	classID: string;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (subClass: SubClass) => void;
 }
@@ -76,7 +75,7 @@ export const SubClassSelectModal = (props: Props) => {
 										key={sc.id}
 										onSelect={() => props.onSelect(sc)}
 									>
-										<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+										<SubclassPanel subclass={sc} mode={PanelMode.Compact} />
 									</SelectablePanel>
 								))
 							}
@@ -96,7 +95,7 @@ export const SubClassSelectModal = (props: Props) => {
 														key={sc.id}
 														onSelect={() => props.onSelect(sc)}
 													>
-														<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+														<SubclassPanel subclass={sc} mode={PanelMode.Compact} />
 													</SelectablePanel>
 												))
 											}
@@ -121,7 +120,7 @@ export const SubClassSelectModal = (props: Props) => {
 															key={sc.id}
 															onSelect={() => props.onSelect(sc)}
 														>
-															<SubclassPanel subclass={sc} options={props.options} mode={PanelMode.Compact} />
+															<SubclassPanel subclass={sc} mode={PanelMode.Compact} />
 														</SelectablePanel>
 													))
 												}

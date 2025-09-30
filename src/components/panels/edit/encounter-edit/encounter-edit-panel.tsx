@@ -49,7 +49,6 @@ interface Props {
 	encounter: Encounter;
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (encounter: Encounter) => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
@@ -224,7 +223,6 @@ export const EncounterEditPanel = (props: Props) => {
 						group={group}
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						showMonster={props.showMonster}
 						setSlotCount={setSlotCount}
 						moveSlot={moveSlot}
@@ -260,7 +258,6 @@ export const EncounterEditPanel = (props: Props) => {
 								group={group}
 								index={n}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								setName={setName}
 								deleteGroup={deleteGroup}
 								getSlot={getSlot}
@@ -711,7 +708,6 @@ export const EncounterEditPanel = (props: Props) => {
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
 						heroes={props.heroes}
-						options={props.options}
 					/>
 				</Expander>
 			);
@@ -790,7 +786,6 @@ interface GroupPanelProps {
 	group: EncounterGroup;
 	index: number;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setName: (group: EncounterGroup, value: string) => void;
 	deleteGroup: (group: EncounterGroup) => void;
 	getSlot: (slot: EncounterSlot, group: EncounterGroup) => ReactNode;
@@ -854,7 +849,6 @@ interface MonsterSlotPanelProps {
 	group: EncounterGroup;
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	showMonster: (monster: Monster, group: MonsterGroup) => void;
 	setSlotCount: (groupID: string, slotID: string, value: number) => void;
 	moveSlot: (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => void;
@@ -885,7 +879,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 								placeholder='Select'
 								mode='multiple'
 								options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-								optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+								optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
 								showSearch={true}
 								filterOption={(input, option) => {
 									const strings = option ?
@@ -946,7 +940,6 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<MonsterPanel
 						monster={monster}
 						monsterGroup={monsterGroup}
-						options={props.options}
 						extra={
 							<Flex align='center'>
 								<Button type='text' title='Customize' icon={<EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />

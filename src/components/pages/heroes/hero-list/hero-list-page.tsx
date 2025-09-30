@@ -23,7 +23,6 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -75,7 +74,7 @@ export const HeroListPage = (props: Props) => {
 				{
 					list.map(hero => (
 						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} options={props.options} />
+							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
 						</SelectablePanel>
 					))
 				}

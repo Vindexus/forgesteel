@@ -9,7 +9,6 @@ import './stats-resources-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const StatsResourcesCard = (props: Props) => {
@@ -62,11 +61,9 @@ export const StatsResourcesCard = (props: Props) => {
 			</div>
 			<StaminaComponent
 				stamina={character.stamina}
-				options={props.options}
 			/>
 			<RecoveriesComponent
 				recoveries={character.recoveries}
-				options={props.options}
 			/>
 			<div className='heroic-resource'>
 				<LabeledTextField

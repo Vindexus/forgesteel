@@ -18,7 +18,6 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	showHeader?: boolean;
 }
 

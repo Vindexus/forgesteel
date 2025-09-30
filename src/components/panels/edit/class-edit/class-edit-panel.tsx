@@ -32,7 +32,6 @@ import './class-edit-panel.scss';
 interface Props {
 	heroClass: HeroClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (heroClass: HeroClass) => void;
 	onEditSubClass: (sc: SubClass) => void;
 }
@@ -289,7 +288,6 @@ export const ClassEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>
@@ -477,7 +475,7 @@ export const ClassEditPanel = (props: Props) => {
 										<DangerButton key='delete' mode='clear' onConfirm={e => { e.stopPropagation(); deleteSubclass(sc); }} />
 									]}
 								>
-									<SubclassPanel subclass={sc} options={props.options} />
+									<SubclassPanel subclass={sc} />
 								</Expander>
 							))
 						}
@@ -502,7 +500,7 @@ export const ClassEditPanel = (props: Props) => {
 														setDrawerOpen(false);
 													}}
 												>
-													<SubclassPanel subclass={sc} options={props.options} />
+													<SubclassPanel subclass={sc} />
 												</SelectablePanel>
 											))
 										}

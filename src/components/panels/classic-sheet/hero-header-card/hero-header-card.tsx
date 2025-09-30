@@ -7,7 +7,6 @@ import './hero-header-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const HeroHeaderCard = (props: Props) => {

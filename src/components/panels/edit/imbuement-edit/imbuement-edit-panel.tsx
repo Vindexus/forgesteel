@@ -23,7 +23,6 @@ import './imbuement-edit-panel.scss';
 interface Props {
 	imbuement: Imbuement;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (imbuemenet: Imbuement) => void;
 }
 
@@ -153,7 +152,6 @@ export const ImbuementEditPanel = (props: Props) => {
 					<FeatureEditPanel
 						feature={imbuement.feature}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={changeFeature}
 					/>
 				</Space>

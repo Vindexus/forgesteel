@@ -54,7 +54,6 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	onChange: (encounter: Encounter) => void;
 }
 
@@ -330,7 +329,6 @@ export const EncounterRunPanel = (props: Props) => {
 					hero={hero}
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={setSelectedHero}
 					onSelectMonster={(monster, monsterGroupID) => {
 						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
@@ -483,7 +481,6 @@ export const EncounterRunPanel = (props: Props) => {
 								<MonsterPanel
 									key={m.monster.id}
 									monster={m.monster}
-									options={props.options}
 									mode={PanelMode.Full}
 									style={{ padding: 0 }}
 									extra={[
@@ -583,7 +580,7 @@ export const EncounterRunPanel = (props: Props) => {
 										const copy = Utils.copy(f);
 										copy.name = `${t.name}: ${f.name}`;
 										return (
-											<FeaturePanel key={copy.id} feature={copy} options={props.options} mode={PanelMode.Full} />
+											<FeaturePanel key={copy.id} feature={copy} mode={PanelMode.Full} />
 										);
 									})
 							}
@@ -631,7 +628,6 @@ export const EncounterRunPanel = (props: Props) => {
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
-					options={props.options}
 					showHeader={false}
 				/>
 			</div>
@@ -699,7 +695,6 @@ export const EncounterRunPanel = (props: Props) => {
 					<HeroSelectModal
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onClose={() => setAddingHeroes(false)}
 						onSelect={heroes => {
 							setAddingHeroes(false);
@@ -710,7 +705,6 @@ export const EncounterRunPanel = (props: Props) => {
 				<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
-						options={props.options}
 						selectOriginal={true}
 						onClose={() => setAddingMonsters(false)}
 						onSelect={m => {
@@ -740,7 +734,6 @@ export const EncounterRunPanel = (props: Props) => {
 								monster={selectedMonster.monster}
 								monsterGroup={selectedMonster.monsterGroup}
 								encounter={selectedMonster.isTeamHero ? undefined : encounter}
-								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
 									const copy = Utils.copy(encounter);
@@ -784,7 +777,6 @@ export const EncounterRunPanel = (props: Props) => {
 							<HeroStateModal
 								hero={selectedHero}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								startPage={HeroStatePage.Vitals}
 								showEncounterControls={true}
 								onClose={() => setSelectedHero(null)}

@@ -36,7 +36,6 @@ import './hero-sheet-page.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 };
 
 export const HeroSheetPage = (props: Props) => {
@@ -261,7 +260,7 @@ export const HeroSheetPage = (props: Props) => {
 		if (character.followers.length) {
 			character.followers.filter(f => f.classification === 'Retainer').forEach(fs => {
 				extraCards.required.push({
-					element: <RetainerCard follower={fs} options={props.options} key={fs.id} />,
+					element: <RetainerCard follower={fs} key={fs.id} />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowerSize(fs, layoutEnd.cardLineLen)),
 					shown: false
@@ -270,7 +269,7 @@ export const HeroSheetPage = (props: Props) => {
 			const followers = character.followers.filter(f => f.classification === 'Follower');
 			if (followers.length) {
 				extraCards.required.push({
-					element: <FollowersCard followers={followers} options={props.options} key='followers' />,
+					element: <FollowersCard followers={followers} key='followers' />,
 					width: 1,
 					height: Math.min(layoutEnd.linesY, SheetFormatter.calculateFollowersSize(followers, layoutEnd.cardLineLen)),
 					shown: false
@@ -292,11 +291,9 @@ export const HeroSheetPage = (props: Props) => {
 						<div className={`page page-1 ${props.options.pageOrientation}`} id={SheetFormatter.getPageId('hero-sheet', hero.id, 'main')}>
 							<HeroHeaderCard
 								character={character}
-								options={props.options}
 							/>
 							<StatsResourcesCard
 								character={character}
-								options={props.options}
 							/>
 							<ModifiersCard
 								character={character}
@@ -306,7 +303,6 @@ export const HeroSheetPage = (props: Props) => {
 							/>
 							<ConditionsCard
 								character={character}
-								options={props.options}
 							/>
 							<PrimaryReferenceCard
 								character={character}

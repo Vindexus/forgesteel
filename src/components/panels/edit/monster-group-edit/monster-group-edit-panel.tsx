@@ -32,7 +32,6 @@ import './monster-group-edit-panel.scss';
 interface Props {
 	monsterGroup: MonsterGroup;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (monsterGroup: MonsterGroup) => void;
 	onEditMonster: (monster: Monster) => void;
 }
@@ -254,7 +253,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 									feature={f}
 									allowedTypes={[ FeatureType.Malice, FeatureType.MaliceAbility ]}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={f => changeMaliceFeature(f as FeatureMalice | FeatureMaliceAbility)}
 								/>
 							</Expander>
@@ -333,7 +331,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 								<MonsterPanel
 									monster={m}
 									monsterGroup={monsterGroup}
-									options={props.options}
 								/>
 							</Expander>
 						))
@@ -373,7 +370,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 					<Drawer open={drawerOpen} closeIcon={null} onClose={() => setDrawerOpen(false)} width='500px'>
 						<MonsterSelectModal
 							monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
-							options={props.options}
 							selectOriginal={false}
 							onSelect={monster => {
 								copyMonster(monster);
@@ -449,7 +445,6 @@ export const MonsterGroupEditPanel = (props: Props) => {
 									feature={i}
 									allowedTypes={[ FeatureType.AddOn ]}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={f => changeAddOn(f as FeatureAddOn)}
 								/>
 							</Expander>

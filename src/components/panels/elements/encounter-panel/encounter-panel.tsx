@@ -30,7 +30,6 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	mode?: PanelMode;
 	showTools?: () => void;
 }
@@ -121,7 +120,7 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<div className='encounter-meta'>
 				{props.encounter.objective ? <EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} /> : null}
-				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} />
 				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
 			</div>
 		);
@@ -151,7 +150,6 @@ export const EncounterPanel = (props: Props) => {
 										key={monster.id}
 										monster={monster}
 										monsterGroup={monsterGroup}
-										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								);
@@ -203,7 +201,6 @@ export const EncounterPanel = (props: Props) => {
 										<SelectablePanel key={m.id}>
 											<FeaturePanel
 												feature={m}
-												options={props.options}
 												mode={PanelMode.Full}
 												cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
 												repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}

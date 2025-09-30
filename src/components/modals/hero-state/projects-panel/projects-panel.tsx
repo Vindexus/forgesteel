@@ -23,7 +23,6 @@ import './projects-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (hero: Hero) => void;
 }
 

@@ -25,7 +25,6 @@ import './career-edit-panel.scss';
 interface Props {
 	career: Career;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (career: Career) => void;
 }
 
@@ -126,7 +125,6 @@ export const CareerEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

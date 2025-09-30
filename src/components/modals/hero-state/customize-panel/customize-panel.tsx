@@ -39,7 +39,6 @@ import './customize-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (hero: Hero) => void;
 }
 
@@ -972,7 +971,6 @@ export const CustomizePanel = (props: Props) => {
 											:
 											<FeatureConfigPanel
 												feature={f}
-												options={props.options}
 												hero={hero}
 												sourcebooks={props.sourcebooks}
 												setData={setFeatureData}

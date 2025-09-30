@@ -23,7 +23,6 @@ import './complication-edit-panel.scss';
 interface Props {
 	complication: Complication;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (complication: Complication) => void;
 }
 
@@ -124,7 +123,6 @@ export const ComplicationEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

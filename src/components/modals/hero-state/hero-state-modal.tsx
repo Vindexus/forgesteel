@@ -17,7 +17,6 @@ import './hero-state-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	startPage: HeroStatePage;
 	showEncounterControls: boolean;
 	onClose: () => void;
@@ -51,7 +50,6 @@ export const HeroStateModal = (props: Props) => {
 					<InventoryPanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={props.onChange}
 					/>
 				);
@@ -60,7 +58,6 @@ export const HeroStateModal = (props: Props) => {
 					<ProjectsPanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={props.onChange}
 					/>
 				);
@@ -69,7 +66,6 @@ export const HeroStateModal = (props: Props) => {
 					<CustomizePanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={props.onChange}
 					/>
 				);
@@ -84,20 +80,6 @@ export const HeroStateModal = (props: Props) => {
 						<Segmented
 							name='tabs'
 							block={true}
-							options={
-								HeroLogic.getStamina(props.hero) !== 0 ?
-									[
-										HeroStatePage.Hero,
-										HeroStatePage.Vitals,
-										HeroStatePage.Inventory,
-										HeroStatePage.Projects,
-										HeroStatePage.Customize
-									]
-									:
-									[
-										HeroStatePage.Vitals
-									]
-							}
 							value={page}
 							onChange={setPage}
 						/>

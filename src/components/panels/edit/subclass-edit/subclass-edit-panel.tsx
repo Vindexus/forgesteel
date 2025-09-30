@@ -23,7 +23,6 @@ import './subclass-edit-panel.scss';
 interface Props {
 	subClass: SubClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (subClass: SubClass) => void;
 }
 
@@ -144,7 +143,6 @@ export const SubClassEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>

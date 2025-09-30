@@ -48,7 +48,6 @@ enum PageState {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -521,7 +520,6 @@ export const HeroEditPage = (props: Props) => {
 						<AncestrySection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
-							options={props.options}
 							searchTerm={searchTerm}
 							selectAncestry={setAncestry}
 							setFeatureData={setFeatureData}
@@ -532,7 +530,6 @@ export const HeroEditPage = (props: Props) => {
 						<CultureSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
-							options={props.options}
 							searchTerm={searchTerm}
 							selectCulture={setCulture}
 							selectEnvironment={setEnvironment}
@@ -546,7 +543,6 @@ export const HeroEditPage = (props: Props) => {
 						<CareerSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
-							options={props.options}
 							searchTerm={searchTerm}
 							selectCareer={setCareer}
 							selectIncitingIncident={setIncitingIncident}
@@ -558,7 +554,6 @@ export const HeroEditPage = (props: Props) => {
 						<ClassSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
-							options={props.options}
 							searchTerm={searchTerm}
 							selectClass={setClass}
 							setLevel={setLevel}
@@ -574,7 +569,6 @@ export const HeroEditPage = (props: Props) => {
 						<ComplicationSection
 							hero={hero}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
-							options={props.options}
 							searchTerm={searchTerm}
 							selectComplication={setComplication}
 							setFeatureData={setFeatureData}
@@ -586,7 +580,6 @@ export const HeroEditPage = (props: Props) => {
 							hero={hero}
 							allHeroes={props.heroes}
 							sourcebooks={props.sourcebooks.filter(cs => hero.settingIDs.includes(cs.id))}
-							options={props.options}
 							setName={setName}
 							setPicture={setPicture}
 							setFolder={setFolder}

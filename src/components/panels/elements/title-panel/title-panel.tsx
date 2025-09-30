@@ -19,7 +19,6 @@ import './title-panel.scss';
 
 interface Props {
 	title: Title;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -95,7 +94,6 @@ export const TitlePanel = (props: Props) => {
 												<FeaturePanel
 													key={f.id}
 													feature={f}
-													options={props.options}
 													hero={props.hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}

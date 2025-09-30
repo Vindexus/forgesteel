@@ -13,7 +13,6 @@ import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	monster: MonsterSheet;
-	options: Options;
 }
 
 export const MonsterCard = (props: Props) => {

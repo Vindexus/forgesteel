@@ -7,7 +7,6 @@ import './follower-card.scss';
 
 interface Props {
 	followers: FollowerSheet[];
-	options: Options;
 }
 
 export const FollowersCard = (props: Props) => {

@@ -9,7 +9,6 @@ import './encounter-header.scss';
 
 interface Props {
 	encounter: EncounterSheet;
-	options: Options;
 }
 
 export const EncounterHeaderCard = (props: Props) => {

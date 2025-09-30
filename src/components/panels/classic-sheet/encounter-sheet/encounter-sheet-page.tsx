@@ -18,7 +18,6 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 }
 
 export const EncounterSheetPage = (props: Props) => {
@@ -44,7 +43,7 @@ export const EncounterSheetPage = (props: Props) => {
 		if (encounter.monsters?.length) {
 			encounter.monsters?.forEach(ms => {
 				requiredCards.push({
-					element: <MonsterCard monster={ms} options={props.options} key={ms.id} />,
+					element: <MonsterCard monster={ms} key={ms.id} />,
 					width: 1,
 					height: Math.min(layout.linesY, SheetFormatter.calculateMonsterSize(ms, layout.cardLineLen)),
 					shown: false
@@ -75,9 +74,9 @@ export const EncounterSheetPage = (props: Props) => {
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')} id={SheetFormatter.getPageId('encounter', encounter.id, 'main')}>
 				<div className={`page page-1 ${props.options.pageOrientation}`}>
-					<EncounterHeaderCard encounter={encounter} options={props.options} />
-					<MaliceCard encounter={encounter} options={props.options} />
-					<EncounterRosterCard encounter={encounter} sourcebooks={props.sourcebooks} options={props.options} />
+					<EncounterHeaderCard encounter={encounter} />
+					<MaliceCard encounter={encounter} />
+					<EncounterRosterCard encounter={encounter} sourcebooks={props.sourcebooks} />
 				</div>
 				{getMonsterCards()}
 			</div>

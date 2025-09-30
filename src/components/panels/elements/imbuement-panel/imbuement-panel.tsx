@@ -12,7 +12,6 @@ import './imbuement-panel.scss';
 
 interface Props {
 	imbuement: Imbuement;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -35,7 +34,6 @@ export const ImbuementPanel = (props: Props) => {
 						<FeaturePanel
 							key={props.imbuement.feature.id}
 							feature={props.imbuement.feature}
-							options={props.options}
 							hero={props.hero}
 							sourcebooks={props.sourcebooks}
 							mode={PanelMode.Full}

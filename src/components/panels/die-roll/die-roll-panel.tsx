@@ -109,13 +109,6 @@ export const DieRollPanel = (props: Props) => {
 							<Flex align='center' justify='space-evenly'>
 								<Segmented
 									className='roll-state-selector'
-									options={[
-										RollState.DoubleBane,
-										RollState.Bane,
-										RollState.Standard,
-										RollState.Edge,
-										RollState.DoubleEdge
-									]}
 									value={props.rollState}
 									onChange={rs => {
 										if (results.length > 0) {

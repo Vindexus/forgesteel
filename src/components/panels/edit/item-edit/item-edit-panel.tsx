@@ -31,7 +31,6 @@ import './item-edit-panel.scss';
 interface Props {
 	item: Item;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (item: Item) => void;
 }
 
@@ -220,7 +219,6 @@ export const ItemEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>

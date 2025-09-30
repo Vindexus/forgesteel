@@ -87,7 +87,6 @@ interface Props {
 	session: Playbook;
 	homebrewSourcebooks: Sourcebook[];
 	hiddenSourcebookIDs: string[];
-	options: Options;
 }
 
 export const Main = (props: Props) => {
@@ -1347,7 +1346,6 @@ export const Main = (props: Props) => {
 			<ElementModal
 				kind={kind}
 				element={element}
-				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => exportLibraryElement(kind, element, format)}
 			/>
@@ -1360,7 +1358,6 @@ export const Main = (props: Props) => {
 				monster={monster}
 				monsterGroup={monsterGroup}
 				summon={summon}
-				options={options}
 				onClose={() => setDrawer(null)}
 				export={format => Utils.export([ monster.id ], monster.name || 'Monster', monster, 'monster', format)}
 			/>
@@ -1403,7 +1400,6 @@ export const Main = (props: Props) => {
 				feature={feature}
 				hero={hero}
 				sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-				options={options}
 				onClose={() => setDrawer(null)}
 				updateHero={persistHero}
 			/>
@@ -1426,7 +1422,6 @@ export const Main = (props: Props) => {
 			<HeroStateModal
 				hero={hero}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-				options={options}
 				startPage={page}
 				showEncounterControls={false}
 				onClose={() => setDrawer(null)}
@@ -1444,7 +1439,6 @@ export const Main = (props: Props) => {
 			<PartyModal
 				heroes={heroes.filter(h => h.folder === folder)}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1480,7 +1474,6 @@ export const Main = (props: Props) => {
 			<EncounterToolsModal
 				encounter={encounter}
 				sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-				options={options}
 				onClose={() => setDrawer(null)}
 			/>
 		);
@@ -1530,7 +1523,6 @@ export const Main = (props: Props) => {
 								<HeroListPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={props.options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1547,7 +1539,6 @@ export const Main = (props: Props) => {
 								<HeroViewPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									setOptions={persistOptions}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
@@ -1586,7 +1577,6 @@ export const Main = (props: Props) => {
 								<HeroEditPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1606,7 +1596,6 @@ export const Main = (props: Props) => {
 								<HeroSheetPreviewPage
 									heroes={heroes}
 									sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-									options={options}
 									setOptions={persistOptions}
 								/>
 							}
@@ -1624,7 +1613,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
-									options={options}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
@@ -1647,7 +1635,6 @@ export const Main = (props: Props) => {
 								<LibraryEditPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1671,7 +1658,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
-									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1695,7 +1681,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
-									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1721,7 +1706,6 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
 									session={session}
-									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1751,7 +1735,6 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
 									session={session}
-									options={options}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}

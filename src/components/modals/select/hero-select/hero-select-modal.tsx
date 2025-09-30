@@ -19,7 +19,6 @@ import './hero-select-modal.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 	onSelect: (heroes: Hero[]) => void;
 }
@@ -75,7 +74,7 @@ export const HeroSelectModal = (props: Props) => {
 								props.onSelect([ h ]);
 							}}
 						>
-							<HeroPanel hero={h} sourcebooks={props.sourcebooks} options={props.options} />
+							<HeroPanel hero={h} sourcebooks={props.sourcebooks} />
 						</SelectablePanel>
 					));
 				}

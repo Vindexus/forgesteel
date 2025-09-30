@@ -6,7 +6,6 @@ import './recoveries-component.scss';
 
 interface Props {
 	recoveries: RecoveriesSheet;
-	options: Options;
 }
 
 export const RecoveriesComponent = (props: Props) => {

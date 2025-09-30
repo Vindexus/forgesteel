@@ -53,7 +53,6 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
 	onSelectCulture?: (culture: Culture) => void;
@@ -842,7 +841,6 @@ export const HeroPanel = (props: Props) => {
 												<FeaturePanel
 													feature={f.feature}
 													source={props.options.showSources ? f.source : undefined}
-													options={props.options}
 													hero={props.hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}
@@ -866,7 +864,6 @@ export const HeroPanel = (props: Props) => {
 												key={f.feature.id}
 												feature={f.feature}
 												source={props.options.showSources ? f.source : undefined}
-												options={props.options}
 												hero={props.hero}
 												sourcebooks={props.sourcebooks}
 												mode={PanelMode.Full}
@@ -932,7 +929,6 @@ export const HeroPanel = (props: Props) => {
 										<AbilityPanel
 											ability={a.ability}
 											hero={props.hero}
-											options={props.options}
 											mode={PanelMode.Full}
 											tags={props.options.showSources ? [ a.source ] : undefined}
 										/>
@@ -955,7 +951,6 @@ export const HeroPanel = (props: Props) => {
 										<AbilityPanel
 											ability={a.ability}
 											hero={props.hero}
-											options={props.options}
 											mode={PanelMode.Full}
 											tags={props.options.showSources ? [ a.source ] : undefined}
 										/>
@@ -1001,7 +996,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-													<MonsterPanel monster={monster} options={props.options} />
+													<MonsterPanel monster={monster} />
 												</SelectablePanel>
 										)
 									}
@@ -1043,7 +1038,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
-													<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
+													<MonsterPanel monster={summon.monster} summon={summon.info} />
 												</SelectablePanel>
 										)
 									}

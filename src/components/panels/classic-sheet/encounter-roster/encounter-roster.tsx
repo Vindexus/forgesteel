@@ -11,7 +11,6 @@ import './encounter-roster.scss';
 interface Props {
 	encounter: EncounterSheet;
 	sourcebooks: Sourcebook[];
-	options: Options;
 }
 
 export const EncounterRosterCard = (props: Props) => {

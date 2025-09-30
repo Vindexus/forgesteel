@@ -32,7 +32,6 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	summon?: SummoningInfo;
-	options: Options;
 	mode?: PanelMode;
 	style?: CSSProperties;
 	extra?: ReactNode;

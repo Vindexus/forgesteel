@@ -134,7 +134,6 @@ Promise.all(promises).then(results => {
 					hiddenSourcebookIDs={hiddenSourcebookIDs}
 					playbook={playbook}
 					session={session}
-					options={options}
 				/>
 			</HashRouter>
 		</StrictMode>

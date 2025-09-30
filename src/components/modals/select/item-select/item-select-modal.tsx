@@ -21,7 +21,6 @@ import './item-select-modal.scss';
 interface Props {
 	types: ItemType[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	hero: Hero;
 	selectOriginal?: boolean;
 	onClose: () => void;
@@ -130,7 +129,7 @@ export const ItemSelectModal = (props: Props) => {
 											/>
 										]}
 									>
-										<ItemPanel item={item} options={props.options} hero={props.hero} mode={PanelMode.Full} />
+										<ItemPanel item={item} hero={props.hero} mode={PanelMode.Full} />
 									</Expander>
 								))
 							}

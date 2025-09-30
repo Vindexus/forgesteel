@@ -9,7 +9,6 @@ import './malice-card.scss';
 
 interface Props {
 	encounter: EncounterSheet;
-	options: Options;
 }
 
 export const MaliceCard = (props: Props) => {

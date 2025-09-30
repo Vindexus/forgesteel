@@ -39,7 +39,6 @@ import './hero-view-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -85,7 +84,6 @@ export const HeroViewPage = (props: Props) => {
 						<HeroPanel
 							hero={hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							mode={PanelMode.Full}
 							onSelectAncestry={props.showAncestry}
 							onSelectCulture={props.showCulture}
@@ -109,7 +107,6 @@ export const HeroViewPage = (props: Props) => {
 						<HeroSheetPage
 							hero={hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 						/>
 					);
 				case 'abilities':
@@ -217,7 +214,7 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
 								Options

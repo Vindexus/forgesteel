@@ -26,7 +26,6 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	encounter?: Encounter;
 	summon?: SummoningInfo;
-	options: Options;
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
@@ -96,7 +95,6 @@ export const MonsterModal = (props: Props) => {
 						monster={monster}
 						monsterGroup={props.monsterGroup}
 						summon={props.summon}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -111,7 +109,6 @@ export const MonsterModal = (props: Props) => {
 									<SelectablePanel key={malice.id}>
 										<FeaturePanel
 											feature={malice}
-											options={props.options}
 											cost={cost}
 											repeatable={malice.type === FeatureType.Malice ? malice.data.repeatable : undefined}
 											mode={PanelMode.Full}
@@ -160,7 +157,6 @@ export const MonsterModal = (props: Props) => {
 								<Flex align='center' justify='center' style={{ width: '100%' }}>
 									<Segmented
 										name='tabs'
-										options={encounter ? [ 'Encounter', 'Stat Block', 'Malice' ] : [ 'Encounter', 'Stat Block' ]}
 										value={page}
 										onChange={setPage}
 									/>

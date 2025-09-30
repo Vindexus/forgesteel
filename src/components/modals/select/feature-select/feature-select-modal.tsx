@@ -16,7 +16,6 @@ import './feature-select-modal.scss';
 interface Props {
 	features: { feature: Feature, value: number }[];
 	hero?: Hero;
-	options: Options;
 	onClose: () => void;
 	onSelect: (feature: Feature) => void;
 }
@@ -61,7 +60,6 @@ export const FeatureSelectModal = (props: Props) => {
 											hero={props.hero}
 											cost={showCosts ? f.value : undefined}
 											mode={PanelMode.Full}
-											options={props.options}
 										/>
 									</SelectablePanel>
 								))

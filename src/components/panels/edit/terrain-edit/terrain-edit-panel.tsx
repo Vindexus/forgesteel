@@ -32,7 +32,6 @@ import './terrain-edit-panel.scss';
 interface Props {
 	terrain: Terrain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (terrain: Terrain) => void;
 }
 
@@ -289,7 +288,6 @@ export const TerrainEditPanel = (props: Props) => {
 								<Segmented
 									name='modifiertypes'
 									block={true}
-									options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ]}
 									value={dm.type}
 									onChange={value => setModifierType(n, value)}
 								/>
@@ -426,7 +424,6 @@ export const TerrainEditPanel = (props: Props) => {
 													feature={feature}
 													allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={f => setSectionContentFeature(sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 												/>
 											</Expander>
@@ -638,7 +635,6 @@ export const TerrainEditPanel = (props: Props) => {
 																	feature={feature}
 																	allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 																	sourcebooks={props.sourcebooks}
-																	options={props.options}
 																	onChange={f => setUpgradeSectionContentFeature(upgradeIndex, sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 																/>
 															</Expander>

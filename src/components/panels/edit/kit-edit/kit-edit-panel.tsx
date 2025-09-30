@@ -27,7 +27,6 @@ import './kit-edit-panel.scss';
 interface Props {
 	kit: Kit;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (kit: Kit) => void;
 }
 
@@ -381,7 +380,6 @@ export const KitEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

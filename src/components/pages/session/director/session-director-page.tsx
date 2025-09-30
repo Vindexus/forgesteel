@@ -39,7 +39,6 @@ interface Props {
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
 	session: Playbook;
-	options: Options;
 	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
@@ -85,7 +84,6 @@ export const SessionDirectorPage = (props: Props) => {
 		return (
 			<div className='session-page-content-selector'>
 				<Segmented
-					options={options}
 					value={selectedElementID}
 					onChange={setSelectedElementID}
 				/>
@@ -103,7 +101,6 @@ export const SessionDirectorPage = (props: Props) => {
 							encounter={encounter}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
-							options={props.options}
 							onChange={props.updateEncounter}
 						/>
 					</div>
@@ -141,7 +138,6 @@ export const SessionDirectorPage = (props: Props) => {
 						<TacticalMapPanel
 							map={map}
 							display={TacticalMapDisplayType.DirectorEdit}
-							options={props.options}
 							heroes={props.heroes}
 							encounters={props.session.encounters}
 							sourcebooks={props.sourcebooks}
@@ -405,7 +401,7 @@ export const SessionDirectorPage = (props: Props) => {
 						<Button onClick={props.showPlayerView}>Player View</Button>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='session' options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode='session' heroes={props.heroes} setOptions={props.setOptions} />}
 						>
 							<Button icon={<SettingOutlined />}>
 								Options

@@ -12,7 +12,6 @@ import './culture-panel.scss';
 
 interface Props {
 	culture: Culture;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -33,10 +32,10 @@ export const CulturePanel = (props: Props) => {
 					{
 						props.mode === PanelMode.Full ?
 							<div style={{ paddingTop: '10px' }}>
-								<FeaturePanel feature={props.culture.language} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
-								{props.culture.environment ? <FeaturePanel feature={props.culture.environment} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
-								{props.culture.organization ? <FeaturePanel feature={props.culture.organization} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
-								{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+								<FeaturePanel feature={props.culture.language} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+								{props.culture.environment ? <FeaturePanel feature={props.culture.environment} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+								{props.culture.organization ? <FeaturePanel feature={props.culture.organization} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
+								{props.culture.upbringing ? <FeaturePanel feature={props.culture.upbringing} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} /> : null}
 							</div>
 							: null
 					}

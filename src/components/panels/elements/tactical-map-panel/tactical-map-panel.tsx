@@ -58,7 +58,6 @@ interface SelectedMonsterInfo {
 interface Props {
 	map: TacticalMap;
 	display: TacticalMapDisplayType;
-	options: Options;
 	heroes?: Hero[];
 	encounters?: Encounter[];
 	sourcebooks?: Sourcebook[];
@@ -571,7 +570,6 @@ export const TacticalMapPanel = (props: Props) => {
 			<div className='tactical-map-toolbar top-toolbar'>
 				<Segmented
 					name='edit'
-					options={editModes}
 					value={editMode}
 					onChange={changeEditMode}
 				/>
@@ -1229,7 +1227,6 @@ export const TacticalMapPanel = (props: Props) => {
 				<div className='tactical-map-toolbar bottom-toolbar'>
 					<Select
 						style={{ width: '200px' }}
-						options={distinctSources}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						popupRender={menu => (
 							<>
@@ -1540,7 +1537,6 @@ export const TacticalMapPanel = (props: Props) => {
 								monster={selectedMonster.monster}
 								monsterGroup={selectedMonster.monsterGroup}
 								encounter={selectedMonster.encounter}
-								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
 									const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
@@ -1600,7 +1596,6 @@ export const TacticalMapPanel = (props: Props) => {
 							<HeroStateModal
 								hero={selectedHero}
 								sourcebooks={props.sourcebooks || []}
-								options={props.options}
 								startPage={HeroStatePage.Vitals}
 								showEncounterControls={true}
 								onClose={() => setSelectedHero(null)}

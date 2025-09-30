@@ -23,7 +23,6 @@ import './domain-edit-panel.scss';
 interface Props {
 	domain: Domain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (domain: Domain) => void;
 }
 
@@ -144,7 +143,6 @@ export const DomainEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>
@@ -334,7 +332,6 @@ export const DomainEditPanel = (props: Props) => {
 									<FeatureEditPanel
 										feature={f}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										onChange={feature => changeFeature(feature)}
 									/>
 								</Expander>

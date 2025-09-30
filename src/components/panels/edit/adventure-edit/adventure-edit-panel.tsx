@@ -29,7 +29,6 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	onChange: (adventure: Adventure) => void;
 }
 
@@ -330,7 +329,6 @@ export const AdventureEditPanel = (props: Props) => {
 				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
 				heroes={props.heroes}
-				options={props.options}
 				onChange={changePlotPoint}
 				onAddAfter={addPlotPoint}
 				onDelete={deletePlotPoint}

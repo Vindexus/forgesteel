@@ -24,7 +24,6 @@ import './ancestry-edit-panel.scss';
 interface Props {
 	ancestry: Ancestry;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (ancestry: Ancestry) => void;
 }
 
@@ -125,7 +124,6 @@ export const AncestryEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

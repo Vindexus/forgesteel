@@ -15,7 +15,6 @@ import './summon-select-modal.scss';
 
 interface Props {
 	summons: Summon[];
-	options: Options;
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (summon: Summon) => void;
@@ -55,7 +54,7 @@ export const SummonSelectModal = (props: Props) => {
 										key={s.id}
 										onSelect={() => props.onSelect(s)}
 									>
-										<MonsterPanel monster={s.monster} summon={s.info} options={props.options} />
+										<MonsterPanel monster={s.monster} summon={s.info} />
 									</SelectablePanel>
 								))
 							}

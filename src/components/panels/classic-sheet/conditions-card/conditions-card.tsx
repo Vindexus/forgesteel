@@ -8,7 +8,6 @@ import './conditions-card.scss';
 
 interface Props {
 	character: HeroSheet;
-	options: Options;
 }
 
 export const ConditionsCard = (props: Props) => {

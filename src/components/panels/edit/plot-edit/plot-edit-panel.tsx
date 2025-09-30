@@ -36,7 +36,6 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	onChange: (plot: Plot) => void;
 	onAddAfter: (plotPointID: string) => void;
 	onDelete: (plotPointID: string) => void;
@@ -422,7 +421,7 @@ export const PlotEditPanel = (props: Props) => {
 										if (element) {
 											name = element.name;
 											content = (
-												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+												<EncounterPanel encounter={element} sourcebooks={props.sourcebooks} heroes={props.heroes} />
 											);
 										}
 										break;
@@ -452,7 +451,7 @@ export const PlotEditPanel = (props: Props) => {
 										if (element) {
 											name = element.name;
 											content = (
-												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+												<TacticalMapPanel map={element} display={TacticalMapDisplayType.Thumbnail} />
 											);
 										}
 										break;
@@ -581,7 +580,6 @@ export const PlotEditPanel = (props: Props) => {
 				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
 				heroes={props.heroes}
-				options={props.options}
 				mode={PanelMode.Full}
 				onSelect={() => null}
 				onStart={() => null}
@@ -632,7 +630,7 @@ export const PlotEditPanel = (props: Props) => {
 									{
 										props.playbook.encounters.map(e =>
 											<SelectablePanel key={e.id} onSelect={() => addContentReference('encounter', e.id)}>
-												<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+												<EncounterPanel encounter={e} sourcebooks={props.sourcebooks} heroes={props.heroes} />
 											</SelectablePanel>
 										)
 									}
@@ -689,7 +687,7 @@ export const PlotEditPanel = (props: Props) => {
 									{
 										props.playbook.tacticalMaps.map(tm =>
 											<SelectablePanel key={tm.id} onSelect={() => addContentReference('map', tm.id)}>
-												<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} options={props.options} />
+												<TacticalMapPanel map={tm} display={TacticalMapDisplayType.Thumbnail} />
 											</SelectablePanel>
 										)
 									}

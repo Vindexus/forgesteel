@@ -24,7 +24,6 @@ import './title-edit-panel.scss';
 interface Props {
 	title: Title;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (title: Title) => void;
 }
 
@@ -155,7 +154,6 @@ export const TitleEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

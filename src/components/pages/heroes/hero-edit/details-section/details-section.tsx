@@ -20,7 +20,6 @@ interface DetailsSectionProps {
 	hero: Hero;
 	allHeroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setName: (value: string) => void;
 	setPicture: (value: string | null) => void;
 	setFolder: (value: string) => void;
@@ -111,7 +110,6 @@ export const DetailsSection = (props: DetailsSectionProps) => {
 									<FeatureConfigPanel
 										key={f.id}
 										feature={f}
-										options={props.options}
 										hero={props.hero}
 										sourcebooks={props.sourcebooks}
 										setData={props.setFeatureData}
@@ -141,7 +139,6 @@ ${f.data.listOptions.length > 0 ? `**Lists**: ${f.data.listOptions.map(s => `${s
 									<FeatureConfigPanel
 										key={f.id}
 										feature={f}
-										options={props.options}
 										hero={props.hero}
 										sourcebooks={props.sourcebooks}
 										setData={props.setFeatureData}
