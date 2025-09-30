@@ -1,7 +1,7 @@
 import { HeaderImage } from '@/components/panels/classic-sheet/header-image/header-image';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { useOption } from '@/store/selectors';
+import { useOption } from '@/store/hooks';
 
 import './hero-header-card.scss';
 

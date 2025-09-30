@@ -35,7 +35,7 @@ import { TacticalMapEditMode } from '@/enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
-import { useOption } from '@/store/selectors';
+import { useOption } from '@/store/hooks';
 
 import './tactical-map-panel.scss';
 import { Collections } from '@/utils/collections';

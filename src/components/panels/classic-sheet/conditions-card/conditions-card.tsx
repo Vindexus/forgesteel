@@ -2,7 +2,7 @@ import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Condition } from '@/models/condition';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { useOption } from '@/store/selectors';
+import { useOption } from '@/store/hooks';
 
 import './conditions-card.scss';
 

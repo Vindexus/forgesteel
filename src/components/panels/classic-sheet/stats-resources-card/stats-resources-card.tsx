@@ -3,7 +3,7 @@ import { LabeledTextField } from '@/components/panels/classic-sheet/components/l
 import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
 import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';
 import { Utils } from '@/utils/utils';
-import { useOption } from '@/store/selectors';
+import { useOption } from '@/store/hooks';
 
 import './stats-resources-card.scss';
 

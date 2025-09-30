@@ -8,6 +8,7 @@ import { SheetPageSize } from '@/enums/sheet-page-size';
 import { SheetTextColor } from '@/models/options';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { useAppStore } from '@/store/store';
+import { useCreateOptionOnChange } from '@/store/hooks';
 import { useEffect } from 'react';
 
 import './options-panel.scss';
@@ -18,7 +19,8 @@ interface Props {
 }
 
 export const OptionsPanel = (props: Props) => {
-	const { options, setOptions, createOptionOnChange, setOption } = useAppStore();
+	const { options, setOptions, setOption } = useAppStore();
+	const createOptionOnChange = useCreateOptionOnChange();
 
 	const changeTextColor = (newColor: SheetTextColor) => {
 		setDrawColor(newColor);

@@ -47,7 +47,6 @@ enum PageState {
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -613,7 +612,7 @@ export const HeroEditPage = (props: Props) => {
 						{getControls()}
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

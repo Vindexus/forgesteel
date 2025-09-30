@@ -2,6 +2,7 @@ import { Badge, Button, Divider, Flex } from 'antd';
 import { BookOutlined, PlayCircleOutlined, ReadOutlined, TeamOutlined } from '@ant-design/icons';
 import { ErrorBoundary } from '@/components/controls/error-boundary/error-boundary';
 import { SyncStatus } from '@/components/panels/sync-status/sync-status';
+import { useAppStore } from '@/store/store';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 
@@ -11,7 +12,6 @@ import shield from '@/assets/shield.png';
 
 interface Props {
 	page: 'welcome' | 'heroes' | 'library' | 'playbook' | 'session' | 'player-view';
-	highlightAbout: boolean;
 	showReference: () => void;
 	showRoll: () => void;
 	showAbout: () => void;
@@ -20,6 +20,7 @@ interface Props {
 export const AppFooter = (props: Props) => {
 	const isSmall = useIsSmall();
 	const navigation = useNavigation();
+	const { errors } = useAppStore();
 
 	try {
 		return (
@@ -53,7 +54,7 @@ export const AppFooter = (props: Props) => {
 						<SyncStatus />
 						<Button onClick={props.showReference}>Reference</Button>
 						<Button onClick={props.showRoll}>Roll</Button>
-						<Badge dot={props.highlightAbout}>
+						<Badge dot={errors.length > 0}>
 							<Button onClick={props.showAbout}>About</Button>
 						</Badge>
 					</div>

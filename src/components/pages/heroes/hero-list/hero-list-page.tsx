@@ -22,7 +22,6 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -182,7 +181,7 @@ export const HeroListPage = (props: Props) => {
 						onChange={navigation.goToHeroList}
 					/>
 				</div>
-				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>
 	);

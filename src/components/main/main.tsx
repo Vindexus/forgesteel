@@ -1,7 +1,7 @@
 import { Adventure, AdventurePackage } from '@/models/adventure';
 import { Navigate, Route, Routes } from 'react-router';
 import { Playbook, PlaybookElementKind } from '@/models/playbook';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Sourcebook, SourcebookElementKind } from '@/models/sourcebook';
 import { Spin, notification } from 'antd';
 import { Ability } from '@/models/ability';
@@ -73,10 +73,10 @@ import { Title } from '@/models/title';
 import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
+import { useAppStore } from '@/store/store';
 import { useErrorListener } from '@/hooks/use-error-listener';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useSyncStatus } from '@/hooks/use-sync-status';
-import { useAppStore } from '@/store/store';
 
 import './main.scss';
 
@@ -89,7 +89,7 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const { options } = useAppStore();
+	const { options, errors, addError } = useAppStore();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
@@ -98,12 +98,41 @@ export const Main = (props: Props) => {
 	const [ session, setSession ] = useState<Playbook>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
-	const [ errors, setErrors ] = useState<Event[]>([]);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
 	const [ spinning, setSpinning ] = useState(false);
+	const errorsRef = useRef<Set<number>>(new Set());
 
-	useErrorListener(event => setErrors([ ...errors, event ]));
+	useEffect(() => {
+		const set = errorsRef.current;
+		for (const errItem of errors) {
+			if (set.has(errItem.id)) {
+				continue;
+			}
+			set.add(errItem.id);
+			const errValue = errItem.err;
+			let err: Error;
+
+			if (errValue instanceof Error) {
+				err = errValue;
+			} else if (errValue instanceof ErrorEvent) {
+				err = errValue.error;
+			} else {
+				err = new Error(String(errValue));
+			}
+
+
+			notify.error({
+				message: err.message,
+				description: err.stack,
+				placement: 'top'
+			});
+		}
+	}, [ notify, errors[errors.length - 1]?.id ]);
+
+	useErrorListener(event => {
+		addError(event);
+	});
 
 	// #region Persistence
 
@@ -1480,7 +1509,6 @@ export const Main = (props: Props) => {
 						index={true}
 						element={
 							<WelcomePage
-								highlightAbout={errors.length > 0}
 								showAbout={showAbout}
 								showRoll={showRoll}
 								showReference={showReference}
@@ -1495,7 +1523,6 @@ export const Main = (props: Props) => {
 								<HeroListPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1511,7 +1538,6 @@ export const Main = (props: Props) => {
 								<HeroViewPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									exportHero={exportHero}
@@ -1548,7 +1574,6 @@ export const Main = (props: Props) => {
 								<HeroEditPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1584,7 +1609,6 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
 									hiddenSourcebookIDs={hiddenSourcebookIDs}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1604,7 +1628,6 @@ export const Main = (props: Props) => {
 								<LibraryEditPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1626,7 +1649,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1648,7 +1670,6 @@ export const Main = (props: Props) => {
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1672,7 +1693,6 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
 									session={session}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
@@ -1700,7 +1720,6 @@ export const Main = (props: Props) => {
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
 									playbook={playbook}
 									session={session}
-									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}

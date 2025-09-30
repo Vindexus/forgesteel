@@ -1,6 +1,6 @@
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { RecoveriesSheet } from '@/models/classic-sheets/hero-sheet';
-import { useOption } from '@/store/selectors';
+import { useOption } from '@/store/hooks';
 
 import './recoveries-component.scss';
 

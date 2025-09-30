@@ -38,7 +38,6 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -238,7 +237,7 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

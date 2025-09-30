@@ -7,6 +7,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
+import { AppError, useAppStore } from '@/store/store';
 import { useTheme } from '@/hooks/use-theme';
 
 import pbds from '@/assets/powered-by-draw-steel.png';
@@ -15,46 +16,56 @@ import pkg from '../../../../package.json';
 import './about-modal.scss';
 
 interface Props {
-	errors: Event[];
-	clearErrors: () => void;
 	onClose: () => void;
 }
 
 export const AboutModal = (props: Props) => {
 	const { themeMode, setTheme } = useTheme();
+	const { errors, clearErrors: clearStoreErrors } = useAppStore();
 
 	try {
 		const clearErrors = () => {
-			props.clearErrors();
+			clearStoreErrors();
 			props.onClose();
 		};
 
-		const getError = (event: Event, index: number) => {
+		const getError = (appError: AppError, index: number) => {
+			const err = appError.err;
 			let message = '';
 			let output = '';
-			const fields: { label: string, value: string }[] = [
-				{ label: 'Type', value: `${event.type}` }
-			];
+			const fields: { label: string, value: string }[] = [];
+			if (err instanceof Event) {
+				const event = err;
+				fields.push({ label: 'Type', value: `${event.type}` });
 
-			if (event.type === 'error') {
-				const error = event as ErrorEvent;
+				if (event.type === 'error') {
+					const error = event as ErrorEvent;
 
-				message = error.message;
-				output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${JSON.stringify(error.error)}`;
+					message = error.message;
+					output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${JSON.stringify(error.error)}`;
 
-				fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
-				fields.push({ label: 'Data', value: JSON.stringify(error.error) });
-			}
+					fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
+					fields.push({ label: 'Data', value: JSON.stringify(error.error) });
+				}
 
-			if (event.type === 'unhandledrejection') {
-				const error = event as PromiseRejectionEvent;
+				if (event.type === 'unhandledrejection') {
+					const error = event as PromiseRejectionEvent;
 
-				message = JSON.stringify(error.reason);
-				output = `reason ${JSON.stringify(error.reason)}`;
+					message = JSON.stringify(error.reason);
+					output = `reason ${JSON.stringify(error.reason)}`;
+				}
+			} else if (err instanceof Error) {
+				message = err.message;
+				output = `reason ${JSON.stringify(err.stack)}`;
+				fields.push({ label: 'Type', value: 'Error' });
+			} else {
+				message = String(err);
+				output = String(err);
+				fields.push({ label: 'Type', value: 'Unknown' });
 			}
 
 			return (
-				<SelectablePanel key={index}>
+				<SelectablePanel key={appError.id}>
 					<HeaderText
 						extra={
 							<Button
@@ -120,12 +131,12 @@ export const AboutModal = (props: Props) => {
 							]}
 						/>
 						{
-							props.errors.length > 0 ?
+							errors.length > 0 ?
 								<Divider />
 								: null
 						}
 						{
-							props.errors.length > 0 ?
+							errors.length > 0 ?
 								<Expander
 									title='Logs'
 									extra={[
@@ -133,7 +144,7 @@ export const AboutModal = (props: Props) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-										{props.errors.map(getError)}
+										{errors.map(getError)}
 									</Space>
 								</Expander>
 								: null

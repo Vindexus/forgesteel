@@ -14,10 +14,11 @@ import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
+import { useCreateOptionOnChange } from '@/store/hooks';
 import { useParams } from 'react-router';
 
 import './hero-sheet-page.scss';
-import { useAppStore } from '@/store/store';
 
 interface Props {
 	heroes: Hero[];
@@ -25,7 +26,8 @@ interface Props {
 }
 
 export const HeroSheetPreviewPage = (props: Props) => {
-	const { options, createOptionOnChange, setOption } = useAppStore();
+	const { options, setOption } = useAppStore();
+	const createOptionOnChange = useCreateOptionOnChange();
 	const { heroID } = useParams<{ heroID: string }>();
 	const hero = useMemo(
 		() => props.heroes.find(h => h.id === heroID)!,
