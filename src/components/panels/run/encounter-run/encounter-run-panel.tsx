@@ -32,7 +32,6 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';

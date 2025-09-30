@@ -8,7 +8,6 @@ import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PlusOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';

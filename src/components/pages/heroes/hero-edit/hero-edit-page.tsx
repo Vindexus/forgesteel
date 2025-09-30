@@ -25,7 +25,6 @@ import { FeatureType } from '@/enums/feature-type';
 import { Format } from '@/utils/format';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { StartSection } from '@/components/pages/heroes/hero-edit/start-section/start-section';

@@ -7,7 +7,6 @@ import { Hero } from '@/models/hero';
 import { MaliceCard } from '@/components/panels/classic-sheet/malice-card/malice-card';
 import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/monster-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
-import { Options } from '@/models/options';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
 import { useMemo } from 'react';

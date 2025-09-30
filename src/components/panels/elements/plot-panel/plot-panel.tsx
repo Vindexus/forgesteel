@@ -17,7 +17,6 @@ import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SashPanel } from '@/components/panels/sash/sash-panel';

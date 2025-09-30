@@ -6,7 +6,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Field } from '@/components/controls/field/field';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
-import { Options } from '@/models/options';
 import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '@/models/sourcebook';

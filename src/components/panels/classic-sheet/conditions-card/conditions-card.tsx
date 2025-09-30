@@ -2,8 +2,6 @@ import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Condition } from '@/models/condition';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { Options } from '@/models/options';
-
 import './conditions-card.scss';
 
 interface Props {

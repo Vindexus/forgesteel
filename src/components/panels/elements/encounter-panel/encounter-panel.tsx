@@ -16,7 +16,6 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

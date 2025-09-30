@@ -18,7 +18,6 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
-import { Options } from '@/models/options';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { Sourcebook } from '@/models/sourcebook';

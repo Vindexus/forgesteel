@@ -5,7 +5,6 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroStatePage } from '@/enums/hero-state-page';
 import { InventoryPanel } from '@/components/modals/hero-state/inventory-panel/inventory-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/projects-panel';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
@@ -80,6 +79,20 @@ export const HeroStateModal = (props: Props) => {
 						<Segmented
 							name='tabs'
 							block={true}
+							options={
+								HeroLogic.getStamina(props.hero) !== 0 ?
+									[
+										HeroStatePage.Hero,
+										HeroStatePage.Vitals,
+										HeroStatePage.Inventory,
+										HeroStatePage.Projects,
+										HeroStatePage.Customize
+									]
+									:
+									[
+										HeroStatePage.Vitals
+									]
+							}
 							value={page}
 							onChange={setPage}
 						/>

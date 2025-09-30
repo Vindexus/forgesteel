@@ -6,7 +6,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Plot } from '@/models/plot';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';

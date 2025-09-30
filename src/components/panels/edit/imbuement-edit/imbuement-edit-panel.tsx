@@ -9,7 +9,6 @@ import { ItemType } from '@/enums/item-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { Sourcebook } from '@/models/sourcebook';

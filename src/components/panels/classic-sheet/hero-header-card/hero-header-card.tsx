@@ -1,8 +1,6 @@
 import { HeaderImage } from '@/components/panels/classic-sheet/header-image/header-image';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
-import { Options } from '@/models/options';
-
 import './hero-header-card.scss';
 
 interface Props {

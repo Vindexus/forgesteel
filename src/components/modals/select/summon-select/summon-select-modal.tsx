@@ -4,7 +4,6 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Summon } from '@/models/summon';

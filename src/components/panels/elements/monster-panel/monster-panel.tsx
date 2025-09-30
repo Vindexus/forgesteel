@@ -21,7 +21,6 @@ import { MonsterLabel } from '@/components/panels/monster-label/monster-label';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterToken } from '@/components/panels/token/token';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SummoningInfo } from '@/models/summon';

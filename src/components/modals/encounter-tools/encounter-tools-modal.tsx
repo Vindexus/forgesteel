@@ -9,7 +9,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 

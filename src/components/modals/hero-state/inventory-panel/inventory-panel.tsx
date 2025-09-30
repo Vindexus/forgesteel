@@ -12,7 +12,6 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
 import { ItemType } from '@/enums/item-type';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';

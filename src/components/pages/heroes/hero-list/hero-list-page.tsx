@@ -10,7 +10,6 @@ import { HeroData } from '@/data/hero-data';
 import { HeroInfo } from '@/components/panels/token/token';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
-import { Options } from '@/models/options';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';

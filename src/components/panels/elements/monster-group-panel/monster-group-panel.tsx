@@ -7,7 +7,6 @@ import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 

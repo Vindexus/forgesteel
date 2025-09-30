@@ -4,7 +4,6 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 

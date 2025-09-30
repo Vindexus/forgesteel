@@ -22,7 +22,6 @@ import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';

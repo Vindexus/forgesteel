@@ -27,7 +27,6 @@ import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Radial } from '@/components/controls/radial/radial';
 import { Sourcebook } from '@/models/sourcebook';

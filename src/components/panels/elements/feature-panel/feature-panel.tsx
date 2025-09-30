@@ -23,7 +23,6 @@ import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';

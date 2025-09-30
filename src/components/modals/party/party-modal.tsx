@@ -15,7 +15,6 @@ import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
