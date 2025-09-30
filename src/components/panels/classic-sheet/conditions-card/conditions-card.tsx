@@ -2,6 +2,8 @@ import { ConditionEndType, ConditionType } from '@/enums/condition-type';
 import { Condition } from '@/models/condition';
 import { HeroSheet } from '@/models/classic-sheets/hero-sheet';
 import { LabeledBooleanField } from '@/components/panels/classic-sheet/components/labeled-field';
+import { useOption } from '@/store/selectors';
+
 import './conditions-card.scss';
 
 interface Props {
@@ -22,7 +24,7 @@ export const ConditionsCard = (props: Props) => {
 	];
 
 	const character = props.character;
-	const showState = props.options.includePlayState;
+	const showState = useOption('includePlayState');
 
 	const otherConditions: Condition[] = character.conditions?.filter(c => !conditionTypes.includes(c.type)) || [];
 	if (!otherConditions.length) {

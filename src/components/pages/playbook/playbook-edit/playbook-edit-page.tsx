@@ -19,7 +19,6 @@ import { MontagePanel } from '@/components/panels/elements/montage-panel/montage
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -46,7 +45,6 @@ interface Props {
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
-	setOptions: (options: Options) => void;
 }
 
 export const PlaybookEditPage = (props: Props) => {
@@ -203,7 +201,7 @@ export const PlaybookEditPage = (props: Props) => {
 							(kind === 'encounter') ?
 								<Popover
 									trigger='click'
-									content={<OptionsPanel mode='encounter-modern'heroes={props.heroes} setOptions={props.setOptions} />}
+									content={<OptionsPanel mode='encounter-modern'heroes={props.heroes} />}
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
@@ -216,7 +214,7 @@ export const PlaybookEditPage = (props: Props) => {
 							(kind === 'tactical-map') ?
 								<Popover
 									trigger='click'
-									content={<OptionsPanel mode={kind} heroes={props.heroes} setOptions={props.setOptions} />}
+									content={<OptionsPanel mode={kind} heroes={props.heroes} />}
 								>
 									<Button icon={<SettingOutlined />}>
 										Options

@@ -9,6 +9,7 @@ import { MonsterCard } from '@/components/panels/classic-sheet/monster-card/mons
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { Sourcebook } from '@/models/sourcebook';
+import { useAppStore } from '@/store/store';
 import { useMemo } from 'react';
 
 import './encounter-sheet-page.scss';
@@ -20,13 +21,14 @@ interface Props {
 }
 
 export const EncounterSheetPage = (props: Props) => {
+	const { options } = useAppStore();
 	const encounter = useMemo(
-		() => EncounterSheetBuilder.buildEncounterSheet(props.encounter, props.sourcebooks, props.heroes, props.options),
-		[ props.encounter, props.sourcebooks, props.heroes, props.options ]
+		() => EncounterSheetBuilder.buildEncounterSheet(props.encounter, props.sourcebooks, props.heroes, options),
+		[ props.encounter, props.sourcebooks, props.heroes, options ]
 	);
 
 	const getMonsterCards = () => {
-		const layout = SheetLayout.getFollowerCardsLayout(props.options, true);
+		const layout = SheetLayout.getFollowerCardsLayout(options, true);
 
 		const requiredCards: FillerCard[] = [];
 
@@ -59,20 +61,20 @@ export const EncounterSheetPage = (props: Props) => {
 		() => {
 			const classes = [
 				'encounter-sheet',
-				props.options.classicSheetPageSize.toLowerCase()
+				options.classicSheetPageSize.toLowerCase()
 			];
-			if (props.options.colorSheet) {
+			if (options.colorSheet) {
 				classes.push('color');
 			}
 			return classes;
 		},
-		[ props.options.classicSheetPageSize, props.options.colorSheet ]
+		[ options.classicSheetPageSize, options.colorSheet ]
 	);
 
 	return (
 		<main id='classic-sheet'>
 			<div className={sheetClasses.join(' ')} id={SheetFormatter.getPageId('encounter', encounter.id, 'main')}>
-				<div className={`page page-1 ${props.options.pageOrientation}`}>
+				<div className={`page page-1 ${options.pageOrientation}`}>
 					<EncounterHeaderCard encounter={encounter} />
 					<MaliceCard encounter={encounter} />
 					<EncounterRosterCard encounter={encounter} sourcebooks={props.sourcebooks} />

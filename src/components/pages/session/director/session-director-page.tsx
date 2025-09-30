@@ -19,7 +19,6 @@ import { Negotiation } from '@/models/negotiation';
 import { NegotiationData } from '@/data/negotiation-data';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Playbook } from '@/models/playbook';
@@ -56,7 +55,6 @@ interface Props {
 	updateMap: (map: TacticalMap) => void;
 	updateCounter: (counter: Counter) => void;
 	finishSessionElement: (id: string) => string | null;
-	setOptions: (options: Options) => void;
 }
 
 export const SessionDirectorPage = (props: Props) => {
@@ -70,20 +68,21 @@ export const SessionDirectorPage = (props: Props) => {
 	const [ newCounterValue, setNewCounterValue ] = useState<number>(0);
 
 	const getSelector = () => {
-		const options = PlaybookLogic.getContentOptions(props.session).map(o => {
+		const contentOptions = PlaybookLogic.getContentOptions(props.session).map(o => {
 			return {
 				value: o.id,
 				label: o.name
 			};
 		});
 
-		if (options.length <= 1) {
+		if (contentOptions.length <= 1) {
 			return null;
 		}
 
 		return (
 			<div className='session-page-content-selector'>
 				<Segmented
+					options={contentOptions}
 					value={selectedElementID}
 					onChange={setSelectedElementID}
 				/>
@@ -401,7 +400,7 @@ export const SessionDirectorPage = (props: Props) => {
 						<Button onClick={props.showPlayerView}>Player View</Button>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='session' heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode='session' heroes={props.heroes} />}
 						>
 							<Button icon={<SettingOutlined />}>
 								Options

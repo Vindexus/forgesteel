@@ -48,7 +48,6 @@ import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-pa
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
-import { Options } from '@/models/options';
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
@@ -66,6 +65,7 @@ import { Title } from '@/models/title';
 import { TitleEditPanel } from '@/components/panels/edit/title-edit/title-edit-panel';
 import { TitlePanel } from '@/components/panels/elements/title-panel/title-panel';
 import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useParams } from 'react-router';
 import { useState } from 'react';
@@ -81,10 +81,10 @@ interface Props {
 	showReference: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	saveChanges: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
-	setOptions: (options: Options) => void;
 }
 
 export const LibraryEditPage = (props: Props) => {
+	const { options } = useAppStore();
 	const navigation = useNavigation();
 	const { kind, sourcebookID, elementID, subElementID } = useParams<{ kind: SourcebookElementKind, sourcebookID: string, elementID: string, subElementID?: string }>();
 	const [ element, setElement ] = useState<Element>(() => {
@@ -149,7 +149,7 @@ export const LibraryEditPage = (props: Props) => {
 
 	const getSimilarMonsters = (monster: Monster) => {
 		const monsters = SourcebookLogic
-			.getSimilarMonsters(props.sourcebooks, monster, props.options)
+			.getSimilarMonsters(props.sourcebooks, monster, options)
 			.filter(m => !hiddenMonsterIDs.includes(m.id));
 
 		scratchpadMonsters
@@ -690,7 +690,7 @@ export const LibraryEditPage = (props: Props) => {
 							monster ?
 								<Popover
 									trigger='click'
-									content={<OptionsPanel mode='monster'heroes={props.heroes} setOptions={props.setOptions} />}
+									content={<OptionsPanel mode='monster'heroes={props.heroes} />}
 								>
 									<Button icon={<SettingOutlined />}>
 										Options

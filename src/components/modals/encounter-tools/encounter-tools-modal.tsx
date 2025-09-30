@@ -11,6 +11,7 @@ import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { useAppStore } from '@/store/store';
 
 import './encounter-tools-modal.scss';
 
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const EncounterToolsModal = (props: Props) => {
+	const { options } = useAppStore();
 	try {
 		const monsters: { monster: Monster, count: number }[] = [];
 		props.encounter.groups
@@ -34,7 +36,7 @@ export const EncounterToolsModal = (props: Props) => {
 					if (monster) {
 						monsters.push({
 							monster: monster,
-							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)
+							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options)
 						});
 					}
 				}

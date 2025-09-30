@@ -10,6 +10,7 @@ import { OptionsLogic } from '@/logic/options-logic';
 import { ReactNode } from 'react';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { useAppStore } from '@/store/store';
 
 import './encounter-difficulty-panel.scss';
 
@@ -21,11 +22,12 @@ interface Props {
 }
 
 export const EncounterDifficultyPanel = (props: Props) => {
+	const { options } = useAppStore();
 	try {
-		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks, props.options);
-		const budgets = EncounterDifficultyLogic.getBudgets(props.options, props.heroes);
+		const count = EncounterLogic.getMonsterCount(props.encounter, props.sourcebooks, options);
+		const budgets = EncounterDifficultyLogic.getBudgets(options, props.heroes);
 		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
 		const victories = EncounterDifficultyLogic.getVictories(difficulty);
 
 		const marks: Record<string | number, ReactNode> = {};
@@ -41,13 +43,13 @@ export const EncounterDifficultyPanel = (props: Props) => {
 			.map(s => SourcebookLogic.getMonster(props.sourcebooks, s.monsterID))
 			.filter(m => !!m)
 			.map(m => m.level);
-		if (Math.max(...levels) > props.options.heroLevel + 2) {
+		if (Math.max(...levels) > options.heroLevel + 2) {
 			warnings.push(
 				<Alert
 					key='too-high-level'
 					type='warning'
 					showIcon={true}
-					message={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${props.options.heroLevel + 2} may cause problems.`}
+					message={`This encounter contains a monster of level ${Math.max(...levels)}; for this party, anything above level ${options.heroLevel + 2} may cause problems.`}
 				/>
 			);
 		}
@@ -56,7 +58,7 @@ export const EncounterDifficultyPanel = (props: Props) => {
 			<ErrorBoundary>
 				<div className='encounter-difficulty-panel'>
 					{props.showHeader !== false ? <HeaderText level={1}>Encounter Difficulty</HeaderText> : null}
-					<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(props.options)}.</div>
+					<div className='ds-text'>Difficulty for {OptionsLogic.getPartyDescription(options)}.</div>
 					<div className='encounter-slider'>
 						<Slider
 							range={true}

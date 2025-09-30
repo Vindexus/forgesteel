@@ -31,7 +31,6 @@ import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Monster } from '@/models/monster';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
@@ -64,7 +63,6 @@ interface Props {
 	showSourcebooks: () => void;
 	showSubclass: (subclass: SubClass) => void;
 	showMonster: (monster: Monster) => void;
-	setOptions: (options: Options) => void;
 	createElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element | null) => void;
 	importElement: (kind: SourcebookElementKind, sourcebookID: string | null, element: Element) => void;
 	deleteElement: (kind: SourcebookElementKind, sourcebookID: string, element: Element) => void;
@@ -674,6 +672,7 @@ export const LibraryListPage = (props: Props) => {
 												<Select
 													style={{ width: '100%' }}
 													placeholder='Select'
+													options={sourcebookOptions}
 													optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 													showSearch={true}
 													filterOption={(input, option) => {

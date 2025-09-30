@@ -24,6 +24,7 @@ import { MonsterToken } from '@/components/panels/token/token';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { SummoningInfo } from '@/models/summon';
+import { useAppStore } from '@/store/store';
 
 import './monster-panel.scss';
 
@@ -37,6 +38,7 @@ interface Props {
 }
 
 export const MonsterPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const [ selectedAbility, setSelectedAbility ] = useState<Ability | null>(null);
 
 	try {
@@ -76,7 +78,7 @@ export const MonsterPanel = (props: Props) => {
 									label='EV'
 									value={
 										props.monster.role.organization === MonsterOrganizationType.Minion ?
-											`${props.monster.encounterValue} for ${props.options.minionCount} minions`
+											`${props.monster.encounterValue} for ${options.minionCount} minions`
 											:
 											((props.monster.encounterValue === 0) ? '-' : props.monster.encounterValue)
 									}
@@ -190,7 +192,7 @@ export const MonsterPanel = (props: Props) => {
 												props.monster.retainer.level4 && (props.monster.retainer.level < 4) ?
 													<>
 														<HeaderText level={1}>Level 4</HeaderText>
-														<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4}options={props.options} mode={PanelMode.Full} />
+														<FeaturePanel key={props.monster.retainer.level4.id} feature={props.monster.retainer.level4} mode={PanelMode.Full} />
 													</>
 													: null
 											}
@@ -198,7 +200,7 @@ export const MonsterPanel = (props: Props) => {
 												props.monster.retainer.level7 && (props.monster.retainer.level < 7) ?
 													<>
 														<HeaderText level={1}>Level 7</HeaderText>
-														<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7}options={props.options} mode={PanelMode.Full} />
+														<FeaturePanel key={props.monster.retainer.level7.id} feature={props.monster.retainer.level7} mode={PanelMode.Full} />
 													</>
 													: null
 											}
@@ -206,7 +208,7 @@ export const MonsterPanel = (props: Props) => {
 												props.monster.retainer.level10 && (props.monster.retainer.level < 10) ?
 													<>
 														<HeaderText level={1}>Level 10</HeaderText>
-														<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10}options={props.options} mode={PanelMode.Full} />
+														<FeaturePanel key={props.monster.retainer.level10.id} feature={props.monster.retainer.level10} mode={PanelMode.Full} />
 													</>
 													: null
 											}

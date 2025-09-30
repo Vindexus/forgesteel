@@ -3,6 +3,7 @@ import { LabeledTextField } from '@/components/panels/classic-sheet/components/l
 import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
 import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';
 import { Utils } from '@/utils/utils';
+import { useOption } from '@/store/selectors';
 
 import './stats-resources-card.scss';
 
@@ -12,7 +13,7 @@ interface Props {
 
 export const StatsResourcesCard = (props: Props) => {
 	const character = props.character;
-	const showState = props.options.includePlayState;
+	const showState = useOption('includePlayState');
 
 	return (
 		<div className='stats-resources card'>

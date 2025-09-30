@@ -22,6 +22,7 @@ import { SelectablePanel } from '@/components/controls/selectable-panel/selectab
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
+import { useAppStore } from '@/store/store';
 
 import './encounter-panel.scss';
 
@@ -34,6 +35,7 @@ interface Props {
 }
 
 export const EncounterPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const getEncounterGroups = () => {
 		if (props.mode !== PanelMode.Full) {
 			return null;
@@ -64,7 +66,7 @@ export const EncounterPanel = (props: Props) => {
 											return null;
 										}
 
-										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
+										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options);
 
 										return (
 											<div key={slot.id} className='encounter-slot'>
@@ -217,7 +219,7 @@ export const EncounterPanel = (props: Props) => {
 
 	try {
 		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
 
 		return (
 			<ErrorBoundary>

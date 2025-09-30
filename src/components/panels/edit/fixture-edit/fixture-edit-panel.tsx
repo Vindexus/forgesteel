@@ -147,6 +147,7 @@ export const FixtureEditPanel = (props: Props) => {
 							<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
 								name='sizemodtypes'
 								block={true}
+								options={[ 'T', 'S', 'M', 'L' ]}
 								value={fixture.size.mod}
 								onChange={setSizeMod}
 							/>

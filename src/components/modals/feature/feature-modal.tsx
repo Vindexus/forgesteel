@@ -23,7 +23,7 @@ interface Props {
 
 export const FeatureModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
-	const [ page, setPage ] = useState<string>('Feature');
+	const [ page, setPage ] = useState<'Feature' | 'Customize'>('Feature');
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) : undefined;
 
@@ -135,6 +135,10 @@ export const FeatureModal = (props: Props) => {
 							<Segmented
 								name='tabs'
 								value={page}
+								options={[
+									{ value: 'Feature', label: 'Feature' },
+									{ value: 'Customize', label: 'Customize' }
+								]}
 								onChange={setPage}
 							/>
 						</div>

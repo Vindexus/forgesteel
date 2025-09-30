@@ -38,6 +38,7 @@ import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
@@ -58,6 +59,7 @@ interface Props {
 
 export const EncounterRunPanel = (props: Props) => {
 	const isSmall = useIsSmall();
+	const { options } = useAppStore();
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
 	const [ tab, setTab ] = useState<string>('combatants');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
@@ -99,7 +101,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const addSlot = (monster: Monster) => {
 		const slot = FactoryLogic.createEncounterSlot(monster.id);
-		slot.count = MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
+		slot.count = MonsterLogic.getRoleMultiplier(monster.role.organization, options);
 
 		while (slot.monsters.length < slot.count) {
 			const monsterCopy = Utils.copy(monster);
@@ -344,7 +346,7 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		const sections = [ 'current', 'ready', 'finished' ];
-		if (props.options.showDefeatedCombatants) {
+		if (options.showDefeatedCombatants) {
 			sections.push('defeated');
 		}
 

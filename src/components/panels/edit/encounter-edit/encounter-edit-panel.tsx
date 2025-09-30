@@ -41,9 +41,9 @@ import { TerrainLogic } from '@/logic/terrain-logic';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
 
 import './encounter-edit-panel.scss';
-
 interface Props {
 	encounter: Encounter;
 	heroes: Hero[];
@@ -54,6 +54,7 @@ interface Props {
 }
 
 export const EncounterEditPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const [ encounter, setEncounter ] = useState<Encounter>(props.encounter);
 	const [ filterVisible, setFilterVisible ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
@@ -699,7 +700,7 @@ export const EncounterEditPanel = (props: Props) => {
 
 		const getDifficultySection = () => {
 			const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
-			const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+			const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
 
 			return (
 				<Expander title='Difficulty' tags={[ difficulty ]}>
@@ -791,6 +792,7 @@ interface GroupPanelProps {
 }
 
 const GroupPanel = (props: GroupPanelProps) => {
+	const { options } = useAppStore();
 	const [ editing, setEditing ] = useState<boolean>(false);
 
 	return (
@@ -822,7 +824,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 					: null
 			}
 			{
-				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
+				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(options.heroLevel) ?
 					<Alert
 						type='warning'
 						showIcon={true}
@@ -831,7 +833,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 					: null
 			}
 			{
-				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
+				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(options.heroLevel) * 2) ?
 					<Alert
 						type='warning'
 						showIcon={true}
@@ -859,6 +861,7 @@ interface MonsterSlotPanelProps {
 }
 
 const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
+	const { options } = useAppStore();
 	const [ showCustomize, setShowCustomize ] = useState<boolean>(false);
 
 	const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, props.slot.monsterID);
@@ -951,7 +954,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				<div className='actions'>
 					<NumberSpin
 						value={props.slot.count}
-						format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
+						format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, options)).toString()}
 						onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
 					/>
 					<Divider />

@@ -18,9 +18,9 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
-import { Options } from '@/models/options';
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
+import { useAppStore } from '@/store/store';
 
 import './ability-panel.scss';
 
@@ -30,7 +30,7 @@ interface Props {
 	monster?: Monster;
 	cost?: number | 'signature';
 	repeatable?: boolean;
-	options?: Options;
+	options?: boolean;
 	tags?: string[];
 	highlightTier?: number;
 	odds?: number[];
@@ -38,6 +38,7 @@ interface Props {
 }
 
 export const AbilityPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const [ autoCalc, setAutoCalc ] = useState<boolean>(true);
 
 	const cost = useMemo(
@@ -89,12 +90,12 @@ export const AbilityPanel = (props: Props) => {
 	const disabled = useMemo(
 		() => {
 			return props.options
-				&& props.options.dimUnavailableAbilities
+				&& options.dimUnavailableAbilities
 				&& cost !== 'signature'
 				&& cost > 0
 				&& cost > heroicResource;
 		},
-		[ cost, heroicResource, props.options ]
+		[ cost, heroicResource, props.options, options.dimUnavailableAbilities ]
 	);
 
 	const parseText = (text: string) => {
@@ -227,7 +228,7 @@ export const AbilityPanel = (props: Props) => {
 				return (
 					<Field
 						key={index}
-						disabled={props.hero && (props.options?.dimUnavailableAbilities || false) && (section.value > 0) && (section.value > heroicResource)}
+						disabled={props.hero && (props.options && options.dimUnavailableAbilities) && (section.value > 0) && (section.value > heroicResource)}
 						danger={(section.name === 'Strained') && props.hero && (heroicResource < 0)}
 						label={section.name}
 						labelTag={section.value ? <ResourcePill value={section.value} repeatable={section.repeatable} /> : null}

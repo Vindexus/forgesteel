@@ -63,6 +63,7 @@ export const CultureEditPanel = (props: Props) => {
 				<Space direction='vertical' style={{ width: '100%' }}>
 					<Segmented
 						block={true}
+						options={[ CultureType.Ancestral, CultureType.Professional ]}
 						value={culture.type}
 						onChange={value => {
 							const copy = Utils.copy(culture);

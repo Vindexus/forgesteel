@@ -22,7 +22,6 @@ import { HeroStatePage } from '@/enums/hero-state-page';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
-import { Options } from '@/models/options';
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
@@ -43,7 +42,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
-	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'json') => void;
 	exportPdf: (hero: Hero, resolution: 'standard' | 'high') => void;
 	exportStandardAbilities: () => void;
@@ -214,7 +212,7 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} heroes={props.heroes} />}
 						>
 							<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
 								Options

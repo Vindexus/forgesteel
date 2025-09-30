@@ -1,5 +1,6 @@
 import { LabeledBooleanField, LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { StaminaSheet } from '@/models/classic-sheets/hero-sheet';
+import { useOption } from '@/store/selectors';
 
 import './stamina-component.scss';
 
@@ -9,7 +10,7 @@ interface Props {
 
 export const StaminaComponent = (props: Props) => {
 	const stamina = props.stamina;
-	const showState = props.options.includePlayState;
+	const showState = useOption('includePlayState');
 
 	return (
 		<div className='stamina'>

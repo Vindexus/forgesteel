@@ -9,7 +9,6 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { Hero } from '@/models/hero';
 import { MontageRunPanel } from '@/components/panels/run/montage-run/montage-run-panel';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
-import { Options } from '@/models/options';
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Playbook } from '@/models/playbook';
@@ -28,7 +27,6 @@ interface Props {
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
-	setOptions: (options: Options) => void;
 }
 
 export const SessionPlayerPage = (props: Props) => {
@@ -100,7 +98,7 @@ export const SessionPlayerPage = (props: Props) => {
 					<AppHeader subheader='Forge Steel'>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode='player' heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode='player' heroes={props.heroes} />}
 						>
 							<Button icon={<SettingOutlined />}>
 								Options

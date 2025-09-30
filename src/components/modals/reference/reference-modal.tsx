@@ -33,7 +33,7 @@ interface Props {
 }
 
 export const ReferenceModal = (props: Props) => {
-	const [ page, setPage ] = useState<string>(props.startPage || RulesPage.Rules);
+	const [ page, setPage ] = useState<RulesPage>(props.startPage || RulesPage.Rules);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ selectedRule, setSelectedRule ] = useState<string>('');
 
@@ -352,6 +352,13 @@ export const ReferenceModal = (props: Props) => {
 						<Segmented
 							name='tabs'
 							value={page}
+							options={[
+								{ value: RulesPage.Rules, label: 'Rules' },
+								{ value: RulesPage.Conditions, label: 'Conditions' },
+								{ value: RulesPage.Skills, label: 'Skills' },
+								{ value: RulesPage.Languages, label: 'Languages' },
+								{ value: RulesPage.Abilities, label: 'Abilities' }
+							]}
 							onChange={setPage}
 						/>
 					</div>

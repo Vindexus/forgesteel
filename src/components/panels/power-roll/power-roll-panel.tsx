@@ -174,6 +174,7 @@ export const PowerRollPanel = (props: Props) => {
 							{
 								props.autoCalc && props.ability && (props.ability.distance.length > 1) ?
 									<Segmented
+										options={props.ability.distance.map(d => d.type)}
 										value={distance}
 										onChange={setDistance}
 									/>

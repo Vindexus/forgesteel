@@ -277,6 +277,7 @@ export const MonsterEditPanel = (props: Props) => {
 						<Segmented<'' | 'T' | 'S' | 'M' | 'L'>
 							name='sizemodtypes'
 							block={true}
+							options={[ 'T', 'S', 'M', 'L' ]}
 							value={monster.size.mod}
 							onChange={setSizeMod}
 						/>

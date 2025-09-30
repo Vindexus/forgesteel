@@ -287,6 +287,7 @@ export const TerrainEditPanel = (props: Props) => {
 								<Segmented
 									name='modifiertypes'
 									block={true}
+									options={[ DamageModifierType.Immunity, DamageModifierType.Weakness ]}
 									value={dm.type}
 									onChange={value => setModifierType(n, value)}
 								/>

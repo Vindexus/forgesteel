@@ -20,7 +20,6 @@ import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlaybookLogic } from '@/logic/playbook-logic';
@@ -44,7 +43,6 @@ interface Props {
 	showRoll: () => void;
 	showReference: () => void;
 	showEncounterTools: (encounter: Encounter) => void;
-	setOptions: (options: Options) => void;
 	createElement: (kind: PlaybookElementKind, element: Element | null) => void;
 	importElement: (kind: PlaybookElementKind, element: Element) => void;
 	importAdventurePackage: (ap: AdventurePackage) => void;
@@ -425,7 +423,7 @@ export const PlaybookListPage = (props: Props) => {
 						(category === 'tactical-map') ?
 							<Popover
 								trigger='click'
-								content={<OptionsPanel mode={category} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={category} heroes={props.heroes} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options
@@ -439,7 +437,7 @@ export const PlaybookListPage = (props: Props) => {
 						(category === 'encounter') ?
 							<Popover
 								trigger='click'
-								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} heroes={props.heroes} setOptions={props.setOptions} />}
+								content={<OptionsPanel mode={view === 'classic' ? 'encounter-classic' : 'encounter-modern'} heroes={props.heroes} />}
 							>
 								<Button icon={<SettingOutlined />}>
 									Options

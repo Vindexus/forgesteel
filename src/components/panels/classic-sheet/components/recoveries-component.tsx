@@ -1,5 +1,6 @@
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { RecoveriesSheet } from '@/models/classic-sheets/hero-sheet';
+import { useOption } from '@/store/selectors';
 
 import './recoveries-component.scss';
 
@@ -9,7 +10,7 @@ interface Props {
 
 export const RecoveriesComponent = (props: Props) => {
 	const recoveries = props.recoveries;
-	const showState = props.options.includePlayState;
+	const showState = useOption('includePlayState');
 
 	return (
 

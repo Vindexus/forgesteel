@@ -3,7 +3,6 @@ import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select
 import { HeroToken, MonsterToken } from '@/components/panels/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '@/models/tactical-map';
 import { ReactNode, useState } from 'react';
-import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
@@ -36,8 +35,10 @@ import { TacticalMapEditMode } from '@/enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useOption } from '@/store/selectors';
 
 import './tactical-map-panel.scss';
+import { Collections } from '@/utils/collections';
 
 export interface MapItemStyle {
 	left: string;
@@ -67,6 +68,7 @@ interface Props {
 }
 
 export const TacticalMapPanel = (props: Props) => {
+	const gridSize = useOption('gridSize');
 	const [ map, setMap ] = useState<TacticalMap>(Utils.copy(props.map));
 	const [ editMode, setEditMode ] = useState<TacticalMapEditMode>(TacticalMapEditMode.Map);
 	const [ editAdding, setEditAdding ] = useState<boolean>(false);
@@ -91,7 +93,7 @@ export const TacticalMapPanel = (props: Props) => {
 	const [ selectedMonster, setSelectedMonster ] = useState<SelectedMonsterInfo | null>(null);
 
 	const zLevel = 0;
-	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
+	const size = props.display === 'thumbnail' ? 5 : gridSize;
 
 	const updateMapItem = (item: MapItem) => {
 		const copy = Utils.copy(map);
@@ -569,6 +571,7 @@ export const TacticalMapPanel = (props: Props) => {
 			<div className='tactical-map-toolbar top-toolbar'>
 				<Segmented
 					name='edit'
+					options={editModes}
 					value={editMode}
 					onChange={changeEditMode}
 				/>
@@ -1226,6 +1229,7 @@ export const TacticalMapPanel = (props: Props) => {
 				<div className='tactical-map-toolbar bottom-toolbar'>
 					<Select
 						style={{ width: '200px' }}
+						options={distinctSources}
 						optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 						popupRender={menu => (
 							<>

@@ -127,6 +127,10 @@ export const RollModal = (props: Props) => {
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							name='tabs'
+							options={[
+								{ value: 'Power Roll', label: 'Power Roll' },
+								{ value: 'Saving Throw', label: 'Saving Throw' }
+							]}
 							value={type}
 							onChange={setType}
 						/>

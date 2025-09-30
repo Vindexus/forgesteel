@@ -34,7 +34,7 @@ interface Props {
 
 export const AbilityModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero | undefined>(props.hero ? Utils.copy(props.hero) : undefined);
-	const [ page, setPage ] = useState<string>('Ability Card');
+	const [ page, setPage ] = useState<'Ability Card' | 'Customize'>('Ability Card');
 	const [ rollState, setRollState ] = useState<RollState>(RollState.Standard);
 	const [ tier, setTier ] = useState<number | null>(null);
 
@@ -237,6 +237,10 @@ export const AbilityModal = (props: Props) => {
 						<div style={{ width: '100%', textAlign: 'center' }}>
 							<Segmented
 								name='tabs'
+								options={[
+									{ value: 'Ability Card', label: 'Ability Card' },
+									{ value: 'Customize', label: 'Customize' }
+								]}
 								value={page}
 								onChange={setPage}
 							/>

@@ -201,6 +201,7 @@ export const SourcebookPanel = (props: Props) => {
 											<MultiLine placeholder='Description' value={lang.description} onChange={value => setLanguageDescription(n, value)} />
 											<Segmented
 												block={true}
+												options={[ LanguageType.Common, LanguageType.Regional, LanguageType.Cultural, LanguageType.Dead ]}
 												value={lang.type}
 												onChange={value => setLanguageType(n, value)}
 											/>

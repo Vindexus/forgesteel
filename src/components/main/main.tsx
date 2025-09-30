@@ -48,7 +48,6 @@ import { MonsterGroup } from '@/models/monster-group';
 import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { Montage } from '@/models/montage';
 import { Negotiation } from '@/models/negotiation';
-import { Options } from '@/models/options';
 import { PartyModal } from '@/components/modals/party/party-modal';
 import { Perk } from '@/models/perk';
 import { PlaybookEditPage } from '@/components/pages/playbook/playbook-edit/playbook-edit-page';
@@ -75,9 +74,9 @@ import { Utils } from '@/utils/utils';
 import { WelcomePage } from '@/components/pages/welcome/welcome-page';
 import localforage from 'localforage';
 import { useErrorListener } from '@/hooks/use-error-listener';
-import { useIsSmall } from '@/hooks/use-is-small';
 import { useNavigation } from '@/hooks/use-navigation';
 import { useSyncStatus } from '@/hooks/use-sync-status';
+import { useAppStore } from '@/store/store';
 
 import './main.scss';
 
@@ -90,7 +89,7 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const isSmall = useIsSmall();
+	const { options } = useAppStore();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
@@ -99,13 +98,6 @@ export const Main = (props: Props) => {
 	const [ session, setSession ] = useState<Playbook>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
 	const [ hiddenSourcebookIDs, setHiddenSourcebookIDs ] = useState<string[]>(props.hiddenSourcebookIDs);
-	const [ options, setOptions ] = useState<Options>(() => {
-		const opts = Utils.copy(props.options);
-		if (isSmall) {
-			opts.compactView = true;
-		}
-		return opts;
-	});
 	const [ errors, setErrors ] = useState<Event[]>([]);
 	const [ drawer, setDrawer ] = useState<ReactNode>(null);
 	const [ playerView, setPlayerView ] = useState<Window | null>(null);
@@ -225,26 +217,6 @@ export const Main = (props: Props) => {
 				}
 			);
 	};
-
-	const persistOptions = (options: Options) => {
-		return localforage
-			.setItem<Options>('forgesteel-options', options)
-			.then(
-				setOptions,
-				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving options',
-						description: err,
-						placement: 'top'
-					});
-				}
-			);
-	};
-
-	// #endregion
-
-	// #region Heroes
 
 	const createHero = (folder: string) => {
 		const hero = FactoryLogic.createHero([
@@ -1539,7 +1511,6 @@ export const Main = (props: Props) => {
 								<HeroViewPage
 									heroes={heroes}
 									sourcebooks={SourcebookLogic.getSourcebooks(homebrewSourcebooks)}
-									setOptions={persistOptions}
 									highlightAbout={errors.length > 0}
 									showAbout={showAbout}
 									showRoll={showRoll}
@@ -1596,7 +1567,6 @@ export const Main = (props: Props) => {
 								<HeroSheetPreviewPage
 									heroes={heroes}
 									sourcebooks={[ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1621,7 +1591,6 @@ export const Main = (props: Props) => {
 									showSourcebooks={showSourcebooks}
 									showSubclass={sc => onSelectLibraryElement(sc, 'subclass')}
 									showMonster={onSelectMonster}
-									setOptions={persistOptions}
 									createElement={(kind, sourcebookID, element) => createLibraryElement(kind, sourcebookID, element)}
 									importElement={importLibraryElement}
 									deleteElement={deleteLibraryElement}
@@ -1641,7 +1610,6 @@ export const Main = (props: Props) => {
 									showReference={showReference}
 									showMonster={onSelectMonster}
 									saveChanges={saveLibraryElement}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1663,7 +1631,6 @@ export const Main = (props: Props) => {
 									showRoll={showRoll}
 									showReference={showReference}
 									showEncounterTools={showEncounterTools}
-									setOptions={persistOptions}
 									createElement={createPlaybookElement}
 									importElement={(kind, element) => importPlaybookElement([ { kind: kind, element: element } ])}
 									importAdventurePackage={importAdventurePackage}
@@ -1688,7 +1655,6 @@ export const Main = (props: Props) => {
 									showMonster={onSelectMonster}
 									showTerrain={onSelectTerrain}
 									saveChanges={savePlaybookElement}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1723,7 +1689,6 @@ export const Main = (props: Props) => {
 									updateMap={updateMap}
 									updateCounter={updateCounter}
 									finishSessionElement={finishSessionElement}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
@@ -1739,7 +1704,6 @@ export const Main = (props: Props) => {
 									showAbout={showAbout}
 									showRoll={showRoll}
 									showReference={showReference}
-									setOptions={persistOptions}
 								/>
 							}
 						/>
