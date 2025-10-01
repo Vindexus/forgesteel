@@ -33,7 +33,7 @@ const promises = [
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
 	localforage.getItem<Playbook>('forgesteel-playbook'),
-	localforage.getItem<Playbook>('forgesteel-session'),
+	localforage.getItem<Playbook>('forgesteel-session')
 ];
 
 Promise.all(promises).then(results => {

@@ -3,6 +3,7 @@ import { Button, ColorPicker, Divider, Drawer, Input, Popover, Segmented, Select
 import { HeroToken, MonsterToken } from '@/components/panels/token/token';
 import { MapBoundaries, MapItem, MapMini, MapPosition, MapTile, MapWall, MapZone, TacticalMap } from '@/models/tactical-map';
 import { ReactNode, useState } from 'react';
+import { Collections } from '@/utils/collections';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
 import { Empty } from '@/components/controls/empty/empty';
 import { Encounter } from '@/models/encounter';
@@ -38,7 +39,6 @@ import { Utils } from '@/utils/utils';
 import { useOption } from '@/store/hooks';
 
 import './tactical-map-panel.scss';
-import { Collections } from '@/utils/collections';
 
 export interface MapItemStyle {
 	left: string;

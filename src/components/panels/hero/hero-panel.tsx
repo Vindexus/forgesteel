@@ -44,11 +44,11 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
+import { useAppStore } from '@/store/store';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
 import './hero-panel.scss';
-import { useAppStore } from '@/store/store';
 
 interface Props {
 	hero: Hero;
