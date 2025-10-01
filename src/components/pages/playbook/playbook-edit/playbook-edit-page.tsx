@@ -19,6 +19,7 @@ import { MontagePanel } from '@/components/panels/elements/montage-panel/montage
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

@@ -11,6 +11,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroLogic } from '@/logic/hero-logic';
 import { NameGenerator } from '@/utils/name-generator';
+
 import { Sourcebook } from '@/models/sourcebook';
 
 import './details-section.scss';

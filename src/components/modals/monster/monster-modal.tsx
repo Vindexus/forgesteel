@@ -11,6 +11,7 @@ import { MonsterHealthPanel } from '@/components/panels/health/health-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterToken } from '@/components/panels/token/token';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { ResourcePill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

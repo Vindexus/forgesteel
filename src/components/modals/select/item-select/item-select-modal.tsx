@@ -8,6 +8,7 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemType } from '@/enums/item-type';
 import { Modal } from '@/components/modals/modal/modal';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';

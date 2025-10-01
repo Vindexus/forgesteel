@@ -19,6 +19,7 @@ import { Negotiation } from '@/models/negotiation';
 import { NegotiationData } from '@/data/negotiation-data';
 import { NegotiationRunPanel } from '@/components/panels/run/negotiation-run/negotiation-run-panel';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
+
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { Playbook } from '@/models/playbook';

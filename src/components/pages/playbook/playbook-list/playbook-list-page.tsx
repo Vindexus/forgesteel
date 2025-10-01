@@ -20,6 +20,7 @@ import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { PlaybookLogic } from '@/logic/playbook-logic';

@@ -17,6 +17,7 @@ import { ImmunitiesWeaknessesCard } from '@/components/panels/classic-sheet/immu
 import { InventoryCard } from '@/components/panels/classic-sheet/inventory-card/inventory-card';
 import { ModifiersCard } from '@/components/panels/classic-sheet/modifiers-card/modifiers-card';
 import { NotesCard } from '@/components/panels/classic-sheet/notes-card/notes-card';
+
 import { PerksCard } from '@/components/panels/classic-sheet/perks-card/perks-card';
 import { PotenciesCard } from '@/components/panels/classic-sheet/potencies-card/potencies-card';
 import { PrimaryReferenceCard } from '@/components/panels/classic-sheet/reference/primary-reference-card';

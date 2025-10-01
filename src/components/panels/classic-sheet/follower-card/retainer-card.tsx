@@ -2,6 +2,7 @@ import { AbilityComponent } from '@/components/panels/classic-sheet/components/a
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
+
 import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';

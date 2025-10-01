@@ -5,6 +5,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroStatePage } from '@/enums/hero-state-page';
 import { InventoryPanel } from '@/components/modals/hero-state/inventory-panel/inventory-panel';
 import { Modal } from '@/components/modals/modal/modal';
+
 import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/projects-panel';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';

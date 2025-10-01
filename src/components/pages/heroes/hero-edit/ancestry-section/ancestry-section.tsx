@@ -7,6 +7,7 @@ import { FeatureData } from '@/models/feature';
 import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { ReactNode } from 'react';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

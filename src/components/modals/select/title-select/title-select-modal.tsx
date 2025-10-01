@@ -4,6 +4,7 @@ import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';

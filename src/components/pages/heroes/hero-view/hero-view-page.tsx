@@ -22,6 +22,7 @@ import { HeroStatePage } from '@/enums/hero-state-page';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
+
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';

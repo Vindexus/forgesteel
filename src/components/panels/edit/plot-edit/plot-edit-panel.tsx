@@ -16,6 +16,7 @@ import { Modal } from '@/components/modals/modal/modal';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Playbook } from '@/models/playbook';
 import { PlaybookLogic } from '@/logic/playbook-logic';
