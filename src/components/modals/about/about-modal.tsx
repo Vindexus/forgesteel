@@ -1,3 +1,4 @@
+import { AppError, useAppStore } from '@/store/store';
 import { Button, Divider, Segmented, Space } from 'antd';
 import { CopyOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -7,7 +8,6 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { LogoPanel } from '@/components/panels/logo/logo-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
-import { AppError, useAppStore } from '@/store/store';
 import { useTheme } from '@/hooks/use-theme';
 
 import pbds from '@/assets/powered-by-draw-steel.png';
@@ -29,39 +29,68 @@ export const AboutModal = (props: Props) => {
 			props.onClose();
 		};
 
-		const getError = (appError: AppError, index: number) => {
-			const err = appError.err;
+		const getError = (appError: AppError) => {
+			const unknownError = appError.err;
 			let message = '';
-			let output = '';
+			let clipboardOutput = `error: ${unknownError}
+error json: ${JSON.stringify(unknownError)}`;
+			let error: Error | null = null;
 			const fields: { label: string, value: string }[] = [];
-			if (err instanceof Event) {
-				const event = err;
-				fields.push({ label: 'Type', value: `${event.type}` });
+			if (unknownError instanceof Event) {
+				const event = unknownError;
+				fields.push({ label: 'Type', value: 'event' });
+				fields.push({ label: 'Event Type', value: `${event.type}` });
+				if (event instanceof ErrorEvent) {
+					error = event.error;
+				}
+				else if (event instanceof PromiseRejectionEvent) {
+					error = event.reason;
+				}
+			}
+			else if (unknownError instanceof Error) {
+				fields.push({ label: 'Type', value: 'error' });
+				error = unknownError;
+			}
 
-				if (event.type === 'error') {
-					const error = event as ErrorEvent;
-
-					message = error.message;
-					output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${JSON.stringify(error.error)}`;
-
-					fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
-					fields.push({ label: 'Data', value: JSON.stringify(error.error) });
+			if (error instanceof Error) {
+				message = error.message;
+				clipboardOutput = `message ${message}`;
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const errAny = error as any;
+				if (errAny.filename) {
+					fields.push({ label: 'Location', value: `${errAny.filename}, line ${errAny.lineno}, column ${errAny.colno}` });
+					clipboardOutput += `
+file ${errAny.filename}
+line ${errAny.lineno}
+col ${errAny.colno}`;
 				}
 
-				if (event.type === 'unhandledrejection') {
-					const error = event as PromiseRejectionEvent;
-
-					message = JSON.stringify(error.reason);
-					output = `reason ${JSON.stringify(error.reason)}`;
+				const stringifiedError = JSON.stringify(error);
+				if (stringifiedError != '{}') {
+					fields.push({ label: 'Data', value: stringifiedError });
+					clipboardOutput += `
+data ${stringifiedError}`;
 				}
-			} else if (err instanceof Error) {
-				message = err.message;
-				output = `reason ${JSON.stringify(err.stack)}`;
-				fields.push({ label: 'Type', value: 'Error' });
-			} else {
-				message = String(err);
-				output = String(err);
-				fields.push({ label: 'Type', value: 'Unknown' });
+
+				if (errAny.stack) {
+					fields.push({ label: 'Stack', value: errAny.stack });
+					clipboardOutput += `
+stack ${errAny.stack}`;
+				}
+
+				if (error.cause && error.cause instanceof Error) {
+					fields.push({ label: 'Cause', value: error.cause.message });
+					clipboardOutput += `
+cause ${error.cause.message}`;
+					if (error.cause.stack) {
+						fields.push({ label: 'Cause Stack', value: error.cause.stack });
+						clipboardOutput += `
+cause stack ${error.cause.stack}`;
+					}
+				}
+			}
+			else {
+				message = String(unknownError);
 			}
 
 			return (
@@ -71,7 +100,7 @@ export const AboutModal = (props: Props) => {
 							<Button
 								type='text'
 								icon={<CopyOutlined />}
-								onClick={() => navigator.clipboard.writeText(output)}
+								onClick={() => navigator.clipboard.writeText(clipboardOutput)}
 							/>
 						}
 					>

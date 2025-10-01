@@ -103,6 +103,8 @@ export const Main = (props: Props) => {
 	const [ spinning, setSpinning ] = useState(false);
 	const errorsRef = useRef<Set<number>>(new Set());
 
+	// This effect watches for new errors in the app state and displays them in a notification
+	const lastErrorId = errors[errors.length - 1]?.id;
 	useEffect(() => {
 		const set = errorsRef.current;
 		for (const errItem of errors) {
@@ -121,14 +123,13 @@ export const Main = (props: Props) => {
 				err = new Error(String(errValue));
 			}
 
-
 			notify.error({
 				message: err.message,
 				description: err.stack,
 				placement: 'top'
 			});
 		}
-	}, [ notify, errors[errors.length - 1]?.id ]);
+	}, [ notify, lastErrorId ]);
 
 	useErrorListener(event => {
 		addError(event);
@@ -158,12 +159,7 @@ export const Main = (props: Props) => {
 			.then(
 				setHeroes,
 				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving heroes',
-						description: err,
-						placement: 'top'
-					});
+					addError(new Error('Error saving heroes', { cause: err }));
 				}
 			)
 			.then(() => {
@@ -178,12 +174,7 @@ export const Main = (props: Props) => {
 			.then(
 				setPlaybook,
 				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving playbook',
-						description: err,
-						placement: 'top'
-					});
+					addError(new Error('Error saving playbook', { cause: err }));
 				}
 			)
 			.then(() => {
@@ -198,12 +189,7 @@ export const Main = (props: Props) => {
 			.then(
 				setSession,
 				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving session',
-						description: err,
-						placement: 'top'
-					});
+					addError(new Error('Error saving session', { cause: err }));
 				}
 			)
 			.then(() => {
@@ -221,12 +207,7 @@ export const Main = (props: Props) => {
 			.then(
 				setHomebrewSourcebooks,
 				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving sourcebooks',
-						description: err,
-						placement: 'top'
-					});
+					addError(new Error('Error saving sourcebooks', { cause: err }));
 				}
 			);
 	};
@@ -237,12 +218,7 @@ export const Main = (props: Props) => {
 			.then(
 				setHiddenSourcebookIDs,
 				err => {
-					console.error(err);
-					notify.error({
-						message: 'Error saving hidden sourcebooks',
-						description: err,
-						placement: 'top'
-					});
+					addError(new Error('Error saving hidden sourcebooks', { cause: err }));
 				}
 			);
 	};
@@ -1323,8 +1299,6 @@ export const Main = (props: Props) => {
 	const showAbout = () => {
 		setDrawer(
 			<AboutModal
-				errors={errors}
-				clearErrors={() => setErrors([])}
 				onClose={() => setDrawer(null)}
 			/>
 		);
