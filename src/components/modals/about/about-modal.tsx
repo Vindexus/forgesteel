@@ -159,13 +159,9 @@ cause stack ${error.cause.stack}`;
 								{ label: 'Dark', value: 'dark', icon: <MoonOutlined /> }
 							]}
 						/>
-						{
-							errors.length > 0 ?
+						{errors.length > 0 && (
+							<>
 								<Divider />
-								: null
-						}
-						{
-							errors.length > 0 ?
 								<Expander
 									title='Logs'
 									extra={[
@@ -176,8 +172,8 @@ cause stack ${error.cause.stack}`;
 										{errors.map(getError)}
 									</Space>
 								</Expander>
-								: null
-						}
+							</>
+						)}
 					</div>
 				}
 				onClose={props.onClose}
