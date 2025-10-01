@@ -5,7 +5,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { HeroStatePage } from '@/enums/hero-state-page';
 import { InventoryPanel } from '@/components/modals/hero-state/inventory-panel/inventory-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
+
 import { ProjectsPanel } from '@/components/modals/hero-state/projects-panel/projects-panel';
 import { Segmented } from 'antd';
 import { Sourcebook } from '@/models/sourcebook';
@@ -17,7 +17,6 @@ import './hero-state-modal.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	startPage: HeroStatePage;
 	showEncounterControls: boolean;
 	onClose: () => void;
@@ -51,7 +50,6 @@ export const HeroStateModal = (props: Props) => {
 					<InventoryPanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={props.onChange}
 					/>
 				);
@@ -60,7 +58,6 @@ export const HeroStateModal = (props: Props) => {
 					<ProjectsPanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={props.onChange}
 					/>
 				);
@@ -69,7 +66,6 @@ export const HeroStateModal = (props: Props) => {
 					<CustomizePanel
 						hero={props.hero}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={props.onChange}
 					/>
 				);

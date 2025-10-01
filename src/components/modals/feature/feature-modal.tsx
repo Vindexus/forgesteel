@@ -6,7 +6,7 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -17,7 +17,6 @@ import './feature-modal.scss';
 interface Props {
 	feature: Feature;
 	hero: Hero;
-	options: Options;
 	sourcebooks: Sourcebook[];
 	onClose: () => void;
 	updateHero?: (hero: Hero) => void;
@@ -25,7 +24,7 @@ interface Props {
 
 export const FeatureModal = (props: Props) => {
 	const [ hero, setHero ] = useState<Hero>(Utils.copy(props.hero));
-	const [ page, setPage ] = useState<string>('Feature');
+	const [ page, setPage ] = useState<'Feature' | 'Customize'>('Feature');
 
 	const customization = hero ? hero.abilityCustomizations.find(ac => ac.abilityID === props.feature.id) : undefined;
 
@@ -99,7 +98,6 @@ export const FeatureModal = (props: Props) => {
 						<div className='feature-section'>
 							<FeaturePanel
 								feature={props.feature}
-								options={props.options}
 								hero={props.hero}
 								sourcebooks={props.sourcebooks}
 								mode={PanelMode.Full}

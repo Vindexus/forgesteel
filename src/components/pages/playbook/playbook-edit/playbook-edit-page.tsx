@@ -19,7 +19,7 @@ import { MontagePanel } from '@/components/panels/elements/montage-panel/montage
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationEditPanel } from '@/components/panels/edit/negotiation-edit/negotiation-edit-panel';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
+
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -39,15 +39,12 @@ interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
 	playbook: Playbook;
-	options: Options;
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 	saveChanges: (kind: PlaybookElementKind, element: Element) => void;
-	setOptions: (options: Options) => void;
 }
 
 export const PlaybookEditPage = (props: Props) => {
@@ -98,7 +95,6 @@ export const PlaybookEditPage = (props: Props) => {
 							playbook={props.playbook}
 							sourcebooks={props.sourcebooks}
 							heroes={props.heroes}
-							options={props.options}
 							onChange={applyChanges}
 						/>
 					</div>
@@ -109,7 +105,6 @@ export const PlaybookEditPage = (props: Props) => {
 						encounter={element as Encounter}
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={applyChanges}
 						showMonster={props.showMonster}
 						showTerrain={props.showTerrain}
@@ -135,7 +130,6 @@ export const PlaybookEditPage = (props: Props) => {
 						<TacticalMapPanel
 							map={element as TacticalMap}
 							display={TacticalMapDisplayType.DirectorEdit}
-							options={props.options}
 							mode={PanelMode.Full}
 							updateMap={applyChanges}
 						/>
@@ -207,7 +201,7 @@ export const PlaybookEditPage = (props: Props) => {
 							(kind === 'encounter') ?
 								<Popover
 									trigger='click'
-									content={<OptionsPanel mode='encounter-modern' options={props.options}heroes={props.heroes} setOptions={props.setOptions} />}
+									content={<OptionsPanel mode='encounter-modern'heroes={props.heroes} />}
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
@@ -220,7 +214,7 @@ export const PlaybookEditPage = (props: Props) => {
 							(kind === 'tactical-map') ?
 								<Popover
 									trigger='click'
-									content={<OptionsPanel mode={kind} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+									content={<OptionsPanel mode={kind} heroes={props.heroes} />}
 								>
 									<Button icon={<SettingOutlined />}>
 										Options
@@ -244,7 +238,7 @@ export const PlaybookEditPage = (props: Props) => {
 								: null
 						}
 					</div>
-					<AppFooter page='playbook' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+					<AppFooter page='playbook' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 				</div>
 			</ErrorBoundary>
 		);

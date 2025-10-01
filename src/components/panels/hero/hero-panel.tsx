@@ -36,7 +36,7 @@ import { Kit } from '@/models/kit';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { Monster } from '@/models/monster';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -45,6 +45,7 @@ import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
 import { SummoningInfo } from '@/models/summon';
 import { Title } from '@/models/title';
+import { useAppStore } from '@/store/store';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
@@ -53,7 +54,6 @@ import './hero-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	mode?: PanelMode;
 	onSelectAncestry?: (ancestry: Ancestry) => void;
 	onSelectCulture?: (culture: Culture) => void;
@@ -73,6 +73,7 @@ interface Props {
 }
 
 export const HeroPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const isSmall = useIsSmall();
 	const [ tab, setTab ] = useState<string>('Hero');
 
@@ -81,8 +82,8 @@ export const HeroPanel = (props: Props) => {
 			return (
 				<HeaderText
 					style={{ marginTop: '0' }}
-					level={props.options.compactView ? 2 : 1}
-					ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={props.options.compactView ? 21 : 34} /> : null}
+					level={options.compactView ? 2 : 1}
+					ribbon={props.hero.picture ? <HeroToken hero={props.hero} size={options.compactView ? 21 : 34} /> : null}
 					tags={props.hero.folder ? [ props.hero.folder ] : []}
 				>
 					{props.hero.name || 'Unnamed Hero'}
@@ -131,12 +132,12 @@ export const HeroPanel = (props: Props) => {
 			const damageImmunities = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Immunity);
 			const damageWeaknesses = HeroLogic.getDamageModifiers(props.hero, DamageModifierType.Weakness);
 
-			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.showStandardAbilities);
 			const heroicResources = HeroLogic.getHeroicResources(props.hero);
 			const triggers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Trigger);
 			const languages = HeroLogic.getLanguages(props.hero, props.sourcebooks);
 
-			const useRows = props.options.singlePage && props.options.compactView;
+			const useRows = options.singlePage && options.compactView;
 
 			const getTrigger = (ability: Ability) => {
 				const showTarget = ability.type.trigger.toLowerCase().includes('the target');
@@ -187,7 +188,7 @@ export const HeroPanel = (props: Props) => {
 							{
 								skills.map(s => (
 									<div key={s.name} className='ds-text'>
-										{s.name} {props.options.showSkillsInGroups ? null : <Tag>{s.list}</Tag>}
+										{s.name} {options.showSkillsInGroups ? null : <Tag>{s.list}</Tag>}
 									</div>
 								))
 							}
@@ -196,7 +197,7 @@ export const HeroPanel = (props: Props) => {
 			};
 
 			let display = 'column';
-			if (props.options.singlePage) {
+			if (options.singlePage) {
 				display = 'grid';
 			}
 			if (useRows) {
@@ -258,7 +259,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 					}
 					{
-						(heroicResources.length > 0) && !props.options.singlePage ?
+						(heroicResources.length > 0) && !options.singlePage ?
 							<>
 								{
 									heroicResources.map(hr =>
@@ -289,7 +290,7 @@ export const HeroPanel = (props: Props) => {
 							: null
 					}
 					{
-						(triggers.length > 0) && !props.options.singlePage ?
+						(triggers.length > 0) && !options.singlePage ?
 							useRows ?
 								<div className='selectable-row clickable' onClick={() => setTab('Triggers')}>
 									<div>Triggers: <b>{triggers.map(t => t.ability.name).join(', ')}</b></div>
@@ -359,7 +360,7 @@ export const HeroPanel = (props: Props) => {
 							</div>
 					}
 					{
-						(props.options.showSkillsInGroups || false) ?
+						(options.showSkillsInGroups || false) ?
 							[ SkillList.Crafting, SkillList.Exploration, SkillList.Interpersonal, SkillList.Intrigue, SkillList.Lore ]
 								.map(list => getSkills(`${list} Skills`, HeroLogic.getSkills(props.hero, props.sourcebooks).filter(s => s.list === list)))
 							:
@@ -396,7 +397,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getStatsSection = () => {
-			const useRows = props.options.compactView;
+			const useRows = options.compactView;
 
 			const sizeSmall = {
 				xs: 24,
@@ -644,7 +645,7 @@ export const HeroPanel = (props: Props) => {
 				incitingIncident = props.hero.career.incitingIncidents.selected;
 			}
 
-			const useRows = props.options.compactView;
+			const useRows = options.compactView;
 
 			return (
 				<div className={`choices-section ${useRows ? 'compact' : ''}`}>
@@ -816,23 +817,23 @@ export const HeroPanel = (props: Props) => {
 				return (
 					<div key={data.feature.id} className='selectable-row clickable' onClick={() => showFeature(data.feature)}>
 						<div><b>{data.feature.name}</b></div>
-						{props.options.showSources ? <Tag>{data.source}</Tag> : null}
+						{options.showSources ? <Tag>{data.source}</Tag> : null}
 					</div>
 				);
 			};
 
 			const itemNames = props.hero.state.inventory.map(i => i.name);
-			const mainFeatures = features.filter(f => !props.options.separateInventoryFeatures || !itemNames.includes(f.source));
-			const inventoryFeatures = features.filter(f => props.options.separateInventoryFeatures && itemNames.includes(f.source));
+			const mainFeatures = features.filter(f => !options.separateInventoryFeatures || !itemNames.includes(f.source));
+			const inventoryFeatures = features.filter(f => options.separateInventoryFeatures && itemNames.includes(f.source));
 
-			const useRows = props.options.compactView;
+			const useRows = options.compactView;
 
 			return (
 				<div className='features-section'>
 					{
 						mainFeatures.length > 0 ?
 							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-								{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>Features</HeaderText> : null}
+								{useRows ? <HeaderText level={options.compactView ? 3 : 1}>Features</HeaderText> : null}
 								{
 									mainFeatures.map(f =>
 										useRows ?
@@ -841,8 +842,7 @@ export const HeroPanel = (props: Props) => {
 											<SelectablePanel key={f.feature.id} onSelect={() => showFeature(f.feature)}>
 												<FeaturePanel
 													feature={f.feature}
-													source={props.options.showSources ? f.source : undefined}
-													options={props.options}
+													source={options.showSources ? f.source : undefined}
 													hero={props.hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}
@@ -856,7 +856,7 @@ export const HeroPanel = (props: Props) => {
 					{
 						inventoryFeatures.length > 0 ?
 							<div className={`features-grid ${useRows ? 'compact' : ''}`}>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Inventory</HeaderText>
+								<HeaderText level={options.compactView ? 3 : 1}>Inventory</HeaderText>
 								{
 									inventoryFeatures.map(f =>
 										useRows ?
@@ -865,8 +865,7 @@ export const HeroPanel = (props: Props) => {
 											<FeaturePanel
 												key={f.feature.id}
 												feature={f.feature}
-												source={props.options.showSources ? f.source : undefined}
-												options={props.options}
+												source={options.showSources ? f.source : undefined}
 												hero={props.hero}
 												sourcebooks={props.sourcebooks}
 												mode={PanelMode.Full}
@@ -897,7 +896,7 @@ export const HeroPanel = (props: Props) => {
 						<div><b>{data.ability.name}</b></div>
 						<div>{data.ability.distance.map(d => AbilityLogic.getDistance(d, data.ability, props.hero)).join(' or ')}</div>
 						<div>{data.ability.target}</div>
-						{props.options.showSources ? <Tag>{data.source}</Tag> : null}
+						{options.showSources ? <Tag>{data.source}</Tag> : null}
 						{
 							data.ability.cost === 'signature' ?
 								<Pill>Signature</Pill>
@@ -912,17 +911,17 @@ export const HeroPanel = (props: Props) => {
 			const nonStandard = abilities.filter(a => a.source !== 'Standard');
 			const standard = abilities.filter(a => a.source === 'Standard');
 
-			const useRows = props.options.compactView;
+			const useRows = options.compactView;
 
 			return (
 				<div className='abilities-section'>
-					{useRows ? <HeaderText level={props.options.compactView ? 3 : 1}>{title}</HeaderText> : null}
+					{useRows ? <HeaderText level={options.compactView ? 3 : 1}>{title}</HeaderText> : null}
 					{
 						(nonStandard.length === 0) && (standard.length === 0) ?
 							<Empty />
 							: null
 					}
-					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 						{
 							nonStandard.map(a =>
 								useRows ?
@@ -932,9 +931,8 @@ export const HeroPanel = (props: Props) => {
 										<AbilityPanel
 											ability={a.ability}
 											hero={props.hero}
-											options={props.options}
 											mode={PanelMode.Full}
-											tags={props.options.showSources ? [ a.source ] : undefined}
+											tags={options.showSources ? [ a.source ] : undefined}
 										/>
 									</SelectablePanel>
 							)
@@ -945,7 +943,7 @@ export const HeroPanel = (props: Props) => {
 							<Divider />
 							: null
 					}
-					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+					<div className={`abilities-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 						{
 							standard.map(a =>
 								useRows ?
@@ -955,9 +953,8 @@ export const HeroPanel = (props: Props) => {
 										<AbilityPanel
 											ability={a.ability}
 											hero={props.hero}
-											options={props.options}
 											mode={PanelMode.Full}
-											tags={props.options.showSources ? [ a.source ] : undefined}
+											tags={options.showSources ? [ a.source ] : undefined}
 										/>
 									</SelectablePanel>
 							)
@@ -980,7 +977,7 @@ export const HeroPanel = (props: Props) => {
 				}
 			};
 
-			const useRows = props.options.compactView;
+			const useRows = options.compactView;
 
 			const companions = HeroLogic.getCompanions(props.hero);
 			const followers = HeroLogic.getFollowers(props.hero);
@@ -991,8 +988,8 @@ export const HeroPanel = (props: Props) => {
 					{
 						companions.length > 0 ?
 							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Companions</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+								<HeaderText level={options.compactView ? 3 : 1}>Companions</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 									{
 										companions.map(monster =>
 											useRows ?
@@ -1001,7 +998,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={monster.id} onSelect={() => onSelectMonster(monster)}>
-													<MonsterPanel monster={monster} options={props.options} />
+													<MonsterPanel monster={monster} />
 												</SelectablePanel>
 										)
 									}
@@ -1012,8 +1009,8 @@ export const HeroPanel = (props: Props) => {
 					{
 						followers.length > 0 ?
 							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Followers</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+								<HeaderText level={options.compactView ? 3 : 1}>Followers</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 									{
 										followers.map(follower =>
 											useRows ?
@@ -1033,8 +1030,8 @@ export const HeroPanel = (props: Props) => {
 					{
 						summons.length > 0 ?
 							<>
-								<HeaderText level={props.options.compactView ? 3 : 1}>Summons</HeaderText>
-								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${props.options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
+								<HeaderText level={options.compactView ? 3 : 1}>Summons</HeaderText>
+								<div className={`retinue-grid ${useRows ? 'compact' : ''} ${options.abilityWidth.toLowerCase().replace(' ', '-')}`}>
 									{
 										summons.map(summon =>
 											useRows ?
@@ -1043,7 +1040,7 @@ export const HeroPanel = (props: Props) => {
 												</div>
 												:
 												<SelectablePanel key={summon.id} onSelect={() => onSelectMonster(summon.monster)}>
-													<MonsterPanel monster={summon.monster} summon={summon.info} options={props.options} />
+													<MonsterPanel monster={summon.monster} summon={summon.info} />
 												</SelectablePanel>
 										)
 									}
@@ -1061,8 +1058,8 @@ export const HeroPanel = (props: Props) => {
 			tabs.push('Hero');
 			tabs.push('Features');
 
-			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
-			if (props.options.compactView) {
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.showStandardAbilities);
+			if (options.compactView) {
 				if (abilities.length > 0) {
 					tabs.push('Abilities');
 				}
@@ -1100,7 +1097,7 @@ export const HeroPanel = (props: Props) => {
 		};
 
 		const getContent = (tab: string) => {
-			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, props.options.showStandardAbilities);
+			const abilities = HeroLogic.getAbilities(props.hero, props.sourcebooks, options.showStandardAbilities);
 			const mains = abilities.filter(a => a.ability.type.usage === AbilityUsage.MainAction);
 			const maneuvers = abilities.filter(a => a.ability.type.usage === AbilityUsage.Maneuver);
 			const moves = abilities.filter(a => a.ability.type.usage === AbilityUsage.Move);
@@ -1114,7 +1111,7 @@ export const HeroPanel = (props: Props) => {
 							{getNameSection()}
 							{getStatsSection()}
 							{getChoicesSection()}
-							{isSmall || props.options.singlePage ? getSidebarSection() : null}
+							{isSmall || options.singlePage ? getSidebarSection() : null}
 						</>
 					);
 				case 'Features':
@@ -1181,7 +1178,7 @@ export const HeroPanel = (props: Props) => {
 					<div className='hero-main-section'>
 						<div className='hero-center-column'>
 							{
-								props.options.singlePage ?
+								options.singlePage ?
 									null
 									:
 									<div className='center-top'>
@@ -1220,14 +1217,14 @@ export const HeroPanel = (props: Props) => {
 							}
 							<div className='center-content'>
 								{
-									props.options.singlePage ?
+									options.singlePage ?
 										getTabs().map(tab => <div key={tab}>{getContent(tab)}</div>)
 										:
 										getContent(tab)
 								}
 							</div>
 						</div>
-						{!isSmall && !props.options.singlePage ? getSidebarSection() : null}
+						{!isSmall && !options.singlePage ? getSidebarSection() : null}
 					</div>
 				</div>
 			</ErrorBoundary>

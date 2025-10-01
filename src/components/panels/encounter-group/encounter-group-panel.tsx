@@ -13,7 +13,7 @@ import { HeroLogic } from '@/logic/hero-logic';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
@@ -32,7 +32,6 @@ interface EncounterGroupHeroProps {
 	hero: Hero;
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onSelect: (hero: Hero) => void;
 	onSelectMonster: (monster: Monster, monsterGroupID: string) => void;
 	onSelectMinionSlot: (slot: EncounterSlot) => void;

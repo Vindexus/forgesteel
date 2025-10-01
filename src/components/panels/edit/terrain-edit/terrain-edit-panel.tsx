@@ -19,7 +19,7 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { Terrain } from '@/models/terrain';
 import { TerrainCategory } from '@/enums/terrain-category';
@@ -32,7 +32,6 @@ import './terrain-edit-panel.scss';
 interface Props {
 	terrain: Terrain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (terrain: Terrain) => void;
 }
 
@@ -426,7 +425,6 @@ export const TerrainEditPanel = (props: Props) => {
 													feature={feature}
 													allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={f => setSectionContentFeature(sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 												/>
 											</Expander>
@@ -638,7 +636,6 @@ export const TerrainEditPanel = (props: Props) => {
 																	feature={feature}
 																	allowedTypes={[ FeatureType.Text, FeatureType.Ability ]}
 																	sourcebooks={props.sourcebooks}
-																	options={props.options}
 																	onChange={f => setUpgradeSectionContentFeature(upgradeIndex, sectionIndex, contentIndex, f as FeatureText | FeatureAbility)}
 																/>
 															</Expander>

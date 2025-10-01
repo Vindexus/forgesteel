@@ -9,20 +9,20 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Modal } from '@/components/modals/modal/modal';
 import { Monster } from '@/models/monster';
 import { MonsterLogic } from '@/logic/monster-logic';
-import { Options } from '@/models/options';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
+import { useAppStore } from '@/store/store';
 
 import './encounter-tools-modal.scss';
 
 interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 }
 
 export const EncounterToolsModal = (props: Props) => {
+	const { options } = useAppStore();
 	try {
 		const monsters: { monster: Monster, count: number }[] = [];
 		props.encounter.groups
@@ -36,7 +36,7 @@ export const EncounterToolsModal = (props: Props) => {
 					if (monster) {
 						monsters.push({
 							monster: monster,
-							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)
+							count: slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options)
 						});
 					}
 				}

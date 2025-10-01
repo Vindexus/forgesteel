@@ -16,13 +16,14 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
+import { useAppStore } from '@/store/store';
 
 import './encounter-panel.scss';
 
@@ -30,12 +31,12 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	mode?: PanelMode;
 	showTools?: () => void;
 }
 
 export const EncounterPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const getEncounterGroups = () => {
 		if (props.mode !== PanelMode.Full) {
 			return null;
@@ -66,7 +67,7 @@ export const EncounterPanel = (props: Props) => {
 											return null;
 										}
 
-										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
+										const count = slot.count * MonsterLogic.getRoleMultiplier(monster.role.organization, options);
 
 										return (
 											<div key={slot.id} className='encounter-slot'>
@@ -121,7 +122,7 @@ export const EncounterPanel = (props: Props) => {
 		return (
 			<div className='encounter-meta'>
 				{props.encounter.objective ? <EncounterObjectivePanel objective={props.encounter.objective} mode={PanelMode.Full} /> : null}
-				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} options={props.options} />
+				<EncounterDifficultyPanel encounter={props.encounter} sourcebooks={props.sourcebooks} heroes={props.heroes} />
 				{props.encounter.notes.map(note => <Field key={note.id} label={note.name} value={<Markdown text={note.description} useSpan={true} />} />)}
 			</div>
 		);
@@ -151,7 +152,6 @@ export const EncounterPanel = (props: Props) => {
 										key={monster.id}
 										monster={monster}
 										monsterGroup={monsterGroup}
-										options={props.options}
 										mode={PanelMode.Full}
 									/>
 								);
@@ -203,7 +203,6 @@ export const EncounterPanel = (props: Props) => {
 										<SelectablePanel key={m.id}>
 											<FeaturePanel
 												feature={m}
-												options={props.options}
 												mode={PanelMode.Full}
 												cost={m.type === FeatureType.MaliceAbility ? m.data.ability.cost : m.data.cost}
 												repeatable={m.type === FeatureType.Malice ? m.data.repeatable : undefined}
@@ -221,7 +220,7 @@ export const EncounterPanel = (props: Props) => {
 
 	try {
 		const strength = EncounterDifficultyLogic.getStrength(props.encounter, props.sourcebooks);
-		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+		const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
 
 		return (
 			<ErrorBoundary>

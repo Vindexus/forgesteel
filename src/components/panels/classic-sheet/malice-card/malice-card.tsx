@@ -3,13 +3,10 @@ import { EncounterSheet } from '@/models/classic-sheets/encounter-sheet';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { LabeledTextField } from '@/components/panels/classic-sheet/components/labeled-field';
 import { MonsterData } from '@/data/monster-data';
-import { Options } from '@/models/options';
-
 import './malice-card.scss';
 
 interface Props {
 	encounter: EncounterSheet;
-	options: Options;
 }
 
 export const MaliceCard = (props: Props) => {

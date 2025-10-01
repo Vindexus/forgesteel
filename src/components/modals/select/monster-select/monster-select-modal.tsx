@@ -10,7 +10,7 @@ import { MonsterFilter } from '@/models/filter';
 import { MonsterFilterPanel } from '@/components/panels/monster-filter/monster-filter-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
+
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Utils } from '@/utils/utils';
@@ -21,7 +21,6 @@ import './monster-select-modal.scss';
 interface Props {
 	monsters: Monster[];
 	subset?: 'mount' | 'retainer';
-	options: Options;
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (monster: Monster) => void;
@@ -88,7 +87,7 @@ export const MonsterSelectModal = (props: Props) => {
 											}
 										}}
 									>
-										<MonsterPanel monster={m} options={props.options} />
+										<MonsterPanel monster={m} />
 									</SelectablePanel>
 								))
 							}

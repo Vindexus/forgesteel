@@ -18,7 +18,7 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
-import { Options } from '@/models/options';
+
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { Sourcebook } from '@/models/sourcebook';
@@ -31,7 +31,6 @@ import './item-edit-panel.scss';
 interface Props {
 	item: Item;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (item: Item) => void;
 }
 
@@ -220,7 +219,6 @@ export const ItemEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>

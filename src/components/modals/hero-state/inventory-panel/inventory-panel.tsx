@@ -12,7 +12,7 @@ import { Item } from '@/models/item';
 import { ItemPanel } from '@/components/panels/elements/item-panel/item-panel';
 import { ItemSelectModal } from '@/components/modals/select/item-select/item-select-modal';
 import { ItemType } from '@/enums/item-type';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -23,7 +23,6 @@ import './inventory-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (hero: Hero) => void;
 }
 
@@ -109,7 +108,6 @@ export const InventoryPanel = (props: Props) => {
 								>
 									<ItemPanel
 										item={i.item}
-										options={props.options}
 										hero={hero}
 										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}
@@ -126,7 +124,6 @@ export const InventoryPanel = (props: Props) => {
 								>
 									<ItemPanel
 										item={i.item}
-										options={props.options}
 										hero={hero}
 										sourcebooks={props.sourcebooks}
 										mode={PanelMode.Full}
@@ -145,7 +142,6 @@ export const InventoryPanel = (props: Props) => {
 				<ItemSelectModal
 					types={[ ItemType.Artifact, ItemType.Consumable, ItemType.ImbuedArmor, ItemType.ImbuedImplement, ItemType.ImbuedWeapon, ItemType.Leveled, ItemType.LeveledArmor, ItemType.LeveledImplement, ItemType.LeveledWeapon, ItemType.Trinket1st, ItemType.Trinket2nd, ItemType.Trinket3rd, ItemType.Trinket4th ]}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					hero={hero}
 					onSelect={addItem}
 					onClose={() => setShopVisible(false)}

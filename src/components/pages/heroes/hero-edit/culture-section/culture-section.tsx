@@ -17,7 +17,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { NameGenerator } from '@/utils/name-generator';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -39,7 +39,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface CultureSectionProps {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectCulture: (culture: Culture) => void;
 	selectEnvironment: (id: string | null) => void;
@@ -65,17 +64,17 @@ export const CultureSection = (props: CultureSectionProps) => {
 		const cultures = [ CultureData.bespoke, ...SourcebookLogic.getCultures(props.sourcebooks) ].map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const optionsAncestral = cultures.filter(c => c.type === CultureType.Ancestral).map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-				<CulturePanel culture={c} options={props.options} />
+				<CulturePanel culture={c} />
 			</SelectablePanel>
 		));
 		const optionsProfessional = cultures.filter(c => c.type === CultureType.Professional).map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-				<CulturePanel culture={c} options={props.options} />
+				<CulturePanel culture={c} />
 			</SelectablePanel>
 		));
 		const optionsBespoke = cultures.filter(c => c.type === CultureType.Bespoke).map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectCulture(c)}>
-				<CulturePanel culture={c} options={props.options} />
+				<CulturePanel culture={c} />
 			</SelectablePanel>
 		));
 
@@ -86,7 +85,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 				.filter(f => FeatureLogic.isChoice(f))
 				.map(f => (
 					<SelectablePanel key={f.id}>
-						<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+						<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 					</SelectablePanel>
 				));
 
@@ -193,7 +192,7 @@ export const CultureSection = (props: CultureSectionProps) => {
 						props.hero.culture && (!isSmall || (choices.length === 0)) ?
 							<div className={columnClassName} id='culture-selected'>
 								<SelectablePanel showShadow={false}>
-									<CulturePanel culture={props.hero.culture} options={props.options} mode={PanelMode.Full} />
+									<CulturePanel culture={props.hero.culture} mode={PanelMode.Full} />
 								</SelectablePanel>
 							</div>
 							: null
@@ -235,7 +234,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<Drawer open={showEnvironment} onClose={() => setShowEnvironment(false)} closeIcon={null} width='500px'>
 					<FeatureSelectModal
 						features={EnvironmentData.getEnvironments().map(f => ({ feature: f, value: 1 }))}
-						options={props.options}
 						onSelect={f => {
 							setShowEnvironment(false);
 							props.selectEnvironment(f.id);
@@ -246,7 +244,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<Drawer open={showOrganization} onClose={() => setShowOrganization(false)} closeIcon={null} width='500px'>
 					<FeatureSelectModal
 						features={OrganizationData.getOrganizations().map(f => ({ feature: f, value: 1 }))}
-						options={props.options}
 						onSelect={f => {
 							setShowOrganization(false);
 							props.selectOrganization(f.id);
@@ -257,7 +254,6 @@ export const CultureSection = (props: CultureSectionProps) => {
 				<Drawer open={showUpbringing} onClose={() => setShowUpbringing(false)} closeIcon={null} width='500px'>
 					<FeatureSelectModal
 						features={UpbringingData.getUpbringings().map(f => ({ feature: f, value: 1 }))}
-						options={props.options}
 						onSelect={f => {
 							setShowUpbringing(false);
 							props.selectUpbringing(f.id);

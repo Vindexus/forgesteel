@@ -4,7 +4,7 @@ import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -16,7 +16,6 @@ import './feature-select-modal.scss';
 interface Props {
 	features: { feature: Feature, value: number }[];
 	hero?: Hero;
-	options: Options;
 	onClose: () => void;
 	onSelect: (feature: Feature) => void;
 }
@@ -61,7 +60,6 @@ export const FeatureSelectModal = (props: Props) => {
 											hero={props.hero}
 											cost={showCosts ? f.value : undefined}
 											mode={PanelMode.Full}
-											options={props.options}
 										/>
 									</SelectablePanel>
 								))

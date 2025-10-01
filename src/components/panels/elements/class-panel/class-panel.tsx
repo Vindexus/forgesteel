@@ -6,7 +6,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -18,7 +18,6 @@ import './class-panel.scss';
 
 interface Props {
 	heroClass: HeroClass;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -60,7 +59,7 @@ export const ClassPanel = (props: Props) => {
 									<div className='features'>
 										{
 											...lvl.features.map(f =>
-												<FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
+												<FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />
 											)
 										}
 									</div>
@@ -92,7 +91,7 @@ export const ClassPanel = (props: Props) => {
 									{
 										...props.heroClass.subclasses
 											.filter(sc => (props.heroClass.subclasses.filter(x => x.selected).length === 0) || sc.selected)
-											.map(sc => <SubclassPanel key={sc.id} subclass={sc} options={props.options} hero={props.hero} mode={PanelMode.Full} />)
+											.map(sc => <SubclassPanel key={sc.id} subclass={sc} hero={props.hero} mode={PanelMode.Full} />)
 									}
 								</div>
 							</Space>

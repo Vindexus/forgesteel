@@ -4,7 +4,7 @@ import { Hero } from '@/models/hero';
 import { Kit } from '@/models/kit';
 import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -16,7 +16,6 @@ import './kit-select-modal.scss';
 interface Props {
 	kits: Kit[];
 	hero: Hero;
-	options: Options;
 	onClose: () => void;
 	onSelect: (kits: Kit) => void;
 }
@@ -54,7 +53,7 @@ export const KitSelectModal = (props: Props) => {
 										key={k.id}
 										onSelect={() => props.onSelect(k)}
 									>
-										<KitPanel kit={k} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+										<KitPanel kit={k} hero={props.hero} mode={PanelMode.Full} />
 									</SelectablePanel>
 								))
 							}

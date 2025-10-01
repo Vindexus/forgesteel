@@ -9,7 +9,7 @@ import { ItemType } from '@/enums/item-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Project } from '@/models/project';
 import { ProjectEditPanel } from '@/components/panels/edit/project-edit/project-edit';
 import { Sourcebook } from '@/models/sourcebook';
@@ -23,7 +23,6 @@ import './imbuement-edit-panel.scss';
 interface Props {
 	imbuement: Imbuement;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (imbuemenet: Imbuement) => void;
 }
 
@@ -153,7 +152,6 @@ export const ImbuementEditPanel = (props: Props) => {
 					<FeatureEditPanel
 						feature={imbuement.feature}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onChange={changeFeature}
 					/>
 				</Space>

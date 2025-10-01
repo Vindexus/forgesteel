@@ -17,7 +17,7 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { TerrainRoleType } from '@/enums/terrain-role-type';
 import { Utils } from '@/utils/utils';
@@ -28,7 +28,6 @@ import './fixture-edit-panel.scss';
 interface Props {
 	fixture: Fixture;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (fixture: Fixture) => void;
 }
 
@@ -240,7 +239,6 @@ export const FixtureEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>

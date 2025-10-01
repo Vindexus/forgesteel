@@ -22,7 +22,7 @@ import { HeroStatePage } from '@/enums/hero-state-page';
 import { Kit } from '@/models/kit';
 import { Monster } from '@/models/monster';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
-import { Options } from '@/models/options';
+
 import { OptionsPanel } from '@/components/panels/options/options-panel';
 import { PanelMode } from '@/enums/panel-mode';
 import { RulesPage } from '@/enums/rules-page';
@@ -39,12 +39,9 @@ import './hero-view-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: (hero: Hero, page?: RulesPage) => void;
-	setOptions: (options: Options) => void;
 	exportHero: (hero: Hero, format: 'image' | 'json') => void;
 	exportPdf: (hero: Hero, resolution: 'standard' | 'high') => void;
 	exportStandardAbilities: () => void;
@@ -85,7 +82,6 @@ export const HeroViewPage = (props: Props) => {
 						<HeroPanel
 							hero={hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							mode={PanelMode.Full}
 							onSelectAncestry={props.showAncestry}
 							onSelectCulture={props.showCulture}
@@ -109,7 +105,6 @@ export const HeroViewPage = (props: Props) => {
 						<HeroSheetPage
 							hero={hero}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 						/>
 					);
 				case 'abilities':
@@ -217,7 +212,7 @@ export const HeroViewPage = (props: Props) => {
 						</Popover>
 						<Popover
 							trigger='click'
-							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} options={props.options} heroes={props.heroes} setOptions={props.setOptions} />}
+							content={<OptionsPanel mode={view === 'classic' ? 'hero-classic' : 'hero-modern'} heroes={props.heroes} />}
 						>
 							<Button disabled={![ 'modern', 'classic' ].includes(view)} icon={<SettingOutlined />}>
 								Options
@@ -228,7 +223,7 @@ export const HeroViewPage = (props: Props) => {
 					<div className={isSmall ? 'hero-view-page-content compact' : 'hero-view-page-content'}>
 						{getContent()}
 					</div>
-					<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
+					<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={() => props.showReference(hero)} />
 				</div>
 			</ErrorBoundary>
 		);

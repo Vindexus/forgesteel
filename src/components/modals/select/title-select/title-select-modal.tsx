@@ -4,7 +4,7 @@ import { Feature } from '@/models/feature';
 import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature-panel';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -18,7 +18,6 @@ import './title-select-modal.scss';
 interface Props {
 	titles: Title[];
 	hero: Hero;
-	options: Options;
 	onClose: () => void;
 	onSelect: (title: Title) => void;
 }
@@ -75,7 +74,7 @@ export const TitleSelectModal = (props: Props) => {
 												key={t.id}
 												onSelect={() => selectTitle(t)}
 											>
-												<TitlePanel title={t} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+												<TitlePanel title={t} hero={props.hero} mode={PanelMode.Full} />
 											</SelectablePanel>
 										))
 									}
@@ -88,7 +87,7 @@ export const TitleSelectModal = (props: Props) => {
 								:
 								<Space direction='vertical' style={{ width: '100%' }}>
 									<SelectablePanel action={{ label: 'Unselect', onClick: () => setSelectedTitle(null) }}>
-										<TitlePanel title={selectedTitle} hero={props.hero} options={props.options} />
+										<TitlePanel title={selectedTitle} hero={props.hero} />
 									</SelectablePanel>
 									<Alert
 										type='info'
@@ -101,7 +100,7 @@ export const TitleSelectModal = (props: Props) => {
 												key={f.id}
 												onSelect={() => selectFeature(f)}
 											>
-												<FeaturePanel feature={f} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+												<FeaturePanel feature={f} hero={props.hero} mode={PanelMode.Full} />
 											</SelectablePanel>
 										))
 									}

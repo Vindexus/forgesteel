@@ -16,7 +16,7 @@ import { KitWeapon } from '@/enums/kit-weapon';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
@@ -27,7 +27,6 @@ import './kit-edit-panel.scss';
 interface Props {
 	kit: Kit;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (kit: Kit) => void;
 }
 
@@ -381,7 +380,6 @@ export const KitEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

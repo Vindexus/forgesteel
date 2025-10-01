@@ -26,7 +26,7 @@ import { KitArmor } from '@/enums/kit-armor';
 import { KitWeapon } from '@/enums/kit-weapon';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { PerkList } from '@/enums/perk-list';
 import { SkillList } from '@/enums/skill-list';
 import { Sourcebook } from '@/models/sourcebook';
@@ -39,7 +39,6 @@ import './customize-panel.scss';
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (hero: Hero) => void;
 }
 
@@ -972,7 +971,6 @@ export const CustomizePanel = (props: Props) => {
 											:
 											<FeatureConfigPanel
 												feature={f}
-												options={props.options}
 												hero={hero}
 												sourcebooks={props.sourcebooks}
 												setData={setFeatureData}

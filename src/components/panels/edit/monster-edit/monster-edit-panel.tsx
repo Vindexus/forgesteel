@@ -25,7 +25,7 @@ import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { RetainerData } from '@/data/retainer-data';
@@ -39,7 +39,6 @@ interface Props {
 	monster: Monster;
 	monsterGroup?: MonsterGroup;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	similarMonsters: Monster[];
 	onChange: (monster: Monster) => void;
 }
@@ -633,7 +632,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={f}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Text, FeatureType.Ability, FeatureType.ConditionImmunity, FeatureType.DamageModifier ]}
-								options={props.options}
 								onChange={changeFeature}
 							/>
 						</Expander>
@@ -673,7 +671,7 @@ export const MonsterEditPanel = (props: Props) => {
 												<Button key='up' type='text' title='Import' icon={<ImportOutlined />} onClick={e => { e.stopPropagation(); importFeature(s.feature); }} />
 											]}
 										>
-											<FeaturePanel feature={s.feature} options={props.options} mode={PanelMode.Full} />
+											<FeaturePanel feature={s.feature} mode={PanelMode.Full} />
 										</Expander>
 									))
 								}
@@ -759,7 +757,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level4}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
-								options={props.options}
 								onChange={f => changeRetainerFeature(f, 4)}
 							/>
 						</Expander>
@@ -775,7 +772,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level7}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
-								options={props.options}
 								onChange={f => changeRetainerFeature(f, 7)}
 							/>
 						</Expander>
@@ -791,7 +787,6 @@ export const MonsterEditPanel = (props: Props) => {
 								feature={monster.retainer.level10}
 								sourcebooks={props.sourcebooks}
 								allowedTypes={[ FeatureType.Ability ]}
-								options={props.options}
 								onChange={f => changeRetainerFeature(f, 10)}
 							/>
 						</Expander>

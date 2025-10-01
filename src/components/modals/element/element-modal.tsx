@@ -22,7 +22,7 @@ import { KitPanel } from '@/components/panels/elements/kit-panel/kit-panel';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterGroup } from '@/models/monster-group';
 import { MonsterGroupPanel } from '@/components/panels/elements/monster-group-panel/monster-group-panel';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkPanel } from '@/components/panels/elements/perk-panel/perk-panel';
@@ -39,7 +39,6 @@ import './element-modal.scss';
 interface Props {
 	kind: SourcebookElementKind;
 	element: Element;
-	options: Options;
 	onClose: () => void;
 	export: (format: 'image' | 'pdf' | 'json') => void;
 }
@@ -52,7 +51,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<AncestryPanel
 							ancestry={props.element as Ancestry}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -60,7 +58,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<CareerPanel
 							career={props.element as Career}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -68,7 +65,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<ClassPanel
 							heroClass={props.element as HeroClass}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -76,7 +72,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<ComplicationPanel
 							complication={props.element as Complication}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -84,7 +79,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<CulturePanel
 							culture={props.element as Culture}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -92,7 +86,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<DomainPanel
 							domain={props.element as Domain}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -100,7 +93,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<ImbuementPanel
 							imbuement={props.element as Imbuement}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -108,7 +100,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<ItemPanel
 							item={props.element as Item}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -116,7 +107,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<KitPanel
 							kit={props.element as Kit}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -124,7 +114,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<MonsterGroupPanel
 							monsterGroup={props.element as MonsterGroup}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -132,7 +121,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<PerkPanel
 							perk={props.element as Perk}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -140,7 +128,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<SubclassPanel
 							subclass={props.element as SubClass}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);
@@ -156,7 +143,6 @@ export const ElementModal = (props: Props) => {
 					return (
 						<TitlePanel
 							title={props.element as Title}
-							options={props.options}
 							mode={PanelMode.Full}
 						/>
 					);

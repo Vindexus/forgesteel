@@ -32,13 +32,14 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterSelectModal } from '@/components/modals/select/monster-select/monster-select-modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
 import { Terrain } from '@/models/terrain';
 import { TerrainModal } from '@/components/modals/terrain/terrain-modal';
 import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
 import { useIsSmall } from '@/hooks/use-is-small';
 import { useState } from 'react';
 
@@ -54,12 +55,12 @@ interface Props {
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	onChange: (encounter: Encounter) => void;
 }
 
 export const EncounterRunPanel = (props: Props) => {
 	const isSmall = useIsSmall();
+	const { options } = useAppStore();
 	const [ encounter, setEncounter ] = useState<Encounter>(Utils.copy(props.encounter));
 	const [ tab, setTab ] = useState<string>('combatants');
 	const [ showSidebar, setShowSidebar ] = useState<boolean>(true);
@@ -101,7 +102,7 @@ export const EncounterRunPanel = (props: Props) => {
 
 	const addSlot = (monster: Monster) => {
 		const slot = FactoryLogic.createEncounterSlot(monster.id);
-		slot.count = MonsterLogic.getRoleMultiplier(monster.role.organization, props.options);
+		slot.count = MonsterLogic.getRoleMultiplier(monster.role.organization, options);
 
 		while (slot.monsters.length < slot.count) {
 			const monsterCopy = Utils.copy(monster);
@@ -330,7 +331,6 @@ export const EncounterRunPanel = (props: Props) => {
 					hero={hero}
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
-					options={props.options}
 					onSelect={setSelectedHero}
 					onSelectMonster={(monster, monsterGroupID) => {
 						const group = SourcebookLogic.getMonsterGroups(props.sourcebooks).find(g => g.id === monsterGroupID);
@@ -347,7 +347,7 @@ export const EncounterRunPanel = (props: Props) => {
 		};
 
 		const sections = [ 'current', 'ready', 'finished' ];
-		if (props.options.showDefeatedCombatants) {
+		if (options.showDefeatedCombatants) {
 			sections.push('defeated');
 		}
 
@@ -483,7 +483,6 @@ export const EncounterRunPanel = (props: Props) => {
 								<MonsterPanel
 									key={m.monster.id}
 									monster={m.monster}
-									options={props.options}
 									mode={PanelMode.Full}
 									style={{ padding: 0 }}
 									extra={[
@@ -583,7 +582,7 @@ export const EncounterRunPanel = (props: Props) => {
 										const copy = Utils.copy(f);
 										copy.name = `${t.name}: ${f.name}`;
 										return (
-											<FeaturePanel key={copy.id} feature={copy} options={props.options} mode={PanelMode.Full} />
+											<FeaturePanel key={copy.id} feature={copy} mode={PanelMode.Full} />
 										);
 									})
 							}
@@ -631,7 +630,6 @@ export const EncounterRunPanel = (props: Props) => {
 					encounter={encounter}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
-					options={props.options}
 					showHeader={false}
 				/>
 			</div>
@@ -699,7 +697,6 @@ export const EncounterRunPanel = (props: Props) => {
 					<HeroSelectModal
 						heroes={props.heroes}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						onClose={() => setAddingHeroes(false)}
 						onSelect={heroes => {
 							setAddingHeroes(false);
@@ -710,7 +707,6 @@ export const EncounterRunPanel = (props: Props) => {
 				<Drawer open={addingMonsters} onClose={() => setAddingMonsters(false)} closeIcon={null} width='500px'>
 					<MonsterSelectModal
 						monsters={props.sourcebooks.flatMap(sb => sb.monsterGroups).flatMap(g => g.monsters)}
-						options={props.options}
 						selectOriginal={true}
 						onClose={() => setAddingMonsters(false)}
 						onSelect={m => {
@@ -740,7 +736,6 @@ export const EncounterRunPanel = (props: Props) => {
 								monster={selectedMonster.monster}
 								monsterGroup={selectedMonster.monsterGroup}
 								encounter={selectedMonster.isTeamHero ? undefined : encounter}
-								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
 									const copy = Utils.copy(encounter);
@@ -784,7 +779,6 @@ export const EncounterRunPanel = (props: Props) => {
 							<HeroStateModal
 								hero={selectedHero}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								startPage={HeroStatePage.Vitals}
 								showEncounterControls={true}
 								onClose={() => setSelectedHero(null)}

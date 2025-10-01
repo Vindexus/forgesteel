@@ -14,7 +14,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -24,7 +24,6 @@ import './ancestry-edit-panel.scss';
 interface Props {
 	ancestry: Ancestry;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (ancestry: Ancestry) => void;
 }
 
@@ -125,7 +124,6 @@ export const AncestryEditPanel = (props: Props) => {
 								<FeatureEditPanel
 									feature={f}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									onChange={changeFeature}
 								/>
 							</Expander>

@@ -12,7 +12,7 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { SubClass } from '@/models/subclass';
 import { Utils } from '@/utils/utils';
@@ -23,7 +23,6 @@ import './subclass-edit-panel.scss';
 interface Props {
 	subClass: SubClass;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (subClass: SubClass) => void;
 }
 
@@ -144,7 +143,6 @@ export const SubClassEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>

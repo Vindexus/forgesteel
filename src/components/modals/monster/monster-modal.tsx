@@ -11,7 +11,7 @@ import { MonsterHealthPanel } from '@/components/panels/health/health-panel';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
 import { MonsterToken } from '@/components/panels/token/token';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { ResourcePill } from '@/components/controls/pill/pill';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
@@ -26,7 +26,6 @@ interface Props {
 	monsterGroup?: MonsterGroup;
 	encounter?: Encounter;
 	summon?: SummoningInfo;
-	options: Options;
 	onClose: () => void;
 	export?: (format: 'image' | 'pdf' | 'json') => void;
 	updateMonster?: (monster: Monster) => void;
@@ -36,7 +35,7 @@ interface Props {
 export const MonsterModal = (props: Props) => {
 	const [ monster, setMonster ] = useState<Monster>(Utils.copy(props.monster));
 	const [ encounter, setEncounter ] = useState<Encounter | undefined>(props.encounter ? Utils.copy(props.encounter) : undefined);
-	const [ page, setPage ] = useState<string>(props.updateMonster ? 'Encounter' : 'Stat Block');
+	const [ page, setPage ] = useState<'Encounter' | 'Stat Block' | 'Malice'>(props.updateMonster ? 'Encounter' : 'Stat Block');
 	const [ editingName, setEditingName ] = useState<boolean>(false);
 
 	const updateMonster = (monster: Monster) => {
@@ -96,7 +95,6 @@ export const MonsterModal = (props: Props) => {
 						monster={monster}
 						monsterGroup={props.monsterGroup}
 						summon={props.summon}
-						options={props.options}
 						mode={PanelMode.Full}
 					/>
 				);
@@ -111,7 +109,6 @@ export const MonsterModal = (props: Props) => {
 									<SelectablePanel key={malice.id}>
 										<FeaturePanel
 											feature={malice}
-											options={props.options}
 											cost={cost}
 											repeatable={malice.type === FeatureType.Malice ? malice.data.repeatable : undefined}
 											mode={PanelMode.Full}

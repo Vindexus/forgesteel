@@ -31,7 +31,7 @@ import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Pill } from '@/components/controls/pill/pill';
 import { Sourcebook } from '@/models/sourcebook';
@@ -42,20 +42,20 @@ import { TerrainLogic } from '@/logic/terrain-logic';
 import { TerrainPanel } from '@/components/panels/elements/terrain-panel/terrain-panel';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useAppStore } from '@/store/store';
 
 import './encounter-edit-panel.scss';
-
 interface Props {
 	encounter: Encounter;
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (encounter: Encounter) => void;
 	showMonster: (monster: Monster, monsterGroup: MonsterGroup) => void;
 	showTerrain: (terrain: Terrain, upgradeIDs: string[]) => void;
 }
 
 export const EncounterEditPanel = (props: Props) => {
+	const { options } = useAppStore();
 	const [ encounter, setEncounter ] = useState<Encounter>(props.encounter);
 	const [ filterVisible, setFilterVisible ] = useState<boolean>(false);
 	const [ monsterFilter, setMonsterFilter ] = useState<MonsterFilter>(FactoryLogic.createMonsterFilter());
@@ -224,7 +224,6 @@ export const EncounterEditPanel = (props: Props) => {
 						group={group}
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
-						options={props.options}
 						showMonster={props.showMonster}
 						setSlotCount={setSlotCount}
 						moveSlot={moveSlot}
@@ -260,7 +259,6 @@ export const EncounterEditPanel = (props: Props) => {
 								group={group}
 								index={n}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								setName={setName}
 								deleteGroup={deleteGroup}
 								getSlot={getSlot}
@@ -703,7 +701,7 @@ export const EncounterEditPanel = (props: Props) => {
 
 		const getDifficultySection = () => {
 			const strength = EncounterDifficultyLogic.getStrength(encounter, props.sourcebooks);
-			const difficulty = EncounterDifficultyLogic.getDifficulty(strength, props.options, props.heroes);
+			const difficulty = EncounterDifficultyLogic.getDifficulty(strength, options, props.heroes);
 
 			return (
 				<Expander title='Difficulty' tags={[ difficulty ]}>
@@ -711,7 +709,6 @@ export const EncounterEditPanel = (props: Props) => {
 						encounter={encounter}
 						sourcebooks={props.sourcebooks}
 						heroes={props.heroes}
-						options={props.options}
 					/>
 				</Expander>
 			);
@@ -790,13 +787,13 @@ interface GroupPanelProps {
 	group: EncounterGroup;
 	index: number;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	setName: (group: EncounterGroup, value: string) => void;
 	deleteGroup: (group: EncounterGroup) => void;
 	getSlot: (slot: EncounterSlot, group: EncounterGroup) => ReactNode;
 }
 
 const GroupPanel = (props: GroupPanelProps) => {
+	const { options } = useAppStore();
 	const [ editing, setEditing ] = useState<boolean>(false);
 
 	return (
@@ -828,7 +825,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 					: null
 			}
 			{
-				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) ?
+				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) < EncounterDifficultyLogic.getHeroValue(options.heroLevel) ?
 					<Alert
 						type='warning'
 						showIcon={true}
@@ -837,7 +834,7 @@ const GroupPanel = (props: GroupPanelProps) => {
 					: null
 			}
 			{
-				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(props.options.heroLevel) * 2) ?
+				EncounterDifficultyLogic.getGroupStrength(props.group, props.sourcebooks) > (EncounterDifficultyLogic.getHeroValue(options.heroLevel) * 2) ?
 					<Alert
 						type='warning'
 						showIcon={true}
@@ -854,7 +851,6 @@ interface MonsterSlotPanelProps {
 	group: EncounterGroup;
 	encounter: Encounter;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	showMonster: (monster: Monster, group: MonsterGroup) => void;
 	setSlotCount: (groupID: string, slotID: string, value: number) => void;
 	moveSlot: (slotID: string, fromGroupID: string, toGroupID: string, remove: boolean) => void;
@@ -866,6 +862,7 @@ interface MonsterSlotPanelProps {
 }
 
 const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
+	const { options } = useAppStore();
 	const [ showCustomize, setShowCustomize ] = useState<boolean>(false);
 
 	const originalMonster = SourcebookLogic.getMonster(props.sourcebooks, props.slot.monsterID);
@@ -885,7 +882,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 								placeholder='Select'
 								mode='multiple'
 								options={Collections.sort(monsterGroup.addOns, a => a.name).map(a => ({ value: a.id, label: a.name, feature: a, cost: a.data.cost }))}
-								optionRender={option => <FeaturePanel feature={option.data.feature} options={props.options} cost={option.data.cost} mode={PanelMode.Full} />}
+								optionRender={option => <FeaturePanel feature={option.data.feature} cost={option.data.cost} mode={PanelMode.Full} />}
 								showSearch={true}
 								filterOption={(input, option) => {
 									const strings = option ?
@@ -946,7 +943,6 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 					<MonsterPanel
 						monster={monster}
 						monsterGroup={monsterGroup}
-						options={props.options}
 						extra={
 							<Flex align='center'>
 								<Button type='text' title='Customize' icon={<EditOutlined />} onClick={() => setShowCustomize(!showCustomize)} />
@@ -959,7 +955,7 @@ const MonsterSlotPanel = (props: MonsterSlotPanelProps) => {
 				<div className='actions'>
 					<NumberSpin
 						value={props.slot.count}
-						format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, props.options)).toString()}
+						format={value => (value * MonsterLogic.getRoleMultiplier(monster.role.organization, options)).toString()}
 						onChange={value => props.setSlotCount(props.group.id, props.slot.id, value)}
 					/>
 					<Divider />

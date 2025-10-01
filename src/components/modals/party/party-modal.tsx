@@ -15,7 +15,7 @@ import { Hero } from '@/models/hero';
 import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { SourcebookLogic } from '@/logic/sourcebook-logic';
@@ -26,7 +26,6 @@ import './party-modal.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onClose: () => void;
 }
 
@@ -271,7 +270,6 @@ export const PartyModal = (props: Props) => {
 								<AncestryPanel
 									ancestry={selectedAncestry}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									mode={PanelMode.Full}
 								/>
 								: null
@@ -286,7 +284,6 @@ export const PartyModal = (props: Props) => {
 								<CareerPanel
 									career={selectedCareer}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									mode={PanelMode.Full}
 								/>
 								: null
@@ -301,7 +298,6 @@ export const PartyModal = (props: Props) => {
 								<ClassPanel
 									heroClass={selectedClass}
 									sourcebooks={props.sourcebooks}
-									options={props.options}
 									mode={PanelMode.Full}
 								/>
 								: null
@@ -315,7 +311,6 @@ export const PartyModal = (props: Props) => {
 							selectedComplication ?
 								<ComplicationPanel
 									complication={selectedComplication}
-									options={props.options}
 									mode={PanelMode.Full}
 								/>
 								: null

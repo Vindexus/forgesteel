@@ -1,3 +1,4 @@
+import { AppError, useAppStore } from '@/store/store';
 import { Button, Divider, Segmented, Space } from 'antd';
 import { CopyOutlined, MoonOutlined, SettingOutlined, SunOutlined } from '@ant-design/icons';
 import { DangerButton } from '@/components/controls/danger-button/danger-button';
@@ -15,52 +16,91 @@ import pkg from '../../../../package.json';
 import './about-modal.scss';
 
 interface Props {
-	errors: Event[];
-	clearErrors: () => void;
 	onClose: () => void;
 }
 
 export const AboutModal = (props: Props) => {
 	const { themeMode, setTheme } = useTheme();
+	const { errors, clearErrors: clearStoreErrors } = useAppStore();
 
 	try {
 		const clearErrors = () => {
-			props.clearErrors();
+			clearStoreErrors();
 			props.onClose();
 		};
 
-		const getError = (event: Event, index: number) => {
+		const getError = (appError: AppError) => {
+			const unknownError = appError.err;
 			let message = '';
-			let output = '';
-			const fields: { label: string, value: string }[] = [
-				{ label: 'Type', value: `${event.type}` }
-			];
-
-			if (event.type === 'error') {
-				const error = event as ErrorEvent;
-
-				message = error.message;
-				output = `title ${error.message}, file ${error.filename}, line ${error.lineno}, col ${error.colno}, data ${JSON.stringify(error.error)}`;
-
-				fields.push({ label: 'Location', value: `${error.filename}, line ${error.lineno}, column ${error.colno}` });
-				fields.push({ label: 'Data', value: JSON.stringify(error.error) });
+			let clipboardOutput = `error: ${unknownError}
+error json: ${JSON.stringify(unknownError)}`;
+			let error: Error | null = null;
+			const fields: { label: string, value: string }[] = [];
+			if (unknownError instanceof Event) {
+				const event = unknownError;
+				fields.push({ label: 'Type', value: 'event' });
+				fields.push({ label: 'Event Type', value: `${event.type}` });
+				if (event instanceof ErrorEvent) {
+					error = event.error;
+				}
+				else if (event instanceof PromiseRejectionEvent) {
+					error = event.reason;
+				}
+			}
+			else if (unknownError instanceof Error) {
+				fields.push({ label: 'Type', value: 'error' });
+				error = unknownError;
 			}
 
-			if (event.type === 'unhandledrejection') {
-				const error = event as PromiseRejectionEvent;
+			if (error instanceof Error) {
+				message = error.message;
+				clipboardOutput = `message ${message}`;
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const errAny = error as any;
+				if (errAny.filename) {
+					fields.push({ label: 'Location', value: `${errAny.filename}, line ${errAny.lineno}, column ${errAny.colno}` });
+					clipboardOutput += `
+file ${errAny.filename}
+line ${errAny.lineno}
+col ${errAny.colno}`;
+				}
 
-				message = JSON.stringify(error.reason);
-				output = `reason ${JSON.stringify(error.reason)}`;
+				const stringifiedError = JSON.stringify(error);
+				if (stringifiedError != '{}') {
+					fields.push({ label: 'Data', value: stringifiedError });
+					clipboardOutput += `
+data ${stringifiedError}`;
+				}
+
+				if (errAny.stack) {
+					fields.push({ label: 'Stack', value: errAny.stack });
+					clipboardOutput += `
+stack ${errAny.stack}`;
+				}
+
+				if (error.cause && error.cause instanceof Error) {
+					fields.push({ label: 'Cause', value: error.cause.message });
+					clipboardOutput += `
+cause ${error.cause.message}`;
+					if (error.cause.stack) {
+						fields.push({ label: 'Cause Stack', value: error.cause.stack });
+						clipboardOutput += `
+cause stack ${error.cause.stack}`;
+					}
+				}
+			}
+			else {
+				message = String(unknownError);
 			}
 
 			return (
-				<SelectablePanel key={index}>
+				<SelectablePanel key={appError.id}>
 					<HeaderText
 						extra={
 							<Button
 								type='text'
 								icon={<CopyOutlined />}
-								onClick={() => navigator.clipboard.writeText(output)}
+								onClick={() => navigator.clipboard.writeText(clipboardOutput)}
 							/>
 						}
 					>
@@ -119,13 +159,9 @@ export const AboutModal = (props: Props) => {
 								{ label: 'Dark', value: 'dark', icon: <MoonOutlined /> }
 							]}
 						/>
-						{
-							props.errors.length > 0 ?
+						{errors.length > 0 && (
+							<>
 								<Divider />
-								: null
-						}
-						{
-							props.errors.length > 0 ?
 								<Expander
 									title='Logs'
 									extra={[
@@ -133,11 +169,11 @@ export const AboutModal = (props: Props) => {
 									]}
 								>
 									<Space direction='vertical' style={{ width: '100%', paddingTop: '15px' }}>
-										{props.errors.map(getError)}
+										{errors.map(getError)}
 									</Space>
 								</Expander>
-								: null
-						}
+							</>
+						)}
 					</div>
 				}
 				onClose={props.onClose}

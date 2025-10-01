@@ -17,7 +17,7 @@ import { Montage } from '@/models/montage';
 import { MontagePanel } from '@/components/panels/elements/montage-panel/montage-panel';
 import { Negotiation } from '@/models/negotiation';
 import { NegotiationPanel } from '@/components/panels/elements/negotiation-panel/negotiation-panel';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { PowerRollPanel } from '@/components/panels/power-roll/power-roll-panel';
 import { SashPanel } from '@/components/panels/sash/sash-panel';
@@ -36,7 +36,6 @@ interface PlotPanelProps {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	mode?: PanelMode;
 	onSelect: (plot: Plot) => void;
 	onStart: (kind: PlaybookElementKind, element: Element, party: string) => void;
@@ -89,7 +88,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 										encounter={encounter}
 										sourcebooks={props.sourcebooks}
 										heroes={props.heroes}
-										options={props.options}
 									/>
 									<SashPanel monogram='Encounter' />
 								</SelectablePanel>
@@ -135,7 +133,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 										<TacticalMapPanel
 											map={map}
 											display={TacticalMapDisplayType.Thumbnail}
-											options={props.options}
 										/>
 									</div>
 									<SashPanel monogram='Map' />
@@ -262,7 +259,6 @@ export const PlotPanel = (props: PlotPanelProps) => {
 									encounter={selectedEncounter}
 									sourcebooks={props.sourcebooks}
 									heroes={props.heroes}
-									options={props.options}
 									mode={PanelMode.Full}
 								/>
 								: null

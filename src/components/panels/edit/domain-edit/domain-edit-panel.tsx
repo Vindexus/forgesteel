@@ -13,7 +13,7 @@ import { FeatureLogic } from '@/logic/feature-logic';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NameGenerator } from '@/utils/name-generator';
-import { Options } from '@/models/options';
+
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
 import { useState } from 'react';
@@ -23,7 +23,6 @@ import './domain-edit-panel.scss';
 interface Props {
 	domain: Domain;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (domain: Domain) => void;
 }
 
@@ -144,7 +143,6 @@ export const DomainEditPanel = (props: Props) => {
 												<FeatureEditPanel
 													feature={f}
 													sourcebooks={props.sourcebooks}
-													options={props.options}
 													onChange={feature => changeFeature(lvl.level, feature)}
 												/>
 											</Expander>
@@ -334,7 +332,6 @@ export const DomainEditPanel = (props: Props) => {
 									<FeatureEditPanel
 										feature={f}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										onChange={feature => changeFeature(feature)}
 									/>
 								</Expander>

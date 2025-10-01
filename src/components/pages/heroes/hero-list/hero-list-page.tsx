@@ -10,7 +10,7 @@ import { HeroData } from '@/data/hero-data';
 import { HeroInfo } from '@/components/panels/token/token';
 import { HeroLogic } from '@/logic/hero-logic';
 import { HeroPanel } from '@/components/panels/hero/hero-panel';
-import { Options } from '@/models/options';
+
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
 import { Utils } from '@/utils/utils';
@@ -23,8 +23,6 @@ import './hero-list-page.scss';
 interface Props {
 	heroes: Hero[];
 	sourcebooks: Sourcebook[];
-	options: Options;
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -75,7 +73,7 @@ export const HeroListPage = (props: Props) => {
 				{
 					list.map(hero => (
 						<SelectablePanel key={hero.id} watermark={hero.picture || undefined} onSelect={() => navigation.goToHeroView(hero.id)}>
-							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} options={props.options} />
+							<HeroPanel hero={hero} sourcebooks={props.sourcebooks} />
 						</SelectablePanel>
 					))
 				}
@@ -184,7 +182,7 @@ export const HeroListPage = (props: Props) => {
 						onChange={navigation.goToHeroList}
 					/>
 				</div>
-				<AppFooter page='heroes' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter page='heroes' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>
 	);

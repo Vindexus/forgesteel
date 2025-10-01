@@ -8,7 +8,7 @@ import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 import { Title } from '@/models/title';
@@ -19,7 +19,6 @@ import './title-panel.scss';
 
 interface Props {
 	title: Title;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -95,7 +94,6 @@ export const TitlePanel = (props: Props) => {
 												<FeaturePanel
 													key={f.id}
 													feature={f}
-													options={props.options}
 													hero={props.hero}
 													sourcebooks={props.sourcebooks}
 													mode={PanelMode.Full}

@@ -19,7 +19,7 @@ import { HeroClass } from '@/models/class';
 import { HeroLogic } from '@/logic/hero-logic';
 import { Modal } from '@/components/modals/modal/modal';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Sourcebook } from '@/models/sourcebook';
@@ -44,7 +44,6 @@ const matchElement = (element: Element, searchTerm: string) => {
 interface Props {
 	hero: Hero;
 	sourcebooks: Sourcebook[];
-	options: Options;
 	searchTerm: string;
 	selectClass: (heroClass: HeroClass) => void;
 	setLevel: (level: number) => void;
@@ -232,7 +231,6 @@ export const ClassSection = (props: Props) => {
 							subClasses={heroClass.subclasses.filter(sc => !sc.selected)}
 							classID={heroClass.id}
 							sourcebooks={props.sourcebooks}
-							options={props.options}
 							onSelect={sc => {
 								setSubclassSelectorOpen(false);
 								props.addSubclass(sc);
@@ -251,7 +249,7 @@ export const ClassSection = (props: Props) => {
 		const classes = SourcebookLogic.getClasses(props.sourcebooks).map(Utils.copy).filter(c => matchElement(c, props.searchTerm));
 		const options = classes.map(c => (
 			<SelectablePanel key={c.id} onSelect={() => props.selectClass(c)}>
-				<ClassPanel heroClass={c} options={props.options} />
+				<ClassPanel heroClass={c} />
 			</SelectablePanel>
 		));
 
@@ -271,7 +269,7 @@ export const ClassSection = (props: Props) => {
 							.filter(f => FeatureLogic.isChoice(f))
 							.map(f => (
 								<SelectablePanel key={f.id}>
-									<FeatureConfigPanel feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
+									<FeatureConfigPanel feature={f} hero={props.hero} sourcebooks={props.sourcebooks} setData={props.setFeatureData} />
 								</SelectablePanel>
 							)),
 						completed: featuresForLevel.every(f => FeatureLogic.isChosen(f, props.hero))
@@ -291,7 +289,7 @@ export const ClassSection = (props: Props) => {
 					props.hero.class && (!isSmall || (choicesByLevel.length === 0)) ?
 						<div className={columnClassName} id='class-selected'>
 							<SelectablePanel showShadow={false}>
-								<ClassPanel heroClass={props.hero.class} hero={props.hero} options={props.options} mode={PanelMode.Full} />
+								<ClassPanel heroClass={props.hero.class} hero={props.hero} mode={PanelMode.Full} />
 							</SelectablePanel>
 						</div>
 						: null
@@ -342,7 +340,7 @@ export const ClassSection = (props: Props) => {
 				}
 				<Drawer open={!!selectedSubClass} onClose={() => setSelectedSubClass(null)} closeIcon={null} width='500px'>
 					<Modal
-						content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} options={props.options} mode={PanelMode.Full} /> : null}
+						content={selectedSubClass ? <SubclassPanel subclass={selectedSubClass} mode={PanelMode.Full} /> : null}
 						onClose={() => setSelectedSubClass(null)}
 					/>
 				</Drawer>

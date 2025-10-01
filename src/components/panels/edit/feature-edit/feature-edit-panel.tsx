@@ -35,7 +35,7 @@ import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MonsterRoleType } from '@/enums/monster-role-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
 import { PowerRoll } from '@/models/power-roll';
@@ -52,7 +52,6 @@ interface Props {
 	feature: Feature | Perk;
 	allowedTypes?: FeatureType[];
 	sourcebooks: Sourcebook[];
-	options: Options;
 	onChange: (feature: Feature) => void;
 }
 
@@ -1021,7 +1020,6 @@ export const FeatureEditPanel = (props: Props) => {
 										<FeatureEditPanel
 											feature={option.feature}
 											sourcebooks={props.sourcebooks}
-											options={props.options}
 											onChange={f => setChoiceFeature(data, n, f)}
 										/>
 										<NumberSpin min={1} value={option.value} onChange={value => setChoiceValue(data, n, value)} />
@@ -1240,7 +1238,6 @@ export const FeatureEditPanel = (props: Props) => {
 							<FixtureEditPanel
 								fixture={data.fixture}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={setFixture}
 							/>
 						</Expander>
@@ -1380,7 +1377,7 @@ export const FeatureEditPanel = (props: Props) => {
 			case FeatureType.Kit: {
 				const data = feature.data as FeatureKitData;
 				const types = SourcebookLogic.getKitTypes(props.sourcebooks);
-				const options = types.map(type => ({ value: type, label: !type ? 'Standard' : type }));
+				const kitOptions = types.map(type => ({ value: type, label: !type ? 'Standard' : type }));
 				return (
 					<Space direction='vertical' style={{ width: '100%' }}>
 						<HeaderText>Types</HeaderText>
@@ -1390,9 +1387,9 @@ export const FeatureEditPanel = (props: Props) => {
 							placeholder='Kit types'
 							mode='multiple'
 							allowClear={true}
-							options={options}
 							optionRender={option => <div className='ds-text'>{option.data.label}</div>}
 							showSearch={true}
+							options={kitOptions}
 							filterOption={(input, option) => {
 								const strings = option ?
 									[
@@ -1637,7 +1634,6 @@ export const FeatureEditPanel = (props: Props) => {
 									<FeatureEditPanel
 										feature={feature}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										onChange={f => setMultipleFeature(data, n, f)}
 									/>
 								</Expander>
@@ -1909,7 +1905,6 @@ export const FeatureEditPanel = (props: Props) => {
 									<MonsterEditPanel
 										monster={summon.monster}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										similarMonsters={[]}
 										onChange={m => setSummonMonster(data, n, m)}
 									/>
@@ -1953,7 +1948,6 @@ export const FeatureEditPanel = (props: Props) => {
 									<MonsterEditPanel
 										monster={summon.monster}
 										sourcebooks={props.sourcebooks}
-										options={props.options}
 										similarMonsters={[]}
 										onChange={m => setSummonChoiceMonster(data, n, m)}
 									/>
@@ -1986,7 +1980,6 @@ export const FeatureEditPanel = (props: Props) => {
 							<FeatureEditPanel
 								feature={data.feature}
 								sourcebooks={props.sourcebooks}
-								options={props.options}
 								onChange={setTaggedFeature}
 							/>
 						</Expander>

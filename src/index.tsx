@@ -4,8 +4,6 @@ import { HashRouter } from 'react-router';
 import { Hero } from '@/models/hero.ts';
 import { HeroUpdateLogic } from '@/logic/update/hero-update-logic.ts';
 import { Main } from '@/components/main/main.tsx';
-import { Options } from '@/models/options.ts';
-import { OptionsUpdateLogic } from '@/logic/update/options-update-logic.ts';
 import { Playbook } from '@/models/playbook.ts';
 import { PlaybookUpdateLogic } from '@/logic/update/playbook-update-logic.ts';
 import { Sourcebook } from '@/models/sourcebook.ts';
@@ -35,8 +33,7 @@ const promises = [
 	localforage.getItem<Sourcebook[]>('forgesteel-homebrew-settings'),
 	localforage.getItem<string[]>('forgesteel-hidden-setting-ids'),
 	localforage.getItem<Playbook>('forgesteel-playbook'),
-	localforage.getItem<Playbook>('forgesteel-session'),
-	localforage.getItem<Options[]>('forgesteel-options')
+	localforage.getItem<Playbook>('forgesteel-session')
 ];
 
 Promise.all(promises).then(results => {
@@ -114,17 +111,6 @@ Promise.all(promises).then(results => {
 
 	// #endregion
 
-	// #region Options
-
-	let options = results[5] as Options | null;
-	if (!options) {
-		options = FactoryLogic.createOptions();
-	}
-
-	OptionsUpdateLogic.updateOptions(options);
-
-	// #endregion
-
 	createRoot(document.getElementById('root')!).render(
 		<StrictMode>
 			<HashRouter>
@@ -134,7 +120,6 @@ Promise.all(promises).then(results => {
 					hiddenSourcebookIDs={hiddenSourcebookIDs}
 					playbook={playbook}
 					session={session}
-					options={options}
 				/>
 			</HashRouter>
 		</StrictMode>

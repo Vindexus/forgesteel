@@ -12,7 +12,7 @@ import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { Playbook } from '@/models/playbook';
 import { PlaybookLogic } from '@/logic/playbook-logic';
 import { Plot } from '@/models/plot';
@@ -29,7 +29,6 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	onChange: (adventure: Adventure) => void;
 }
 
@@ -330,7 +329,6 @@ export const AdventureEditPanel = (props: Props) => {
 				playbook={props.playbook}
 				sourcebooks={props.sourcebooks}
 				heroes={props.heroes}
-				options={props.options}
 				onChange={changePlotPoint}
 				onAddAfter={addPlotPoint}
 				onDelete={deletePlotPoint}

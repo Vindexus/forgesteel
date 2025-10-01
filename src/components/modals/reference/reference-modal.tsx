@@ -33,7 +33,7 @@ interface Props {
 }
 
 export const ReferenceModal = (props: Props) => {
-	const [ page, setPage ] = useState<string>(props.startPage || RulesPage.Rules);
+	const [ page, setPage ] = useState<RulesPage>(props.startPage || RulesPage.Rules);
 	const [ searchTerm, setSearchTerm ] = useState<string>('');
 	const [ selectedRule, setSelectedRule ] = useState<string>('');
 

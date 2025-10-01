@@ -11,7 +11,6 @@ import { useState } from 'react';
 import './welcome-page.scss';
 
 interface Props {
-	highlightAbout: boolean;
 	showAbout: () => void;
 	showRoll: () => void;
 	showReference: () => void;
@@ -78,7 +77,7 @@ export const WelcomePage = (props: Props) => {
 						<Content type={page} />
 					</div>
 				</div>
-				<AppFooter page='welcome' highlightAbout={props.highlightAbout} showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
+				<AppFooter page='welcome' showAbout={props.showAbout} showRoll={props.showRoll} showReference={props.showReference} />
 			</div>
 		</ErrorBoundary>
 	);

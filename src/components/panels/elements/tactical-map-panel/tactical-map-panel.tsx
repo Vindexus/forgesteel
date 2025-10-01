@@ -27,7 +27,7 @@ import { MonsterModal } from '@/components/modals/monster/monster-modal';
 import { MonsterOrganizationType } from '@/enums/monster-organization-type';
 import { MultiLine } from '@/components/controls/multi-line/multi-line';
 import { NumberSpin } from '@/components/controls/number-spin/number-spin';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Radial } from '@/components/controls/radial/radial';
 import { Sourcebook } from '@/models/sourcebook';
@@ -37,6 +37,7 @@ import { TacticalMapEditMode } from '@/enums/tactical-map-edit-mode';
 import { TacticalMapLogic } from '@/logic/tactical-map-logic';
 import { Toggle } from '@/components/controls/toggle/toggle';
 import { Utils } from '@/utils/utils';
+import { useOption } from '@/store/hooks';
 
 import './tactical-map-panel.scss';
 
@@ -58,7 +59,6 @@ interface SelectedMonsterInfo {
 interface Props {
 	map: TacticalMap;
 	display: TacticalMapDisplayType;
-	options: Options;
 	heroes?: Hero[];
 	encounters?: Encounter[];
 	sourcebooks?: Sourcebook[];
@@ -69,6 +69,7 @@ interface Props {
 }
 
 export const TacticalMapPanel = (props: Props) => {
+	const gridSize = useOption('gridSize');
 	const [ map, setMap ] = useState<TacticalMap>(Utils.copy(props.map));
 	const [ editMode, setEditMode ] = useState<TacticalMapEditMode>(TacticalMapEditMode.Map);
 	const [ editAdding, setEditAdding ] = useState<boolean>(false);
@@ -93,7 +94,7 @@ export const TacticalMapPanel = (props: Props) => {
 	const [ selectedMonster, setSelectedMonster ] = useState<SelectedMonsterInfo | null>(null);
 
 	const zLevel = 0;
-	const size = props.display === 'thumbnail' ? 5 : props.options.gridSize;
+	const size = props.display === 'thumbnail' ? 5 : gridSize;
 
 	const updateMapItem = (item: MapItem) => {
 		const copy = Utils.copy(map);
@@ -1540,7 +1541,6 @@ export const TacticalMapPanel = (props: Props) => {
 								monster={selectedMonster.monster}
 								monsterGroup={selectedMonster.monsterGroup}
 								encounter={selectedMonster.encounter}
-								options={props.options}
 								onClose={() => setSelectedMonster(null)}
 								updateMonster={monster => {
 									const mini = map.items.filter(item => item.type === 'mini').find(mini => mini.id === selectedMapItemID);
@@ -1600,7 +1600,6 @@ export const TacticalMapPanel = (props: Props) => {
 							<HeroStateModal
 								hero={selectedHero}
 								sourcebooks={props.sourcebooks || []}
-								options={props.options}
 								startPage={HeroStatePage.Vitals}
 								showEncounterControls={true}
 								onClose={() => setSelectedHero(null)}

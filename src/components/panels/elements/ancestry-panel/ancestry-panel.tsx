@@ -4,7 +4,7 @@ import { FeaturePanel } from '@/components/panels/elements/feature-panel/feature
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Sourcebook } from '@/models/sourcebook';
 
@@ -12,7 +12,6 @@ import './ancestry-panel.scss';
 
 interface Props {
 	ancestry: Ancestry;
-	options: Options;
 	hero?: Hero;
 	sourcebooks?: Sourcebook[];
 	mode?: PanelMode;
@@ -27,7 +26,7 @@ export const AncestryPanel = (props: Props) => {
 					<Markdown text={props.ancestry.description} />
 					{
 						props.mode === PanelMode.Full ?
-							props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} options={props.options} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
+							props.ancestry.features.map(f => <FeaturePanel key={f.id} feature={f} hero={props.hero} sourcebooks={props.sourcebooks} mode={PanelMode.Full} />)
 							: null
 					}
 				</div>

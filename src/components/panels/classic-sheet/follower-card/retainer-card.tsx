@@ -2,7 +2,7 @@ import { AbilityComponent } from '@/components/panels/classic-sheet/components/a
 import { AbilitySheet } from '@/models/classic-sheets/ability-sheet';
 import { FeatureComponent } from '@/components/panels/classic-sheet/components/feature-component';
 import { FollowerSheet } from '@/models/classic-sheets/hero-sheet';
-import { Options } from '@/models/options';
+
 import { RecoveriesComponent } from '@/components/panels/classic-sheet/components/recoveries-component';
 import { SheetFormatter } from '@/logic/classic-sheet/sheet-formatter';
 import { StaminaComponent } from '@/components/panels/classic-sheet/components/stamina-component';
@@ -15,7 +15,6 @@ import starIcon from '@/assets/icons/star.svg';
 
 interface Props {
 	follower: FollowerSheet;
-	options: Options;
 }
 
 export const RetainerCard = (props: Props) => {
@@ -83,11 +82,9 @@ export const RetainerCard = (props: Props) => {
 				<div className='stamina-recoveries'>
 					<StaminaComponent
 						stamina={follower.stamina}
-						options={props.options}
 					/>
 					<RecoveriesComponent
 						recoveries={follower.recoveries}
-						options={props.options}
 					/>
 				</div>
 			);

@@ -6,7 +6,7 @@ import { ErrorBoundary } from '@/components/controls/error-boundary/error-bounda
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Markdown } from '@/components/controls/markdown/markdown';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Plot } from '@/models/plot';
 import { PlotGraphPanel } from '@/components/panels/plot-graph/plot-graph-panel';
@@ -21,7 +21,6 @@ interface Props {
 	playbook: Playbook;
 	sourcebooks: Sourcebook[];
 	heroes: Hero[];
-	options: Options;
 	mode?: PanelMode;
 	onStart?: (kind: PlaybookElementKind, element: Element, party: string) => void;
 }
@@ -39,7 +38,6 @@ export const AdventurePanel = (props: Props) => {
 					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
-					options={props.options}
 					mode={PanelMode.Full}
 					onSelect={setSelectedPlot}
 					onStart={props.onStart!}
@@ -55,7 +53,6 @@ export const AdventurePanel = (props: Props) => {
 					playbook={props.playbook}
 					sourcebooks={props.sourcebooks}
 					heroes={props.heroes}
-					options={props.options}
 					mode={PanelMode.Full}
 					onSelect={setSelectedPlot}
 					onStart={props.onStart!}

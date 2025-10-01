@@ -4,7 +4,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { Modal } from '@/components/modals/modal/modal';
 import { MonsterLogic } from '@/logic/monster-logic';
 import { MonsterPanel } from '@/components/panels/elements/monster-panel/monster-panel';
-import { Options } from '@/models/options';
+
 import { SearchOutlined } from '@ant-design/icons';
 import { SelectablePanel } from '@/components/controls/selectable-panel/selectable-panel';
 import { Summon } from '@/models/summon';
@@ -15,7 +15,6 @@ import './summon-select-modal.scss';
 
 interface Props {
 	summons: Summon[];
-	options: Options;
 	selectOriginal?: boolean;
 	onClose: () => void;
 	onSelect: (summon: Summon) => void;
@@ -55,7 +54,7 @@ export const SummonSelectModal = (props: Props) => {
 										key={s.id}
 										onSelect={() => props.onSelect(s)}
 									>
-										<MonsterPanel monster={s.monster} summon={s.info} options={props.options} />
+										<MonsterPanel monster={s.monster} summon={s.info} />
 									</SelectablePanel>
 								))
 							}

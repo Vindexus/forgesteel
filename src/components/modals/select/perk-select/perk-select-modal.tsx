@@ -3,7 +3,7 @@ import { Empty } from '@/components/controls/empty/empty';
 import { HeaderText } from '@/components/controls/header-text/header-text';
 import { Hero } from '@/models/hero';
 import { Modal } from '@/components/modals/modal/modal';
-import { Options } from '@/models/options';
+
 import { PanelMode } from '@/enums/panel-mode';
 import { Perk } from '@/models/perk';
 import { PerkList } from '@/enums/perk-list';
@@ -18,7 +18,6 @@ import './perk-select-modal.scss';
 interface Props {
 	perks: Perk[];
 	hero: Hero;
-	options: Options;
 	onClose: () => void;
 	onSelect: (perk: Perk) => void;
 }
@@ -62,7 +61,7 @@ export const PerkSelectModal = (props: Props) => {
 										{
 											subset.map((p, n) => (
 												<SelectablePanel key={n} onSelect={() => props.onSelect(p)}>
-													<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} options={props.options} />
+													<PerkPanel perk={p} hero={props.hero} mode={PanelMode.Full} />
 												</SelectablePanel>
 											))
 										}
