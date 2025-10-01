@@ -156,12 +156,8 @@ export const MonsterModal = (props: Props) => {
 								<Flex align='center' justify='center' style={{ width: '100%' }}>
 									<Segmented
 										name='tabs'
+										options={encounter ? [ 'Encounter', 'Stat Block', 'Malice' ] : [ 'Encounter', 'Stat Block' ]}
 										value={page}
-										options={[
-											{ value: 'Encounter', label: 'Encounter' },
-											{ value: 'Stat Block', label: 'Stat Block' },
-											{ value: 'Malice', label: 'Malice' }
-										]}
 										onChange={setPage}
 									/>
 								</Flex>

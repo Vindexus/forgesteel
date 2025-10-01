@@ -134,11 +134,8 @@ export const FeatureModal = (props: Props) => {
 						<div style={{ width: '100%', textAlign: 'center' }}>
 							<Segmented
 								name='tabs'
+								options={[ 'Feature', 'Customize' ]}
 								value={page}
-								options={[
-									{ value: 'Feature', label: 'Feature' },
-									{ value: 'Customize', label: 'Customize' }
-								]}
 								onChange={setPage}
 							/>
 						</div>

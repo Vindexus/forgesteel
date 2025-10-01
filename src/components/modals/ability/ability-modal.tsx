@@ -237,10 +237,7 @@ export const AbilityModal = (props: Props) => {
 						<div style={{ width: '100%', textAlign: 'center' }}>
 							<Segmented
 								name='tabs'
-								options={[
-									{ value: 'Ability Card', label: 'Ability Card' },
-									{ value: 'Customize', label: 'Customize' }
-								]}
+								options={[ 'Ability Card', 'Customize' ]}
 								value={page}
 								onChange={setPage}
 							/>

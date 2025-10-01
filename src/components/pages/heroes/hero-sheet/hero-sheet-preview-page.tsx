@@ -260,11 +260,8 @@ export const HeroSheetPreviewPage = (props: Props) => {
 						<Segmented
 							name='pagesize'
 							block={true}
+							options={[ SheetPageSize.Letter, SheetPageSize.A4 ]}
 							value={options.classicSheetPageSize}
-							options={[
-								{ value: SheetPageSize.Letter, label: 'Letter' },
-								{ value: SheetPageSize.A4, label: 'A4' }
-							]}
 							onChange={createOptionOnChange('classicSheetPageSize')}
 						/>
 						<Segmented

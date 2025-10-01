@@ -351,14 +351,8 @@ export const ReferenceModal = (props: Props) => {
 					<div style={{ width: '100%', textAlign: 'center' }}>
 						<Segmented
 							name='tabs'
+							options={[ RulesPage.Rules, RulesPage.Conditions, RulesPage.Skills, RulesPage.Languages, RulesPage.Abilities ]}
 							value={page}
-							options={[
-								{ value: RulesPage.Rules, label: 'Rules' },
-								{ value: RulesPage.Conditions, label: 'Conditions' },
-								{ value: RulesPage.Skills, label: 'Skills' },
-								{ value: RulesPage.Languages, label: 'Languages' },
-								{ value: RulesPage.Abilities, label: 'Abilities' }
-							]}
 							onChange={setPage}
 						/>
 					</div>
