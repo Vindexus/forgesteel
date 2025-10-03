@@ -90,11 +90,10 @@ interface Props {
 }
 
 export const Main = (props: Props) => {
-	const { options, errors, addError } = useAppStore();
+	const { options, errors, addError, syncChangeId, heroes, setHero, setHeroes } = useAppStore();
 	const navigation = useNavigation();
 	const [ notify, notifyContext ] = notification.useNotification();
 	const { triggerSyncOnChange } = useSyncStatus();
-	const [ heroes, setHeroes ] = useState<Hero[]>(props.heroes);
 	const [ playbook, setPlaybook ] = useState<Playbook>(props.playbook);
 	const [ session, setSession ] = useState<Playbook>(props.session);
 	const [ homebrewSourcebooks, setHomebrewSourcebooks ] = useState<Sourcebook[]>(props.homebrewSourcebooks);
@@ -138,36 +137,9 @@ export const Main = (props: Props) => {
 
 	// #region Persistence
 
-	const persistHero = (hero: Hero) => {
-		if (heroes.some(h => h.id === hero.id)) {
-			const copy = Utils.copy(heroes);
-			const list = copy.map(h => h.id === hero.id ? hero : h);
-
-			return persistHeroes(list);
-		}
-		else {
-			const copy = Utils.copy(heroes);
-			copy.push(hero);
-			Collections.sort(copy, h => h.name);
-
-			return persistHeroes(copy);
-		}
-	};
-
-	const persistHeroes = (heroes: Hero[]) => {
-		return localforage
-			.setItem<Hero[]>('forgesteel-heroes', Collections.sort(heroes, h => h.name))
-			.then(
-				setHeroes,
-				err => {
-					addError(new Error('Error saving heroes', { cause: err }));
-				}
-			)
-			.then(() => {
-				// Trigger sync when data changes
-				triggerSyncOnChange();
-			});
-	};
+	useEffect(() => {
+		triggerSyncOnChange()
+	}, [syncChangeId])
 
 	const persistPlaybook = (playbook: Playbook) => {
 		return localforage
@@ -232,19 +204,18 @@ export const Main = (props: Props) => {
 		hero.folder = folder;
 
 		setDrawer(null);
-		persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
+		setHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'start'));
 	};
 
 	const deleteHero = (hero: Hero) => {
 		const copy = Utils.copy(heroes.filter(h => h.id !== hero.id));
 		const stayInFolder = copy.some(h => h.folder === hero.folder);
 		navigation.goToHeroList(stayInFolder ? hero.folder : undefined);
-
-		persistHeroes(copy);
+		setHeroes(copy)
 	};
 
 	const saveHero = (hero: Hero) => {
-		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
+		setHero(hero).then(() => navigation.goToHeroView(hero.id));
 	};
 
 	const importHero = (hero: Hero, folder: string, createCopy: boolean = false) => {
@@ -259,7 +230,7 @@ export const Main = (props: Props) => {
 		HeroUpdateLogic.updateHero(hero, [ SourcebookData.core, SourcebookData.orden, ...homebrewSourcebooks ]);
 
 		setDrawer(null);
-		persistHero(hero).then(() => navigation.goToHeroView(hero.id));
+		setHero(hero).then(() => navigation.goToHeroView(hero.id));
 
 		return hero;
 	};
@@ -287,10 +258,8 @@ export const Main = (props: Props) => {
 	};
 
 	const setNotes = (hero: Hero, value: string) => {
-		const copy = Utils.copy(hero);
-		copy.state.notes = value;
-
-		persistHero(copy);
+		hero.state.notes = value;
+		setHero(hero);
 	};
 
 	// #endregion
@@ -1401,10 +1370,9 @@ export const Main = (props: Props) => {
 				startPage={page}
 				showEncounterControls={false}
 				onClose={() => setDrawer(null)}
-				onChange={persistHero}
 				onLevelUp={hero => {
 					setDrawer(null);
-					persistHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'class'));
+					setHero(hero).then(() => navigation.goToHeroEdit(hero.id, 'class'));
 				}}
 			/>
 		);

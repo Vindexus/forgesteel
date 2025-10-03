@@ -151,7 +151,7 @@ export class Utils {
 
 	static saveFile = (data: unknown, name: string, type: string) => {
 		const json = JSON.stringify(data, null, '\t');
-		const blob = new Blob([ json ], { type: 'application/json' });
+		const blob = new Blob([json], { type: 'application/json' });
 
 		const a = document.createElement('a');
 		a.download = `${name}.ds-${type}`;
@@ -172,9 +172,9 @@ export class Utils {
 
 		const orientation = (height >= width) ? 'portrait' : 'landscape';
 
-		const pdf = new jspdf(orientation, 'pt', [ width, height ]);
+		const pdf = new jspdf(orientation, 'pt', [width, height]);
 		canvases.forEach((canvas, n) => {
-			const page = (n === 0) ? pdf : pdf.addPage([ width, height ], orientation);
+			const page = (n === 0) ? pdf : pdf.addPage([width, height], orientation);
 			page.addImage(canvas, 'PNG', 0, 0, canvas.width, canvas.height);
 		});
 
@@ -192,7 +192,7 @@ export class Utils {
 			orientation: documentOrientation,
 			unit: (72 / dpi), // undocumented feature to set arbitrary dpi, see: https://github.com/parallax/jsPDF/issues/1204#issuecomment-1291015995
 			format: paperSize,
-			hotfixes: [ 'px_scaling' ]
+			hotfixes: ['px_scaling']
 		});
 		pageCanvases.forEach((canvas, n) => {
 			const orientation = (canvas.height >= canvas.width) ? 'portrait' : 'landscape';

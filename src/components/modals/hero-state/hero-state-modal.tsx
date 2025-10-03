@@ -20,7 +20,6 @@ interface Props {
 	startPage: HeroStatePage;
 	showEncounterControls: boolean;
 	onClose: () => void;
-	onChange: (hero: Hero) => void;
 	onLevelUp?: (hero: Hero) => void;
 }
 
